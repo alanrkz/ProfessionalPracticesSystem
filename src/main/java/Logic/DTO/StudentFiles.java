@@ -1,7 +1,7 @@
 package Logic.DTO;
 
 
-public class StudentRecord {
+public class StudentFiles {
     private int idStudentRecord;
     private String internSchedule;
     private String workPlan;
@@ -9,10 +9,10 @@ public class StudentRecord {
     private String enrollment;
 
     
-    public StudentRecord() {
+    public StudentFiles() {
     }
 
-    public StudentRecord(int idStudentRecord, String internSchedule, String workPlan, String assigmentLetter, String enrollment) {
+    public StudentFiles(int idStudentRecord, String internSchedule, String workPlan, String assigmentLetter, String enrollment) {
         this.idStudentRecord = idStudentRecord;
         this.internSchedule = internSchedule;
         this.workPlan = workPlan;

@@ -9,6 +9,6 @@ public interface IProfessorDAO {
     
     public String registerProfessor(Professor professor);
     
-    public String deativateProfessor(User user, Professor professor);
+    public String deactivateProfessor(User user, Professor professor);
     
 }

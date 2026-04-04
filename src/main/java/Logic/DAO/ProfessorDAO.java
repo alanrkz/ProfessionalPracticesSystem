@@ -42,7 +42,7 @@ public class ProfessorDAO implements IProfessorDAO{
     }
 
     @Override
-    public String deativateProfessor(User user, Professor professor) {
+    public String deactivateProfessor(User user, Professor professor) {
         if (user.getIdUser() == professor.getIdUser()) {
             if (user.getStatus() == false) {
                 try {

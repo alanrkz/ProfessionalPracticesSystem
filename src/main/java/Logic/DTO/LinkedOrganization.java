@@ -11,13 +11,13 @@ public class LinkedOrganization {
     private String status;
     private String city;
     private String address;
-    private String evaluationOV;
+    private String evaluation;
 
     
     public LinkedOrganization() {
     }
 
-    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, String status, String city, String address, String evaluationOV) {
+    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, String status, String city, String address, String evaluation) {
         this.idLikedOrganization = idLikedOrganization;
         this.companyName = companyName;
         this.sector = sector;
@@ -28,7 +28,7 @@ public class LinkedOrganization {
         this.status = status;
         this.city = city;
         this.address = address;
-        this.evaluationOV = evaluationOV;
+        this.evaluation = evaluation;
     }
     
     public int getIdLikedOrganization() {
@@ -111,12 +111,12 @@ public class LinkedOrganization {
         this.address = address;
     }
 
-    public String getEvaluationOV() {
-        return evaluationOV;
+    public String getEvaluation() {
+        return evaluation;
     }
 
-    public void setEvaluationOV(String evaluationOV) {
-        this.evaluationOV = evaluationOV;
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation;
     }
     
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Coordinator extends User{
     private String numberStaff;
-    private Date registrionDate;
+    private Date registrationDate;
     private Date terminationDate;
     private String serviceTime;
     private int idUser;
@@ -15,9 +15,9 @@ public class Coordinator extends User{
     public Coordinator() {
     }
 
-    public Coordinator(String numberStaff, Date registrionDate, Date terminationDate, String serviceTime, int idUser) {
+    public Coordinator(String numberStaff, Date registrationDate, Date terminationDate, String serviceTime, int idUser) {
         this.numberStaff = numberStaff;
-        this.registrionDate = registrionDate;
+        this.registrationDate = registrationDate;
         this.terminationDate = terminationDate;
         this.serviceTime = serviceTime;
         this.idUser = idUser;
@@ -32,12 +32,12 @@ public class Coordinator extends User{
         this.numberStaff = numberStaff;
     }
 
-    public Date getRegistrionDate() {
-        return registrionDate;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRegistrionDate(Date registrionDate) {
-        this.registrionDate = registrionDate;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public Date getTerminationDate() {

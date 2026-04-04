@@ -1,39 +1,39 @@
-package Logic.DTO;
+ package Logic.DTO;
 
 
 import java.util.Date;
 
 
 public class Activity {
-    private int id;
+    private int idActivity;
     private String activityName;
     private Date dueDateActivity;
     private String description;
     private double value;
-    private int idProject;
-    private int idReport;
+    private int idActivityProject;
+    private int idActivityReport;
 
     
     public Activity() {
     }
 
-    public Activity(int id, String activityName, Date dueDateActivity, String description, double value, int idProject, int idReport) {
-        this.id = id;
+    public Activity(int idActivity, String activityName, Date dueDateActivity, String description, double value, int idActivityProject, int idActivityReport) {
+        this.idActivity = idActivity;
         this.activityName = activityName;
         this.dueDateActivity = dueDateActivity;
         this.description = description;
         this.value = value;
-        this.idProject = idProject;
-        this.idReport = idReport;
+        this.idActivityProject = idActivityProject;
+        this.idActivityReport = idActivityReport;
     }
 
     
-    public int getid() {
-        return id;
+    public int getIdActivity() {
+        return idActivity;
     }
 
-    public void setid(int id) {
-        this.id = id;
+    public void setIdActivity(int idActivity) {
+        this.idActivity = idActivity;
     }
 
     public String getActivityName() {
@@ -68,20 +68,20 @@ public class Activity {
         this.value = value;
     }
 
-    public int getIdProject() {
-        return idProject;
+    public int getIdActivityProject() {
+        return idActivityProject;
     }
 
-    public void setIdProject(int idProject) {
-        this.idProject = idProject;
+    public void setIdActivityProject(int idActivityProject) {
+        this.idActivityProject = idActivityProject;
     }
 
-    public int getIdReport() {
-        return idReport;
+    public int getIdActivityReport() {
+        return idActivityReport;
     }
 
-    public void setIdReport(int idReport) {
-        this.idReport = idReport;
+    public void setIdActivityReport(int idActivityReport) {
+        this.idActivityReport = idActivityReport;
     }
       
 }
