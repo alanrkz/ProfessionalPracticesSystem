@@ -10,4 +10,8 @@ package Logic.DAO;
  */
 public class CoordinatorDAO {
     
+    public String prueba(){
+        return "Hola";
+    }
+    
 }
