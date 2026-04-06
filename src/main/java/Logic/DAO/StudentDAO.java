@@ -1,5 +1,6 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IStudentDAO;
 import Logic.DTO.Student;
@@ -11,6 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author alan rkz
+ */
 public class StudentDAO implements IStudentDAO {
     
     @Override

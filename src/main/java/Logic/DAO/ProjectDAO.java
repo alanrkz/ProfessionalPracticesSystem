@@ -10,12 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ *
+ * @author alan rkz
+ */
 public class ProjectDAO implements IProjectDAO{
     
     @Override
     public String registerProject (Project project){
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Proyecto (nombreProyecto, duracion, descripcion, cupo, estado, metodologiaProyecto, idOrganizacionVinculada) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Proyecto (nombreProyecto, duracion, descripcion, cupo, estado, metodologiaProyecto, idOrganizacionVinculada) VALUES(?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, project.getProjectName());
@@ -34,8 +38,8 @@ public class ProjectDAO implements IProjectDAO{
             }
 
             preparedStatement.close();
-            connection.close();
             resultSet.close();
+            connection.close();
 
             if (affectedRows > 0) {
                 return "El proyecto fue registrado correctamente ";

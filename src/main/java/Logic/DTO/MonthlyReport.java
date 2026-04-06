@@ -11,8 +11,7 @@ public class MonthlyReport extends Report{
     public MonthlyReport() {
     }
 
-    public MonthlyReport(int reportNumber, String montlyReportFile, String ActivitiesPerformed, int idReport) {
-        this.reportNumber = reportNumber;
+    public MonthlyReport(String montlyReportFile, String ActivitiesPerformed, int idReport) {
         this.montlyReportFile = montlyReportFile;
         this.ActivitiesPerformed = ActivitiesPerformed;
         this.idReport = idReport;

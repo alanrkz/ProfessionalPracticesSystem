@@ -8,16 +8,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-
+/**
+ *
+ * @author alan rkz
+ */
 public class ActivityDAO implements IActivityDAO{
 
     @Override
     public String addActivity(Activity activity) {
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Activity VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Activity (nombreActividad, descripcion, valor, fechaEntregaActividad, idProyecto, idReporte) VALUES (?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, activity.getActivityName());
             preparedStatement.setString(2, activity.getDescription());
             preparedStatement.setDouble(3, activity.getValue());
@@ -26,8 +31,14 @@ public class ActivityDAO implements IActivityDAO{
             preparedStatement.setInt(6, activity.getIdActivityReport());
 
             int affectedRows = preparedStatement.executeUpdate();
-
+            
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                activity.setIdActivity(resultSet.getInt(1));
+            }
+            
             preparedStatement.close();
+            resultSet.close();
             connection.close();
 
             if (affectedRows > 0) {

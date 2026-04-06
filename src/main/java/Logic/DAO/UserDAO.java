@@ -1,5 +1,6 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IUserDAO;
 import Logic.DTO.User;
@@ -9,13 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/**
+ *
+ * @author alan rkz
+ */
 public class UserDAO implements IUserDAO{
     
     @Override
     public String registerUser(User user){
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Proyecto (primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, estado, genero, correoElectronico, contraseña) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Proyecto (primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, estado, genero, correoElectronico, contraseña) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFirstName());
@@ -35,8 +39,8 @@ public class UserDAO implements IUserDAO{
             }
 
             preparedStatement.close();
-            connection.close();
             resultSet.close();
+            connection.close();
 
             if (affectedRows > 0) {
                 return "El usuario fue registrado correctamente ";
@@ -52,7 +56,7 @@ public class UserDAO implements IUserDAO{
     @Override
     public String modifyUser(User user) {
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "UPDATE User SET primerNombre = ?, segundoNombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, estado = ?, genero = ? WHERE idUser = ?;";
+            String query = "UPDATE Usuario SET primerNombre = ?, segundoNombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, estado = ?, genero = ? WHERE idUser = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getFirstName());

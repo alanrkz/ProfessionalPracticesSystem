@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
+/**
+ *
+ * @author alan rkz
+ */
 public class CoordinatorDAO implements ICoordinatorDAO{
     
     @Override
