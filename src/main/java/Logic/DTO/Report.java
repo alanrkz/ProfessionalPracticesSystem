@@ -1,24 +1,23 @@
 package Logic.DTO;
 
 
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Report {
-    private int idReport;
-    private Date reportCompletionDate;
-    private Date reportSubmissionDate;
-    private String description;
-    private String personalComments;
-    private Double qualification;
-    private String enrollment;
+    protected int idReport;
+    protected Date reportCompletionDate;
+    protected Date reportSubmissionDate;
+    protected String description;
+    protected String personalComments;
+    protected Double qualification;
+    protected String enrollment;
 
     
     public Report() {
     }
 
-    public Report(int idReport, Date reportCompletionDate, Date reportSubmissionDate, String description, String personalComments, Double qualification, String enrollment) {
-        this.idReport = idReport;
+    public Report(Date reportCompletionDate, Date reportSubmissionDate, String description, String personalComments, Double qualification, String enrollment) {
         this.reportCompletionDate = reportCompletionDate;
         this.reportSubmissionDate = reportSubmissionDate;
         this.description = description;

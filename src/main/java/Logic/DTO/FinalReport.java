@@ -1,7 +1,7 @@
 package Logic.DTO;
 
 
-public class FinalReport {
+public class FinalReport extends Report{
     private int reportNumber;
     private String finalReportFile;
     private String finalDeliverable;

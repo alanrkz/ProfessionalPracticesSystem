@@ -12,12 +12,9 @@ import java.sql.SQLException;
 
 public class ProfessorDAO implements IProfessorDAO{
     
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection connection = databaseConnection.connect();
-    
     @Override
-        public String registerProfessor(Professor professor) {
-        try {
+    public String registerProfessor(Professor professor) {
+        try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -35,13 +32,13 @@ public class ProfessorDAO implements IProfessorDAO{
             connection.close();
 
             if (affectedRows > 0) {
-                return "El profesor fue registrado correctamente";
+                return "El profesor fue registrado correctamente.";
             } else {
-                return "Hubo problemas para registrar al Profesor. Intente de nuevo mas tarde";
+                return "Hubo problemas para registrar al profesor. Intente de nuevo mas tarde.";
             }
 
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema";
+            return "Tenemos problemas con la conexion al sistema.";
         }
     }
 
@@ -49,7 +46,7 @@ public class ProfessorDAO implements IProfessorDAO{
     public String deactivateProfessor(User user, Professor professor) {
         if (user.getIdUser() == professor.getIdUser()) {
             if (user.getStatus() == false) {
-                try {
+                try (Connection connection = DatabaseConnection.connect()) {
                     String query = "UPDATE Usuario SET estado = false WHERE id = ?;";
                     
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -61,36 +58,31 @@ public class ProfessorDAO implements IProfessorDAO{
                     preparedStatement.close();
 
                     if (affectedRows > 0) {
-                        return "El Profesor fue inactivado correctamente";
+                        return "El profesor fue inactivado correctamente.";
                     } else {
-                        return "Hubo problemas para inactivar al Profesor. Intente de nuevo mas tarde";
+                        return "Hubo problemas para inactivar al profesor. Intente de nuevo mas tarde.";
                     }
 
                 } catch (SQLException e) {
-                    return "Tenemos problemas con la conexion al sistema";
+                    return "Tenemos problemas con la conexion al sistema.";
                 }
             } else {
-                return "El Profesor ya esta inactivo";
+                return "El profesor ya esta inactivo.";
             }
         } else {
-            return "Profesor no encontrado";
+            return "Profesor no encontrado.";
         }
     }
     
-    /**
-    public String updateProfessor(int numberStaff){
-        try {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            Connection connection = databaseConnection.connect();
-            String query = "UPDATE Profesor SET turno = ?, esCoordinador = ?;";
+    @Override
+    public String updateProfessor(Professor professor){
+        try (Connection connection = DatabaseConnection.connect()) {
+            String query = "UPDATE Profesor SET turno = ?, esCoordinador = ? WHERE numeroPersonal = ?;";
+            
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, professor.getNumberStaff());
-            preparedStatement.setString(2, professor.getShift());
-            preparedStatement.setDate(3, professor.getRegistrationDate());
-            preparedStatement.setDate(4, professor.getTerminationDate());
-            preparedStatement.setString(5, professor.getServiceTime());
-            preparedStatement.setBoolean(6, professor.isIsCoordinator());
-            preparedStatement.setInt(7, professor.getIdUser());
+            preparedStatement.setString(1, professor.getShift());
+            preparedStatement.setBoolean(2, professor.isIsCoordinator());
+            preparedStatement.setString(3, professor.getNumberStaff());
 
             int affectedRows = preparedStatement.executeUpdate();
             
@@ -98,16 +90,14 @@ public class ProfessorDAO implements IProfessorDAO{
             connection.close();
 
             if (affectedRows > 0) {
-                return "El profesor fue registrado correctamente";
+                return "El profesor fue actualizado correctamente";
             } else {
-                return "Hubo problemas para registrar al Profesor. Intente de nuevo mas tarde";
+                return "Hubo problemas para actualizar al Profesor. Intente de nuevo mas tarde";
             }
 
         } catch (SQLException e) {
             return "Tenemos problemas con la conexion al sistema";
         }
-        
     }
-    **/
     
 }

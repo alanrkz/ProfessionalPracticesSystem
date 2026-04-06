@@ -2,7 +2,6 @@ package Logic.DTO;
 
 
 public class User {
-    
     protected int idUser;
     protected String firstName;
     protected String middleName;
@@ -17,8 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
-        this.idUser = idUser;
+    public User(String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.paternalSurname = paternalSurname;
@@ -29,6 +27,7 @@ public class User {
         this.status = status;
     }
 
+    
     public int getIdUser() {
         return idUser;
     }

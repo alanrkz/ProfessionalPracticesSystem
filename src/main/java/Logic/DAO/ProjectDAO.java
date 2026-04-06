@@ -12,12 +12,9 @@ import java.sql.Statement;
 
 public class ProjectDAO implements IProjectDAO{
     
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection connection = databaseConnection.connect();
-    
     @Override
     public String registerProject (Project project){
-        try {
+        try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Proyecto (nombreProyecto, duracion, descripcion, cupo, estado, metodologiaProyecto, idOrganizacionVinculada) VALUES(?, ?, ?, ?, ?, ?, ?)";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -41,9 +38,9 @@ public class ProjectDAO implements IProjectDAO{
             resultSet.close();
 
             if (affectedRows > 0) {
-                return "El Proyecto fue registrado correctamente ";
+                return "El proyecto fue registrado correctamente ";
             } else {
-                return "Hubo problemas para registrar el Proyecto. Intente de nuevo mas tarde ";
+                return "Hubo problemas para registrar el proyecto. Intente de nuevo mas tarde ";
             }
             
         } catch (SQLException e) {
@@ -53,7 +50,7 @@ public class ProjectDAO implements IProjectDAO{
     
     @Override
     public String deactivateProject(int idProject){
-        try {
+        try (Connection connection = DatabaseConnection.connect()) {
             String query = "UPDATE Proyecto SET estado = false WHERE idProyecto = ?;";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -65,9 +62,9 @@ public class ProjectDAO implements IProjectDAO{
             preparedStatement.close();
 
             if (affectedRows > 0) {
-                return "El Proyecto ha sido desactivado ";
+                return "El proyecto ha sido desactivado ";
             } else {
-                return "Hubo problemas para desactivar el Proyecto. Intente de nuevo mas tarde ";
+                return "Hubo problemas para desactivar el proyecto. Intente de nuevo mas tarde ";
             }
             
         } catch (SQLException e) {

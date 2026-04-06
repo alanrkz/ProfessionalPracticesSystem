@@ -11,4 +11,5 @@ public interface IProfessorDAO {
     
     public String deactivateProfessor(User user, Professor professor);
     
+    public String updateProfessor(Professor professor);
 }

@@ -1,7 +1,7 @@
 package Logic.DTO;
 
 
-public class MonthlyReport {
+public class MonthlyReport extends Report{
     private int reportNumber;
     private String montlyReportFile;
     private String ActivitiesPerformed;

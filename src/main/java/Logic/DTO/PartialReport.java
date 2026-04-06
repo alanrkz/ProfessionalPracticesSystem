@@ -1,7 +1,7 @@
 package Logic.DTO;
 
 
-public class PartialReport {
+public class PartialReport extends Report{
     private int reportNumber;
     private String partialReportFile;
     private String resultsObtained;

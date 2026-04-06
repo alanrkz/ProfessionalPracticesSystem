@@ -13,12 +13,9 @@ import java.util.List;
 
 public class StudentDAO implements IStudentDAO {
     
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection connection = databaseConnection.connect();
-    
     @Override
     public String registerStudent(Student student) {
-        try {
+        try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Practicante VALUES (?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -38,7 +35,7 @@ public class StudentDAO implements IStudentDAO {
             if (affectedRows > 0) {
                 return "El alumno fue agregado correctamente.";
             } else {
-                return "Hubo problemas para guardar al alumno. Intente de nuevo mas tarde.";
+                return "Hubo problemas para registrar al alumno. Intente de nuevo mas tarde.";
             }
             
         } catch (SQLException e) {
@@ -50,7 +47,7 @@ public class StudentDAO implements IStudentDAO {
     public String deactivateStudent(User user, Student student) {
         if (user.getIdUser() == student.getIdUser()) {
             if (user.getStatus() == false) {
-                try {
+                try (Connection connection = DatabaseConnection.connect()) {
                     String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
                     
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -62,16 +59,16 @@ public class StudentDAO implements IStudentDAO {
                     preparedStatement.close();
                     
                     if (affectedRows > 0) {
-                        return "El alumno fue agregado correctamente.";
+                        return "El alumno fue desactivado correctamente.";
                     } else {
-                        return "Hubo problemas para guardar al alumno. Intente de nuevo mas tarde.";
+                        return "Hubo problemas para desactivar al alumno. Intente de nuevo mas tarde.";
                     }
                     
                 } catch (SQLException e) {
                     return "Tenemos problemas con la conexion al sistema.";
                 }
             } else {
-                return "El Alumno ya esta inactivo";
+                return "El alumno ya esta inactivo";
             }
         } else {
             return "Alumno no encontrado";
@@ -84,7 +81,7 @@ public class StudentDAO implements IStudentDAO {
         
         String query = "SELECT * FROM Practicante;";
         
-        try {
+        try (Connection connection = DatabaseConnection.connect()) {
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             
