@@ -15,8 +15,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(int idProject, String projectName, String duration, String description, int availableSpaces, boolean status, String projectMethodology, int idLikedOrganization) {
-        this.idProject = idProject;
+    public Project(String projectName, String duration, String description, int availableSpaces, boolean status, String projectMethodology, int idLikedOrganization) {
         this.projectName = projectName;
         this.duration = duration;
         this.description = description;
@@ -26,6 +25,7 @@ public class Project {
         this.idLikedOrganization = idLikedOrganization;
     }
 
+    
     public int getIdProject() {
         return idProject;
     }
@@ -89,6 +89,5 @@ public class Project {
     public void setIdLikedOrganization(int idLikedOrganization) {
         this.idLikedOrganization = idLikedOrganization;
     }
-    
-    
+      
 }
