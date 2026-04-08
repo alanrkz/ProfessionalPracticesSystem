@@ -12,7 +12,7 @@ public interface IMonthlyReportDAO {
     
     public String registerMonthlyReport(MonthlyReport monthlyReport);
     
-    public String modifyReport(MonthlyReport monthlyReport);
+    public String modifyMonthlyReport(MonthlyReport monthlyReport);
     
     public List<MonthlyReport> getMonthlyReports();
     

@@ -51,7 +51,7 @@ public class MonthlyReportDAO implements IMonthlyReportDAO{
     }
     
     @Override
-    public String modifyReport(MonthlyReport monthlyReport) {
+    public String modifyMonthlyReport(MonthlyReport monthlyReport) {
         try (Connection connection = DatabaseConnection.connect()) {
             String query = "UPDATE ReporteMensual SET archivoReporteMensual = ?, actividadesRealizadas = ? WHERE numeroReporte = ?;";
 
