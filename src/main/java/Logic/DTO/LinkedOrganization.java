@@ -1,5 +1,6 @@
 package Logic.DTO;
 
+
 public class LinkedOrganization {
     private int idLikedOrganization;
     private String companyName;
@@ -30,6 +31,7 @@ public class LinkedOrganization {
         this.address = address;
         this.evaluation = evaluation;
     }
+    
     
     public int getIdLikedOrganization() {
         return idLikedOrganization;
