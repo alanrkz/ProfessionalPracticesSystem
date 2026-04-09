@@ -1,4 +1,3 @@
-
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
@@ -16,14 +15,15 @@ import java.util.List;
  *
  * @author ELLIN JV
  */
-public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
-    
+public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
+
     @Override
     public String registerOrganization(LinkedOrganization linkedOrganization) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuariosDirectos, usuariosIndirectos, email, telefono, estado, ciudad, direccion, evaluacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuarioDirectos, usuariosIndirectos, correoElectronico, telefono, estado, ciudad, direccion, evaluacionOV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+            int idGenerado = 0;
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, linkedOrganization.getCompanyName());
             preparedStatement.setString(2, linkedOrganization.getSector());
@@ -36,21 +36,19 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
             preparedStatement.setString(9, linkedOrganization.getAddress());
             preparedStatement.setString(10, linkedOrganization.getEvaluation());
 
-            int affectedRows = preparedStatement.executeUpdate();
-            
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                linkedOrganization.setIdLikedOrganization(resultSet.getInt(1));                
+            preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+
+            if (rs.next()) {
+                idGenerado = rs.getInt(1);
             }
 
-            if (affectedRows > 0) {
-                return "La organización fue registrada correctamente.";
-            } else {
-                return "No fue posible registrar la organización.";
-            }
+            return "Registro exitoso. ID generado: " + idGenerado;
 
         } catch (SQLException e) {
-            return "Error de conexión.";
+            e.printStackTrace();
+            return "Error al registrar organización.";
         }
     }
 
@@ -66,7 +64,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
 
             while (resultSet.next()) {
                 LinkedOrganization linkedOrganization = new LinkedOrganization();
-                linkedOrganization.setIdLikedOrganization(resultSet.getInt("idOrganizacion"));
+                linkedOrganization.setIdLikedOrganization(resultSet.getInt("idOrganizacionVinculada"));
                 linkedOrganization.setCompanyName(resultSet.getString("nombreEmpresa"));
 
                 OrganizationsList.add(linkedOrganization);
@@ -78,13 +76,13 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
 
         return OrganizationsList;
     }
-    
+
     @Override
     public String deactivateOrganization(int organizationId) {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 'Inactivo' WHERE idOrganizacion = ?;";
+            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 0 WHERE idOrganizacion = ?;";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
             preparedStatement.setInt(1, organizationId);

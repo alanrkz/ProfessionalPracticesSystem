@@ -1,8 +1,9 @@
 package GUI;
 
-
+import DataAccess.DatabaseConnection;
 import Logic.DAO.*;
 import Logic.DTO.*;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -29,7 +30,13 @@ public class ProfessionalPracticesSystem {
             System.out.println("11. Listar Estudiantes");
             System.out.println("12. Listar Profesores");
             System.out.println("13. Listar Reportes Mensuales");
-            System.out.println("14. Salir");
+            System.out.println("14. Registrar Organización Vinculada");
+            System.out.println("15. Registrar Notificación");
+            System.out.println("16. Registrar Aplicación a Proyecto");
+            System.out.println("17. Registrar Responsable de Proyecto");
+            System.out.println("18. Registrar Notificación Recibida");
+            System.out.println("19. Registrar Archivos de Estudiante");
+            System.out.println("20. Salir");
 
             System.out.print("\n     Selecciona una opcion:     \n");
             option = scanner.nextInt();
@@ -324,7 +331,132 @@ public class ProfessionalPracticesSystem {
                     break;
                 }
 
-                case 14:
+                case 14: {
+                    LinkedOrganizationDAO dao = new LinkedOrganizationDAO();
+                    LinkedOrganization org = new LinkedOrganization();
+
+                    System.out.print("Nombre empresa: ");
+                    org.setCompanyName(scanner.nextLine());
+
+                    System.out.print("Sector: ");
+                    org.setSector(scanner.nextLine());
+
+                    System.out.print("Usuarios directos: ");
+                    org.setDirectUsers(scanner.nextLine());
+
+                    System.out.print("Usuarios indirectos: ");
+                    org.setIndirectUsers(scanner.nextLine());
+
+                    System.out.print("Email: ");
+                    org.setEmail(scanner.nextLine());
+
+                    System.out.print("Telefono: ");
+                    org.setPhone(scanner.nextLine());
+
+                    org.setStatus("1");
+
+                    System.out.print("Ciudad: ");
+                    org.setCity(scanner.nextLine());
+
+                    System.out.print("Direccion: ");
+                    org.setAddress(scanner.nextLine());
+
+                    System.out.print("Evaluacion: ");
+                    org.setEvaluation(scanner.nextLine());
+
+                    System.out.println(dao.registerOrganization(org));                    
+
+                    break;
+                }
+
+                case 15: {
+                    NotificationDAO dao = new NotificationDAO();
+                    Notification n = new Notification();
+
+                    System.out.print("Destinatario: ");
+                    n.setRecipient(scanner.nextLine());
+
+                    System.out.print("Asunto: ");
+                    n.setSubject(scanner.nextLine());
+
+                    System.out.print("Mensaje: ");
+                    n.setMessageBody(scanner.nextLine());
+
+                    System.out.print("Numero personal: ");
+                    n.setNumberStaff(scanner.nextLine());
+
+                    System.out.println(dao.registerNotification(n));
+                    System.out.println("ID generado: " + n.getIdNotification());
+
+                    break;
+                }
+
+                case 16: {
+                    ProjectApplicationsDAO dao = new ProjectApplicationsDAO();
+                    ProjectApplications pa = new ProjectApplications();
+
+                    System.out.print("ID Proyecto: ");
+                    pa.setIdProject(scanner.nextInt());
+
+                    System.out.print("Matricula: ");
+                    pa.setEnrollment(scanner.next());
+
+                    System.out.print("Asignado (true/false): ");
+                    pa.setAssignmentStatus(scanner.nextBoolean());
+                    scanner.nextLine();
+
+                    System.out.println(dao.registerApplication(pa));
+                    System.out.println("ID generado: " + pa.getIdProject());
+
+                    break;
+                }
+
+                case 17: {
+                    ProjectManagerDAO dao = new ProjectManagerDAO();
+                    ProjectManager pm = new ProjectManager();
+
+                    System.out.print("Nombre: ");
+                    pm.setManagerName(scanner.nextLine());
+
+                    System.out.print("Puesto: ");
+                    pm.setManagerPosition(scanner.nextLine());
+
+                    System.out.print("Email: ");
+                    pm.setManagerEmail(scanner.nextLine());
+
+                    System.out.print("ID Proyecto: ");
+                    pm.setIdProject(scanner.nextInt());
+                    scanner.nextLine();
+
+                    System.out.println(dao.registerManager(pm));
+                    System.out.println("ID generado: " + pm.getIdProjectManager());
+
+                    break;
+                }
+
+                case 19: {
+                    StudentFilesDAO dao = new StudentFilesDAO();
+                    StudentFiles sf = new StudentFiles();
+
+                    System.out.print("Horario: ");
+                    sf.setInternSchedule(scanner.nextLine());
+
+                    System.out.print("Plan de trabajo: ");
+                    sf.setActivitiesPlan(scanner.nextLine());
+
+                    System.out.print("Carta asignacion: ");
+                    sf.setAssigmentLetter(scanner.nextLine());
+
+                    System.out.print("Matricula: ");
+                    sf.setEnrollment(scanner.nextLine());
+
+                    System.out.println(dao.registerFiles(sf));
+                    System.out.println("ID generado: " + sf.getIdStudentRecord());
+
+                    break;
+                }
+
+                case 20:
                     System.out.println("Saliendo...");
                     break;
 
