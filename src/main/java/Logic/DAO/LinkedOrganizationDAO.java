@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
@@ -11,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
 
             String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuariosDirectos, usuariosIndirectos, email, telefono, estado, ciudad, direccion, evaluacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, linkedOrganization.getCompanyName());
             preparedStatement.setString(2, linkedOrganization.getSector());
             preparedStatement.setString(3, linkedOrganization.getDirectUsers());
@@ -39,6 +37,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
             preparedStatement.setString(10, linkedOrganization.getEvaluation());
 
             int affectedRows = preparedStatement.executeUpdate();
+            
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                linkedOrganization.setIdLikedOrganization(resultSet.getInt(1));                
+            }
 
             if (affectedRows > 0) {
                 return "La organización fue registrada correctamente.";

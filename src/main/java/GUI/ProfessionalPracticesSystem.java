@@ -1,3 +1,5 @@
+package GUI;
+
 
 import Logic.DAO.*;
 import Logic.DTO.*;
@@ -9,7 +11,7 @@ public class ProfessionalPracticesSystem {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int option;
 
         do {
@@ -30,8 +32,8 @@ public class ProfessionalPracticesSystem {
             System.out.println("14. Salir");
 
             System.out.print("\n     Selecciona una opcion:     \n");
-            option = sc.nextInt();
-            sc.nextLine();
+            option = scanner.nextInt();
+            scanner.nextLine();
 
             switch (option) {
 
@@ -40,27 +42,27 @@ public class ProfessionalPracticesSystem {
                     User user = new User();
 
                     System.out.print("Primer nombre: ");
-                    user.setFirstName(sc.nextLine());
+                    user.setFirstName(scanner.nextLine());
 
                     System.out.print("Segundo nombre: ");
-                    user.setMiddleName(sc.nextLine());
+                    user.setMiddleName(scanner.nextLine());
 
                     System.out.print("Apellido paterno: ");
-                    user.setPaternalSurname(sc.nextLine());
+                    user.setPaternalSurname(scanner.nextLine());
 
                     System.out.print("Apellido materno: ");
-                    user.setMaternalSurname(sc.nextLine());
+                    user.setMaternalSurname(scanner.nextLine());
 
                     user.setStatus(true);
 
                     System.out.print("Genero: ");
-                    user.setGender(sc.nextLine());
+                    user.setGender(scanner.nextLine());
 
                     System.out.print("Correo: ");
-                    user.setEmail(sc.nextLine());
+                    user.setEmail(scanner.nextLine());
 
                     System.out.print("Contraseña: ");
-                    user.setPassword(sc.nextLine());
+                    user.setPassword(scanner.nextLine());
 
                     System.out.println(dao.registerUser(user));
                     break;
@@ -71,28 +73,28 @@ public class ProfessionalPracticesSystem {
                     Student student = new Student();
 
                     System.out.print("Matricula: ");
-                    student.setEnrollment(sc.nextLine());
+                    student.setEnrollment(scanner.nextLine());
 
                     System.out.print("Fecha nacimiento (YYYY-MM-DD): ");
-                    student.setBirthdate(Date.valueOf(sc.nextLine()));
+                    student.setBirthdate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Horas cubiertas: ");
-                    student.setHoursCovered(sc.nextInt());
-                    sc.nextLine();
+                    student.setHoursCovered(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.print("Lengua indigena (true/false): ");
-                    student.setIndigenousLanguage(sc.nextBoolean());
-                    sc.nextLine();
+                    student.setIndigenousLanguage(scanner.nextBoolean());
+                    scanner.nextLine();
 
                     System.out.print("Sector social: ");
-                    student.setSocialSector(sc.nextLine());
+                    student.setSocialSector(scanner.nextLine());
 
                     System.out.print("ID Usuario: ");
-                    student.setIdUser(sc.nextInt());
-                    sc.nextLine();
+                    student.setIdUser(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.print("NRC: ");
-                    student.setNrc(sc.nextLine());
+                    student.setNrc(scanner.nextLine());
 
                     System.out.println(dao.registerStudent(student));
                     break;
@@ -103,27 +105,27 @@ public class ProfessionalPracticesSystem {
                     Professor professor = new Professor();
 
                     System.out.print("Numero personal: ");
-                    professor.setNumberStaff(sc.nextLine());
+                    professor.setNumberStaff(scanner.nextLine());
 
                     System.out.print("Turno: ");
-                    professor.setShift(sc.nextLine());
+                    professor.setShift(scanner.nextLine());
 
                     System.out.print("Fecha registro (YYYY-MM-DD): ");
-                    professor.setRegistrationDate(Date.valueOf(sc.nextLine()));
+                    professor.setRegistrationDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Fecha baja (YYYY-MM-DD): ");
-                    professor.setTerminationDate(Date.valueOf(sc.nextLine()));
+                    professor.setTerminationDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Tiempo servicio: ");
-                    professor.setServiceTime(sc.nextLine());
+                    professor.setServiceTime(scanner.nextLine());
 
                     System.out.print("Es coordinador (true/false): ");
-                    professor.setIsCoordinator(sc.nextBoolean());
-                    sc.nextLine();
+                    professor.setIsCoordinator(scanner.nextBoolean());
+                    scanner.nextLine();
 
                     System.out.print("ID Usuario: ");
-                    professor.setIdUser(sc.nextInt());
-                    sc.nextLine();
+                    professor.setIdUser(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerProfessor(professor));
                     break;
@@ -134,20 +136,20 @@ public class ProfessionalPracticesSystem {
                     Coordinator coordinator = new Coordinator();
 
                     System.out.print("Numero de personal: ");
-                    coordinator.setNumberStaff(sc.nextLine());
+                    coordinator.setNumberStaff(scanner.nextLine());
 
                     System.out.print("Fecha de registro (YYYY-MM-DD): ");
-                    coordinator.setRegistrationDate(Date.valueOf(sc.nextLine()));
+                    coordinator.setRegistrationDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Fecha de baja (YYYY-MM-DD): ");
-                    coordinator.setTerminationDate(Date.valueOf(sc.nextLine()));
+                    coordinator.setTerminationDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Tiempo de servicio: ");
-                    coordinator.setServiceTime(sc.nextLine());
+                    coordinator.setServiceTime(scanner.nextLine());
 
                     System.out.print("ID Usuario: ");
-                    coordinator.setIdUser(sc.nextInt());
-                    sc.nextLine();
+                    coordinator.setIdUser(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerCoordinator(coordinator));
                     break;
@@ -158,26 +160,26 @@ public class ProfessionalPracticesSystem {
                     Project project = new Project();
 
                     System.out.print("Nombre proyecto: ");
-                    project.setProjectName(sc.nextLine());
+                    project.setProjectName(scanner.nextLine());
 
                     System.out.print("Duracion: ");
-                    project.setDuration(sc.nextLine());
+                    project.setDuration(scanner.nextLine());
 
                     System.out.print("Descripcion: ");
-                    project.setDescription(sc.nextLine());
+                    project.setDescription(scanner.nextLine());
 
                     System.out.print("Cupo: ");
-                    project.setAvailableSpaces(sc.nextInt());
-                    sc.nextLine();
+                    project.setAvailableSpaces(scanner.nextInt());
+                    scanner.nextLine();
 
                     project.setStatus(true);
 
                     System.out.print("Metodologia: ");
-                    project.setProjectMethodology(sc.nextLine());
+                    project.setProjectMethodology(scanner.nextLine());
 
                     System.out.print("ID Organizacion: ");
-                    project.setIdLikedOrganization(sc.nextInt());
-                    sc.nextLine();
+                    project.setIdLikedOrganization(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerProject(project));
                     break;
@@ -188,23 +190,23 @@ public class ProfessionalPracticesSystem {
                     Report report = new Report();
 
                     System.out.print("Fecha entrega (YYYY-MM-DD): ");
-                    report.setReportSubmissionDate(Date.valueOf(sc.nextLine()));
+                    report.setReportSubmissionDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Fecha realizacion (YYYY-MM-DD): ");
-                    report.setReportCompletionDate(Date.valueOf(sc.nextLine()));
+                    report.setReportCompletionDate(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("Descripcion: ");
-                    report.setDescription(sc.nextLine());
+                    report.setDescription(scanner.nextLine());
 
                     System.out.print("Calificacion: ");
-                    report.setQualification(sc.nextDouble());
-                    sc.nextLine();
+                    report.setQualification(scanner.nextDouble());
+                    scanner.nextLine();
 
                     System.out.print("Comentarios: ");
-                    report.setPersonalComments(sc.nextLine());
+                    report.setPersonalComments(scanner.nextLine());
 
                     System.out.print("Matricula: ");
-                    report.setEnrollment(sc.nextLine());
+                    report.setEnrollment(scanner.nextLine());
 
                     System.out.println(dao.registerReport(report));
                     break;
@@ -215,24 +217,24 @@ public class ProfessionalPracticesSystem {
                     Activity activity = new Activity();
 
                     System.out.print("Nombre actividad: ");
-                    activity.setActivityName(sc.nextLine());
+                    activity.setActivityName(scanner.nextLine());
 
                     System.out.print("Descripcion: ");
-                    activity.setDescription(sc.nextLine());
+                    activity.setDescription(scanner.nextLine());
 
                     System.out.print("Valor: ");
-                    activity.setValue(sc.nextDouble());
-                    sc.nextLine();
+                    activity.setValue(scanner.nextDouble());
+                    scanner.nextLine();
 
                     System.out.print("Fecha entrega (YYYY-MM-DD): ");
-                    activity.setDueDateActivity(Date.valueOf(sc.nextLine()));
+                    activity.setDueDateActivity(Date.valueOf(scanner.nextLine()));
 
                     System.out.print("ID Proyecto: ");
-                    activity.setIdActivityProject(sc.nextInt());
+                    activity.setIdActivityProject(scanner.nextInt());
 
                     System.out.print("ID Reporte: ");
-                    activity.setIdActivityReport(sc.nextInt());
-                    sc.nextLine();
+                    activity.setIdActivityReport(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.addActivity(activity));
                     break;
@@ -243,14 +245,14 @@ public class ProfessionalPracticesSystem {
                     PartialReport pr = new PartialReport();
 
                     System.out.print("Archivo: ");
-                    pr.setPartialReportFile(sc.nextLine());
+                    pr.setPartialReportFile(scanner.nextLine());
 
                     System.out.print("Resultados: ");
-                    pr.setResultsObtained(sc.nextLine());
+                    pr.setResultsObtained(scanner.nextLine());
 
                     System.out.print("ID Reporte: ");
-                    pr.setIdReport(sc.nextInt());
-                    sc.nextLine();
+                    pr.setIdReport(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerPartialReport(pr));
                     break;
@@ -261,14 +263,14 @@ public class ProfessionalPracticesSystem {
                     MonthlyReport mr = new MonthlyReport();
 
                     System.out.print("Archivo: ");
-                    mr.setMontlyReportFile(sc.nextLine());
+                    mr.setMontlyReportFile(scanner.nextLine());
 
                     System.out.print("Actividades: ");
-                    mr.setActivitiesPerformed(sc.nextLine());
+                    mr.setActivitiesPerformed(scanner.nextLine());
 
                     System.out.print("ID Reporte: ");
-                    mr.setIdReport(sc.nextInt());
-                    sc.nextLine();
+                    mr.setIdReport(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerMonthlyReport(mr));
                     break;
@@ -279,14 +281,14 @@ public class ProfessionalPracticesSystem {
                     FinalReport fr = new FinalReport();
 
                     System.out.print("Archivo: ");
-                    fr.setFinalReportFile(sc.nextLine());
+                    fr.setFinalReportFile(scanner.nextLine());
 
                     System.out.print("Resultado: ");
-                    fr.setFinalDeliverable(sc.nextLine());
+                    fr.setFinalDeliverable(scanner.nextLine());
 
                     System.out.print("ID Reporte: ");
-                    fr.setIdReport(sc.nextInt());
-                    sc.nextLine();
+                    fr.setIdReport(scanner.nextInt());
+                    scanner.nextLine();
 
                     System.out.println(dao.registerFinalReport(fr));
                     break;
@@ -332,7 +334,7 @@ public class ProfessionalPracticesSystem {
 
         } while (option != 14);
 
-        sc.close();
+        scanner.close();
     }
 
 }

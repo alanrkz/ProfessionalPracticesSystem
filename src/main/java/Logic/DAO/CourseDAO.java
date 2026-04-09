@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
@@ -11,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class CourseDAO implements ICourseDAO{
 
             String query = "INSERT INTO Curso (nrc, nombreCurso, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, course.getNrc());
             preparedStatement.setString(2, course.getCourseName());
             preparedStatement.setString(3, course.getCareer());
@@ -33,7 +31,8 @@ public class CourseDAO implements ICourseDAO{
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0) {
+            if (affectedRows > 0) {                
+                
                 return "El curso fue registrado correctamente.";
             } else {
                 return "No fue posible registrar el curso.";
