@@ -17,9 +17,10 @@ public class CourseDAO implements ICourseDAO {
     public String registerCourse(Course course) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Curso (nrc, nombreCurso, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO experienciaeducativa (nrc, nombreExperienciaEducativa, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            
             preparedStatement.setString(1, course.getNrc());
             preparedStatement.setString(2, course.getCourseName());
             preparedStatement.setString(3, course.getCareer());
@@ -27,25 +28,20 @@ public class CourseDAO implements ICourseDAO {
             preparedStatement.setDate(5, new java.sql.Date(course.getEndDate().getTime()));
             preparedStatement.setString(6, course.getNumberStaff());
 
-            int affectedRows = preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();          
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                int idGenerado = resultSet.getInt(1);
-                return "Registro exitoso. ID generado: " + idGenerado;
-            }
-            
             if (affectedRows > 0) {
-                return "El curso fue registrado correctamente.";
+                return "Curso registrado coreectamente.";
             } else {
-                return "No fue posible registrar el curso.";
+                return "Error al registrar .";
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return "Error de conexión.";
         }
     }
-
+    
     @Override
     public List<Course> getCourses() {
         List<Course> CoursesList = new ArrayList<>();
@@ -59,7 +55,7 @@ public class CourseDAO implements ICourseDAO {
             while (resultSet.next()) {
                 Course course = new Course();
                 course.setNrc(resultSet.getString("nrc"));
-                course.setCourseName(resultSet.getString("nombreCurso"));
+                course.setCourseName(resultSet.getString("nombreExperienciaEducativa"));
                 course.setCareer(resultSet.getString("carrera"));
                 course.setStartDate(resultSet.getDate("fechaInicio"));
                 course.setEndDate(resultSet.getDate("fechaFin"));
