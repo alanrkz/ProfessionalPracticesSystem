@@ -55,7 +55,7 @@ public class ActivityDAO implements IActivityDAO{
     @Override
     public String modifyActivity(Activity activity) {
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "UPDATE Activity SET nombreActividad = ?, descipcion = ?, valor = ?, fechaEntregaActividad = ? WHERE idActividad = ?;";
+            String query = "UPDATE Activity SET nombreActividad = ?, descripcion = ?, valor = ?, fechaEntregaActividad = ? WHERE idActividad = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, activity.getActivityName());

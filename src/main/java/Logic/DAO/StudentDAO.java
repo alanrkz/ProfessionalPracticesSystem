@@ -17,82 +17,74 @@ import java.util.List;
  * @author alan rkz
  */
 public class StudentDAO implements IStudentDAO {
-    
+
     @Override
     public String registerStudent(Student student) {
         try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Practicante VALUES (?, ?, ?, ?, ?, ?, ?);";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, student.getEnrollment());
             preparedStatement.setDate(2, student.getBirthdate());
             preparedStatement.setInt(3, student.getHoursCovered());
-            preparedStatement.setBoolean(4, student.isIndigenousLanguage());
-            preparedStatement.setString(5, student.getSocialSector());
+            preparedStatement.setString(4, student.getSocialSector());
+            preparedStatement.setBoolean(5, student.isIndigenousLanguage());
             preparedStatement.setInt(6, student.getIdUser());
             preparedStatement.setString(7, student.getNrc());
-            
+
             int affectedRows = preparedStatement.executeUpdate();
-            
+
             preparedStatement.close();
             connection.close();
-            
+
             if (affectedRows > 0) {
                 return "El alumno fue agregado correctamente.";
             } else {
                 return "Hubo problemas para registrar al alumno. Intente de nuevo mas tarde.";
             }
-            
+
         } catch (SQLException e) {
             return "Tenemos problemas con la conexion al sistema.";
         }
     }
-    
+
     @Override
     public String deactivateStudent(User user, Student student) {
-        if (user.getIdUser() == student.getIdUser()) {
-            if (user.getStatus() == false) {
-                try (Connection connection = DatabaseConnection.connect()) {
-                    String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
-                    
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
-                    preparedStatement.setInt(1, student.getIdUser());
-                    
-                    int affectedRows = preparedStatement.executeUpdate();
-                    
-                    connection.close();
-                    preparedStatement.close();
-                    
-                    if (affectedRows > 0) {
-                        return "El alumno fue desactivado correctamente.";
-                    } else {
-                        return "Hubo problemas para desactivar al alumno. Intente de nuevo mas tarde.";
-                    }
-                    
-                } catch (SQLException e) {
-                    return "Tenemos problemas con la conexion al sistema.";
-                }
+        try (Connection connection = DatabaseConnection.connect()) {
+            String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, student.getIdUser());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            connection.close();
+            preparedStatement.close();
+
+            if (affectedRows > 0) {
+                return "El alumno fue desactivado correctamente.";
             } else {
-                return "El alumno ya esta inactivo";
+                return "Hubo problemas para desactivar al alumno. Intente de nuevo mas tarde.";
             }
-        } else {
-            return "Alumno no encontrado";
+
+        } catch (SQLException e) {
+            return "Tenemos problemas con la conexion al sistema.";
         }
     }
-    
+
     @Override
     public List<Student> getStudents() {
-        List <Student> listStudents = new ArrayList<>();
-        
+        List<Student> listStudents = new ArrayList<>();
+
         String query = "SELECT * FROM Practicante;";
-        
+
         try (Connection connection = DatabaseConnection.connect()) {
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            
+
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            while (resultSet.next()){
+
+            while (resultSet.next()) {
                 Student student = new Student();
                 student.setEnrollment(resultSet.getString("matricula"));
                 student.setBirthdate(resultSet.getDate("fechaNacimiento"));
@@ -101,14 +93,14 @@ public class StudentDAO implements IStudentDAO {
                 student.setIndigenousLanguage(resultSet.getBoolean("lenguaIndigena"));
                 student.setIdUser(resultSet.getInt("idUsuario"));
                 student.setNrc(resultSet.getString("nrc"));
-                
+
                 listStudents.add(student);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return listStudents;
     }
-    
+
 }

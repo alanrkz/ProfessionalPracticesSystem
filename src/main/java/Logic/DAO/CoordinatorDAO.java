@@ -13,13 +13,13 @@ import java.sql.SQLException;
  *
  * @author alan rkz
  */
-public class CoordinatorDAO implements ICoordinatorDAO{
-    
+public class CoordinatorDAO implements ICoordinatorDAO {
+
     @Override
     public String registerCoordinator(Coordinator coordinator) {
         try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?);";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, coordinator.getNumberStaff());
             preparedStatement.setDate(2, coordinator.getRegistrationDate());
@@ -42,37 +42,29 @@ public class CoordinatorDAO implements ICoordinatorDAO{
             return "Tenemos problemas con la conexion al sistema.";
         }
     }
-    
+
     @Override
     public String deactivateCoordinator(User user, Coordinator coordinator) {
-        if (user.getIdUser() == coordinator.getIdUser()) {
-            if (user.getStatus() == false) {
-                try (Connection connection = DatabaseConnection.connect()) {
-                    String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
-                    
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
-                    preparedStatement.setInt(1, coordinator.getIdUser());
-                    
-                    int affectedRows = preparedStatement.executeUpdate();
-                    
-                    connection.close();
-                    preparedStatement.close();
-                    
-                    if (affectedRows > 0) {
-                        return "El coordinador fue desactivado correctamente.";
-                    } else {
-                        return "Hubo problemas para desactivar al coordinador. Intente de nuevo mas tarde.";
-                    }
-                    
-                } catch (SQLException e) {
-                    return "Tenemos problemas con la conexion al sistema.";
-                }
+        try (Connection connection = DatabaseConnection.connect()) {
+            String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, coordinator.getIdUser());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            connection.close();
+            preparedStatement.close();
+
+            if (affectedRows > 0) {
+                return "El coordinador fue desactivado correctamente.";
             } else {
-                return "El coordinador ya esta inactivo.";
+                return "Hubo problemas para desactivar al coordinador. Intente de nuevo mas tarde.";
             }
-        } else {
-            return "Coordinador no encontrado.";
+
+        } catch (SQLException e) {
+            return "Tenemos problemas con la conexion al sistema.";
         }
     }
-    
+
 }

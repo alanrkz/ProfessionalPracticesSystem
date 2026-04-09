@@ -7,19 +7,22 @@ import Logic.DTO.Professor;
 import Logic.DTO.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author alan rkz
  */
-public class ProfessorDAO implements IProfessorDAO{
-    
+public class ProfessorDAO implements IProfessorDAO {
+
     @Override
     public String registerProfessor(Professor professor) {
         try (Connection connection = DatabaseConnection.connect()) {
             String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getNumberStaff());
             preparedStatement.setString(2, professor.getShift());
@@ -47,48 +50,40 @@ public class ProfessorDAO implements IProfessorDAO{
 
     @Override
     public String deactivateProfessor(User user, Professor professor) {
-        if (user.getIdUser() == professor.getIdUser()) {
-            if (user.getStatus() == false) {
-                try (Connection connection = DatabaseConnection.connect()) {
-                    String query = "UPDATE Usuario SET estado = false WHERE id = ?;";
-                    
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
-                    preparedStatement.setInt(1, professor.getIdUser());
+        try (Connection connection = DatabaseConnection.connect()) {
+            String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
 
-                    int affectedRows = preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, professor.getIdUser());
 
-                    connection.close();
-                    preparedStatement.close();
+            int affectedRows = preparedStatement.executeUpdate();
 
-                    if (affectedRows > 0) {
-                        return "El profesor fue inactivado correctamente.";
-                    } else {
-                        return "Hubo problemas para inactivar al profesor. Intente de nuevo mas tarde.";
-                    }
+            connection.close();
+            preparedStatement.close();
 
-                } catch (SQLException e) {
-                    return "Tenemos problemas con la conexion al sistema.";
-                }
+            if (affectedRows > 0) {
+                return "El profesor fue inactivado correctamente.";
             } else {
-                return "El profesor ya esta inactivo.";
+                return "Hubo problemas para inactivar al profesor. Intente de nuevo mas tarde.";
             }
-        } else {
-            return "Profesor no encontrado.";
+
+        } catch (SQLException e) {
+            return "Tenemos problemas con la conexion al sistema.";
         }
     }
-    
+
     @Override
-    public String updateProfessor(Professor professor){
+    public String updateProfessor(Professor professor) {
         try (Connection connection = DatabaseConnection.connect()) {
             String query = "UPDATE Profesor SET turno = ?, esCoordinador = ? WHERE numeroPersonal = ?;";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getShift());
             preparedStatement.setBoolean(2, professor.isIsCoordinator());
             preparedStatement.setString(3, professor.getNumberStaff());
 
             int affectedRows = preparedStatement.executeUpdate();
-            
+
             preparedStatement.close();
             connection.close();
 
@@ -102,5 +97,36 @@ public class ProfessorDAO implements IProfessorDAO{
             return "Tenemos problemas con la conexion al sistema";
         }
     }
-    
+
+    @Override
+    public List<Professor> getProfessors() {
+        List<Professor> listProfessors = new ArrayList<>();
+
+        String query = "SELECT * FROM Profesor;";
+
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Professor professor = new Professor();
+                professor.setNumberStaff(resultSet.getString("numeroPersonal"));
+                professor.setShift(resultSet.getString("turno"));
+                professor.setRegistrationDate(resultSet.getDate("fechaRegistro"));
+                professor.setTerminationDate(resultSet.getDate("fechaBaja"));
+                professor.setServiceTime(resultSet.getString("tiempoServicio"));
+                professor.setIsCoordinator(resultSet.getBoolean("esCoordinador"));
+                professor.setIdUser(resultSet.getInt("idUsuario"));
+
+                listProfessors.add(professor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listProfessors;
+    }
+
 }

@@ -19,7 +19,7 @@ public class UserDAO implements IUserDAO{
     @Override
     public String registerUser(User user){
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Proyecto (primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, estado, genero, correoElectronico, contraseña) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Usuario (primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, estado, genero, correoElectronico, contraseña) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFirstName());

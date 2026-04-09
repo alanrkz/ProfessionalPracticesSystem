@@ -1,5 +1,6 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IFinalReportDAO;
 import Logic.DTO.FinalReport;
@@ -20,7 +21,7 @@ public class FinalReportDAO implements IFinalReportDAO{
     @Override
     public String registerFinalReport(FinalReport finalReport) {
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO ReporteParcial (archivoReporteFinal, resultadoEntregable, idReporte) VALUES (?, ?, ?);";
+            String query = "INSERT INTO ReporteFinal (archivoReporteFinal, resultadoEntregable, idReporte) VALUES (?, ?, ?);";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, finalReport.getFinalReportFile());
@@ -65,9 +66,9 @@ public class FinalReportDAO implements IFinalReportDAO{
             connection.close();
 
             if (affectedRows > 0) {
-                return "El reporte parcial fue modificado correctamente.";
+                return "El reporte final fue modificado correctamente.";
             } else {
-                return "Hubo problemas para modificar el reporte parcial. Intente de nuevo mas tarde.";
+                return "Hubo problemas para modificar el reporte final. Intente de nuevo mas tarde.";
             }
             
         } catch (SQLException e) {

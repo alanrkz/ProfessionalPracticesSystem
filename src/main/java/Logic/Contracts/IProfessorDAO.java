@@ -3,6 +3,7 @@ package Logic.Contracts;
 
 import Logic.DTO.Professor;
 import Logic.DTO.User;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,7 @@ public interface IProfessorDAO {
     public String deactivateProfessor(User user, Professor professor);
     
     public String updateProfessor(Professor professor);
+    
+    public List<Professor> getProfessors();
+    
 }
