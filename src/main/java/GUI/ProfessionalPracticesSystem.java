@@ -36,7 +36,8 @@ public class ProfessionalPracticesSystem {
             System.out.println("17. Registrar Responsable de Proyecto");
             System.out.println("18. Registrar Notificación Recibida");
             System.out.println("19. Registrar Archivos de Estudiante");
-            System.out.println("20. Salir");
+            System.out.println("20. Registrar Experiencia educativa");
+            System.out.println("21. Salir");
 
             System.out.print("\n     Selecciona una opcion:     \n");
             option = scanner.nextInt();
@@ -455,8 +456,36 @@ public class ProfessionalPracticesSystem {
 
                     break;
                 }
-
+                
                 case 20:
+                {
+                    CourseDAO dao = new CourseDAO();
+                    Course course = new Course();
+
+                    System.out.print("NRC: ");
+                    course.setNrc(scanner.nextLine());
+                    
+                    System.out.print("Nombre de EE: ");
+                    course.setCourseName(scanner.nextLine());
+
+                    System.out.print("Carrera: ");
+                    course.setCareer(scanner.nextLine());
+
+                    System.out.print("Fecha de inicio YYYY-MM-DD: ");
+                    course.setStartDate(Date.valueOf(scanner.nextLine()));
+
+                    System.out.print("Fecha de fin YYYY-MM-DD: ");
+                    course.setEndDate(Date.valueOf(scanner.nextLine()));
+                    
+                    System.out.print("No personal profesor: ");
+                    course.setNumberStaff(scanner.nextLine());                    
+
+                    System.out.println(dao.registerCourse(course));
+                    
+                    break;
+                }
+
+                case 21:
                     System.out.println("Saliendo...");
                     break;
 
@@ -464,7 +493,7 @@ public class ProfessionalPracticesSystem {
                     System.out.println("Opción inválida");
             }
 
-        } while (option != 14);
+        } while (option != 21);
 
         scanner.close();
     }
