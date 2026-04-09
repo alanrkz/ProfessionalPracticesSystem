@@ -19,26 +19,30 @@ import java.util.List;
  */
 public class LinkedOrganizationDAO {
     
-    public String registerOrganization(LinkedOrganization org) {
-        try (Connection connection = DatabaseConnection.connect()) {
+    public String registerOrganization(LinkedOrganization linkedOrganization) {
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuariosDirectos, usuariosIndirectos, email, telefono, estado, ciudad, direccion, evaluacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, org.getCompanyName());
-            ps.setString(2, org.getSector());
-            ps.setString(3, org.getDirectUsers());
-            ps.setString(4, org.getIndirectUsers());
-            ps.setString(5, org.getEmail());
-            ps.setString(6, org.getPhone());
-            ps.setString(7, org.getStatus());
-            ps.setString(8, org.getCity());
-            ps.setString(9, org.getAddress());
-            ps.setString(10, org.getEvaluation());
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            preparedStatement.setString(1, linkedOrganization.getCompanyName());
+            preparedStatement.setString(2, linkedOrganization.getSector());
+            preparedStatement.setString(3, linkedOrganization.getDirectUsers());
+            preparedStatement.setString(4, linkedOrganization.getIndirectUsers());
+            preparedStatement.setString(5, linkedOrganization.getEmail());
+            preparedStatement.setString(6, linkedOrganization.getPhone());
+            preparedStatement.setString(7, linkedOrganization.getStatus());
+            preparedStatement.setString(8, linkedOrganization.getCity());
+            preparedStatement.setString(9, linkedOrganization.getAddress());
+            preparedStatement.setString(10, linkedOrganization.getEvaluation());
 
-            int rows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
-            return (rows > 0) ? "Organización registrada." : "Error al registrar.";
+            if (affectedRows > 0) {
+                return "La organización fue registrada correctamente.";
+            } else {
+                return "No fue posible registrar la organización.";
+            }
 
         } catch (SQLException e) {
             return "Error de conexión.";
@@ -46,26 +50,26 @@ public class LinkedOrganizationDAO {
     }
 
     public List<LinkedOrganization> getOrganizations() {
-        List<LinkedOrganization> list = new ArrayList<>();
+        List<LinkedOrganization> OrganizationsList = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnection.connect()) {
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "SELECT * FROM OrganizacionVinculada;";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
-                LinkedOrganization org = new LinkedOrganization();
-                org.setIdLikedOrganization(rs.getInt("idOrganizacion"));
-                org.setCompanyName(rs.getString("nombreEmpresa"));
+            while (resultSet.next()) {
+                LinkedOrganization linkedOrganization = new LinkedOrganization();
+                linkedOrganization.setIdLikedOrganization(resultSet.getInt("idOrganizacion"));
+                linkedOrganization.setCompanyName(resultSet.getString("nombreEmpresa"));
 
-                list.add(org);
+                OrganizationsList.add(linkedOrganization);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return list;
+        return OrganizationsList;
     }
 }

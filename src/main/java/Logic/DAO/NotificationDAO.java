@@ -18,20 +18,24 @@ import java.util.List;
  * @author ELLIN JV
  */
 public class NotificationDAO {
-    public String registerNotification(Notification n) {
-        try (Connection connection = DatabaseConnection.connect()) {
+    public String registerNotification(Notification notification) {
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Notificacion (destinatario, asunto, mensaje, numeroPersonal) VALUES (?, ?, ?, ?);";
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, n.getRecipient());
-            ps.setString(2, n.getSubject());
-            ps.setString(3, n.getMessageBody());
-            ps.setString(4, n.getNumberStaff());
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            preparedStatement.setString(1, notification.getRecipient());
+            preparedStatement.setString(2, notification.getSubject());
+            preparedStatement.setString(3, notification.getMessageBody());
+            preparedStatement.setString(4, notification.getNumberStaff());
 
-            int rows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
-            return (rows > 0) ? "Notificación enviada." : "Error.";
+            if (affectedRows > 0) {
+                return "La organización fue registrada correctamente.";
+            } else {
+                return "No fue posible registrar la organización.";
+            }
 
         } catch (SQLException e) {
             return "Error de conexión.";
@@ -39,26 +43,26 @@ public class NotificationDAO {
     }
 
     public List<Notification> getNotifications() {
-        List<Notification> list = new ArrayList<>();
+        List<Notification> NotificationsList = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "SELECT * FROM Notificacion;";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                Notification n = new Notification();
-                n.setIdNotification(rs.getInt("idNotificacion"));
-                n.setSubject(rs.getString("asunto"));
+                Notification notification = new Notification();
+                notification.setIdNotification(rs.getInt("idNotificacion"));
+                notification.setSubject(rs.getString("asunto"));
 
-                list.add(n);
+                NotificationsList.add(notification);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return list;
+        return NotificationsList;
     }
 }

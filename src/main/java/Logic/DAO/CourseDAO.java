@@ -18,53 +18,58 @@ import java.util.List;
 public class CourseDAO implements ICourseDAO{
      @Override
     public String registerCourse(Course course) {
-        try (Connection connection = DatabaseConnection.connect()) {
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Curso (nrc, nombreCurso, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, course.getNrc());
-            ps.setString(2, course.getCourseName());
-            ps.setString(3, course.getCareer());
-            ps.setDate(4, new java.sql.Date(course.getStartDate().getTime()));
-            ps.setDate(5, new java.sql.Date(course.getEndDate().getTime()));
-            ps.setString(6, course.getNumberStaff());
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            preparedStatement.setString(1, course.getNrc());
+            preparedStatement.setString(2, course.getCourseName());
+            preparedStatement.setString(3, course.getCareer());
+            preparedStatement.setDate(4, new java.sql.Date(course.getStartDate().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(course.getEndDate().getTime()));
+            preparedStatement.setString(6, course.getNumberStaff());
 
-            int rows = ps.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
 
-            return (rows > 0) ? "Curso registrado correctamente." : "Error al registrar curso.";
+            if (affectedRows > 0) {
+                return "El curso fue registrado correctamente.";
+            } else {
+                return "No fue posible registrar el curso.";
+            }
 
         } catch (SQLException e) {
             return "Error de conexión.";
         }
     }
 
+     @Override
     public List<Course> getCourses() {
-        List<Course> list = new ArrayList<>();
+        List<Course> CoursesList = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnection.connect()) {
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "SELECT * FROM Curso;";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
-                Course c = new Course();
-                c.setNrc(rs.getString("nrc"));
-                c.setCourseName(rs.getString("nombreCurso"));
-                c.setCareer(rs.getString("carrera"));
-                c.setStartDate(rs.getDate("fechaInicio"));
-                c.setEndDate(rs.getDate("fechaFin"));
-                c.setNumberStaff(rs.getString("numeroPersonal"));
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setNrc(resultSet.getString("nrc"));
+                course.setCourseName(resultSet.getString("nombreCurso"));
+                course.setCareer(resultSet.getString("carrera"));
+                course.setStartDate(resultSet.getDate("fechaInicio"));
+                course.setEndDate(resultSet.getDate("fechaFin"));
+                course.setNumberStaff(resultSet.getString("numeroPersonal"));
 
-                list.add(c);
+                CoursesList.add(course);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return list;
+        return CoursesList;
     }
 
 }
