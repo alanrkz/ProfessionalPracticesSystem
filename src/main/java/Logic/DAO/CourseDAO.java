@@ -9,68 +9,68 @@ import Logic.Contracts.ICourseDAO;
 import Logic.DTO.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author ELLIN JV
- */
-public class CourseDAO {
+
+public class CourseDAO implements ICourseDAO{
+    
+     @Override
     public String registerCourse(Course course) {
-        try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Curso (nombreCurso) VALUES (?);";
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, course.getCourseName());
+            String query = "INSERT INTO Curso (nrc, nombreCurso, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
+
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            preparedStatement.setString(1, course.getNrc());
+            preparedStatement.setString(2, course.getCourseName());
+            preparedStatement.setString(3, course.getCareer());
+            preparedStatement.setDate(4, new java.sql.Date(course.getStartDate().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(course.getEndDate().getTime()));
+            preparedStatement.setString(6, course.getNumberStaff());
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            preparedStatement.close();
-            connection.close();
-
-            return (affectedRows > 0)
-                    ? "Curso registrado correctamente."
-                    : "Error al registrar el curso.";
+            if (affectedRows > 0) {
+                return "El curso fue registrado correctamente.";
+            } else {
+                return "No fue posible registrar el curso.";
+            }
 
         } catch (SQLException e) {
-            return "Problemas con la conexión.";
+            return "Error de conexión.";
         }
     }
 
-    public String updateCourse(Course course) {
-        try (Connection connection = DatabaseConnection.connect()) {
-            String query = "UPDATE Curso SET nombreCurso = ? WHERE idCurso = ?;";
+     @Override
+    public List<Course> getCourses() {
+        List<Course> CoursesList = new ArrayList<>();
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, course.getCourseName());
-            ps.setString(2, course.getNrc());
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            int affectedRows = ps.executeUpdate();
+            String query = "SELECT * FROM Curso;";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            return (affectedRows > 0)
-                    ? "Curso actualizado correctamente."
-                    : "Error al actualizar curso.";
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setNrc(resultSet.getString("nrc"));
+                course.setCourseName(resultSet.getString("nombreCurso"));
+                course.setCareer(resultSet.getString("carrera"));
+                course.setStartDate(resultSet.getDate("fechaInicio"));
+                course.setEndDate(resultSet.getDate("fechaFin"));
+                course.setNumberStaff(resultSet.getString("numeroPersonal"));
 
-        } catch (SQLException e) {
-            return "Problemas con la conexión.";
-        }
-    }
-
-    public String deleteCourse(int idCourse) {
-        try (Connection connection = DatabaseConnection.connect()) {
-            String query = "DELETE FROM Curso WHERE idCurso = ?;";
-
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, idCourse);
-
-            int affectedRows = ps.executeUpdate();
-
-            return (affectedRows > 0)
-                    ? "Curso eliminado."
-                    : "Error al eliminar.";
+                CoursesList.add(course);
+            }
 
         } catch (SQLException e) {
-            return "Problemas con la conexión.";
+            e.printStackTrace();
         }
+
+        return CoursesList;
     }
+
 }

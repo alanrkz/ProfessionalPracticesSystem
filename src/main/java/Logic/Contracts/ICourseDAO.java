@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.Course;
+import java.util.List;
 
 /**
  *
@@ -9,8 +10,6 @@ import Logic.DTO.Course;
  */
 public interface ICourseDAO {
     public String registerCourse(Course course);
+    public List<Course> getCourses();
     
-    public String updateCourse(Course course);
-    
-    public String deleteCourse(int idCourse);
 }

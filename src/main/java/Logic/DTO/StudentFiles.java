@@ -4,7 +4,7 @@ package Logic.DTO;
 public class StudentFiles {
     private int idStudentRecord;
     private String internSchedule;
-    private String workPlan;
+    private String activitiesPlan;
     private String assigmentLetter;
     private String enrollment;
 
@@ -12,10 +12,10 @@ public class StudentFiles {
     public StudentFiles() {
     }
 
-    public StudentFiles(int idStudentRecord, String internSchedule, String workPlan, String assigmentLetter, String enrollment) {
+    public StudentFiles(int idStudentRecord, String internSchedule, String activitiesPlan, String assigmentLetter, String enrollment) {
         this.idStudentRecord = idStudentRecord;
         this.internSchedule = internSchedule;
-        this.workPlan = workPlan;
+        this.activitiesPlan = activitiesPlan;
         this.assigmentLetter = assigmentLetter;
         this.enrollment = enrollment;
     }
@@ -37,12 +37,12 @@ public class StudentFiles {
         this.internSchedule = internSchedule;
     }
 
-    public String getWorkPlan() {
-        return workPlan;
+    public String getActivitiesPlan() {
+        return activitiesPlan;
     }
 
-    public void setWorkPlan(String workPlan) {
-        this.workPlan = workPlan;
+    public void setActivitiesPlan(String activitiesPlan) {
+        this.activitiesPlan = activitiesPlan;
     }
 
     public String getAssigmentLetter() {
