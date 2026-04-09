@@ -5,22 +5,24 @@ import Logic.Contracts.IProjectManagerDAO;
 import Logic.DTO.ProjectManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author ELLIN JV
  */
 public class ProjectManagerDAO implements IProjectManagerDAO {
-    
+
     @Override
     public String registerManager(ProjectManager projectManager) {
-        
+
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO ResponsableProyecto (nombre, puesto, email, idProyecto) VALUES (?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, projectManager.getManagerName());
             preparedStatement.setString(2, projectManager.getManagerPosition());
             preparedStatement.setString(3, projectManager.getManagerEmail());
@@ -28,17 +30,21 @@ public class ProjectManagerDAO implements IProjectManagerDAO {
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0) {
-                return "Responsable registrad correctamente.";
-            } else {
-                return "No fue posible registrar al responsable.";
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                projectManager.setIdProjectManager(resultSet.getInt(1));
             }
 
+            if (affectedRows > 0) {
+                return "Responsable registrado correctamente.";
+            } else {
+                return "No fue posible registrar.";
+            }
         } catch (SQLException e) {
             return "Error de conexión.";
         }
     }
-    
+
     @Override
     public String deactivateProjectManager(int projectManagerId) {
 

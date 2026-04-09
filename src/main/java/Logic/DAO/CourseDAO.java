@@ -1,4 +1,3 @@
-
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
@@ -12,10 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+public class CourseDAO implements ICourseDAO {
 
-public class CourseDAO implements ICourseDAO{
-    
-     @Override
+    @Override
     public String registerCourse(Course course) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -31,8 +29,13 @@ public class CourseDAO implements ICourseDAO{
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0) {                
-                
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                int idGenerado = resultSet.getInt(1);
+                return "Registro exitoso. ID generado: " + idGenerado;
+            }
+            
+            if (affectedRows > 0) {
                 return "El curso fue registrado correctamente.";
             } else {
                 return "No fue posible registrar el curso.";
@@ -43,14 +46,14 @@ public class CourseDAO implements ICourseDAO{
         }
     }
 
-     @Override
+    @Override
     public List<Course> getCourses() {
         List<Course> CoursesList = new ArrayList<>();
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "SELECT * FROM Curso;";
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
