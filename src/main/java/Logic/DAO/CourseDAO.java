@@ -9,68 +9,62 @@ import Logic.Contracts.ICourseDAO;
 import Logic.DTO.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author ELLIN JV
- */
-public class CourseDAO {
+
+public class CourseDAO implements ICourseDAO{
+     @Override
     public String registerCourse(Course course) {
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "INSERT INTO Curso (nombreCurso) VALUES (?);";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, course.getCourseName());
-
-            int affectedRows = preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            connection.close();
-
-            return (affectedRows > 0)
-                    ? "Curso registrado correctamente."
-                    : "Error al registrar el curso.";
-
-        } catch (SQLException e) {
-            return "Problemas con la conexión.";
-        }
-    }
-
-    public String updateCourse(Course course) {
-        try (Connection connection = DatabaseConnection.connect()) {
-            String query = "UPDATE Curso SET nombreCurso = ? WHERE idCurso = ?;";
+            String query = "INSERT INTO Curso (nrc, nombreCurso, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, course.getCourseName());
-            ps.setString(2, course.getNrc());
+            ps.setString(1, course.getNrc());
+            ps.setString(2, course.getCourseName());
+            ps.setString(3, course.getCareer());
+            ps.setDate(4, new java.sql.Date(course.getStartDate().getTime()));
+            ps.setDate(5, new java.sql.Date(course.getEndDate().getTime()));
+            ps.setString(6, course.getNumberStaff());
 
-            int affectedRows = ps.executeUpdate();
+            int rows = ps.executeUpdate();
 
-            return (affectedRows > 0)
-                    ? "Curso actualizado correctamente."
-                    : "Error al actualizar curso.";
+            return (rows > 0) ? "Curso registrado correctamente." : "Error al registrar curso.";
 
         } catch (SQLException e) {
-            return "Problemas con la conexión.";
+            return "Error de conexión.";
         }
     }
 
-    public String deleteCourse(int idCourse) {
+    public List<Course> getCourses() {
+        List<Course> list = new ArrayList<>();
+
         try (Connection connection = DatabaseConnection.connect()) {
-            String query = "DELETE FROM Curso WHERE idCurso = ?;";
 
+            String query = "SELECT * FROM Curso;";
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, idCourse);
+            ResultSet rs = ps.executeQuery();
 
-            int affectedRows = ps.executeUpdate();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setNrc(rs.getString("nrc"));
+                c.setCourseName(rs.getString("nombreCurso"));
+                c.setCareer(rs.getString("carrera"));
+                c.setStartDate(rs.getDate("fechaInicio"));
+                c.setEndDate(rs.getDate("fechaFin"));
+                c.setNumberStaff(rs.getString("numeroPersonal"));
 
-            return (affectedRows > 0)
-                    ? "Curso eliminado."
-                    : "Error al eliminar.";
+                list.add(c);
+            }
 
         } catch (SQLException e) {
-            return "Problemas con la conexión.";
+            e.printStackTrace();
         }
+
+        return list;
     }
+
 }

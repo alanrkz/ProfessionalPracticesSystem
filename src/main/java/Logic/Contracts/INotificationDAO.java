@@ -4,15 +4,16 @@
  */
 package Logic.Contracts;
 
-import Logic.DTO.Course;
+import Logic.DTO.Notification;
 import java.util.List;
 
 /**
  *
  * @author ELLIN JV
  */
-public interface ICourseDAO {
-    public String registerCourse(Course course);
-    public List<Course> getCourses();
+public interface INotificationDAO {
     
+    public String registerNotification(Notification notification);
+    
+    public List<Notification> getNotifications();
 }
