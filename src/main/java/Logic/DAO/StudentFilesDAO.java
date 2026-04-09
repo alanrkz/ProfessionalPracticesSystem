@@ -25,7 +25,7 @@ public class StudentFilesDAO implements IStudentFilesDAO{
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
             preparedStatement.setString(1, studentFiles.getInternSchedule());
-            preparedStatement.setString(2, studentFiles.getWorkPlan());
+            preparedStatement.setString(2, studentFiles.getActivitiesPlan());
             preparedStatement.setString(3, studentFiles.getAssigmentLetter());
             preparedStatement.setString(4, studentFiles.getEnrollment());
 
