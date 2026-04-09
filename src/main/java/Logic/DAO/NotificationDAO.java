@@ -5,6 +5,7 @@
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
+import Logic.Contracts.INotificationDAO;
 import Logic.DTO.Notification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,11 @@ import java.util.List;
  *
  * @author ELLIN JV
  */
-public class NotificationDAO {
+public class NotificationDAO implements INotificationDAO{
+    
+    @Override
     public String registerNotification(Notification notification) {
+        
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Notificacion (destinatario, asunto, mensaje, numeroPersonal) VALUES (?, ?, ?, ?);";

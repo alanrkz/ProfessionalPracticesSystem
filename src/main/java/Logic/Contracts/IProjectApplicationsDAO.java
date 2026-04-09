@@ -4,16 +4,14 @@
  */
 package Logic.Contracts;
 
-import Logic.DTO.LinkedOrganization;
-import java.util.List;
+import Logic.DTO.ProjectApplications;
 
 /**
  *
  * @author ELLIN JV
  */
-public interface ILinkedOrganizationDAO {
+public interface IProjectApplicationsDAO {
     
-    public String registerOrganization(LinkedOrganization linkedOrganization);
+    public String registerApplication(ProjectApplications projectApplication);
     
-    public List<LinkedOrganization> getOrganizations();
 }

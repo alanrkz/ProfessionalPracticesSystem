@@ -5,6 +5,7 @@
 package Logic.DAO;
 
 import DataAccess.DatabaseConnection;
+import Logic.Contracts.ILinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,9 @@ import java.util.List;
  *
  * @author ELLIN JV
  */
-public class LinkedOrganizationDAO {
+public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
     
+    @Override
     public String registerOrganization(LinkedOrganization linkedOrganization) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -49,6 +51,7 @@ public class LinkedOrganizationDAO {
         }
     }
 
+    @Override
     public List<LinkedOrganization> getOrganizations() {
         List<LinkedOrganization> OrganizationsList = new ArrayList<>();
 

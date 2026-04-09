@@ -4,16 +4,15 @@
  */
 package Logic.Contracts;
 
-import Logic.DTO.LinkedOrganization;
-import java.util.List;
+
+import Logic.DTO.ReceivedNotifications;
 
 /**
  *
  * @author ELLIN JV
  */
-public interface ILinkedOrganizationDAO {
+public interface IReceivedNotificationsDAO {
     
-    public String registerOrganization(LinkedOrganization linkedOrganization);
+    public String registerReceived(ReceivedNotifications receivedNotifications);
     
-    public List<LinkedOrganization> getOrganizations();
 }

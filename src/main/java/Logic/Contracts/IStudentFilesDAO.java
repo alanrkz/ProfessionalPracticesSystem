@@ -4,16 +4,13 @@
  */
 package Logic.Contracts;
 
-import Logic.DTO.LinkedOrganization;
-import java.util.List;
+import Logic.DTO.StudentFiles;
 
 /**
  *
  * @author ELLIN JV
  */
-public interface ILinkedOrganizationDAO {
+public interface IStudentFilesDAO {
     
-    public String registerOrganization(LinkedOrganization linkedOrganization);
-    
-    public List<LinkedOrganization> getOrganizations();
+    public String registerFiles(StudentFiles studentFiles);
 }
