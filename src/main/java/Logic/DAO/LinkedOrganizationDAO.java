@@ -75,4 +75,28 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO{
 
         return OrganizationsList;
     }
+    
+    @Override
+    public String deactivateOrganization(int organizationId) {
+
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
+
+            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 'Inactivo' WHERE idOrganizacion = ?;";
+
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
+            preparedStatement.setInt(1, organizationId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                return "La organización fue desactivada correctamente.";
+            } else {
+                return "No fue posible desactivar la organización.";
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return "Error en la conexión.";
+        }
+    }
 }

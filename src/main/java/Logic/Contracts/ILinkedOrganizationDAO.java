@@ -16,4 +16,6 @@ public interface ILinkedOrganizationDAO {
     public String registerOrganization(LinkedOrganization linkedOrganization);
     
     public List<LinkedOrganization> getOrganizations();
+    
+    public String deactivateOrganization(int OrganizationId);
 }

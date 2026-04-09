@@ -42,4 +42,28 @@ public class ProjectManagerDAO implements IProjectManagerDAO {
             return "Error de conexión.";
         }
     }
+    
+    @Override
+    public String deactivateProjectManager(int projectManagerId) {
+
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
+
+            String updateQuery = "UPDATE ResponsableProyecto SET estado = 'Inactivo' WHERE idResponsable = ?;";
+
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
+            preparedStatement.setInt(1, projectManagerId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                return "Responsable desactivado correctamente.";
+            } else {
+                return "No fue posible desactivar.";
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return "Error en la conexión.";
+        }
+    }
 }

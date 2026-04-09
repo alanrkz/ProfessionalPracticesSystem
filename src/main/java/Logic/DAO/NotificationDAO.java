@@ -46,6 +46,7 @@ public class NotificationDAO implements INotificationDAO{
         }
     }
 
+    @Override
     public List<Notification> getNotifications() {
         List<Notification> NotificationsList = new ArrayList<>();
 

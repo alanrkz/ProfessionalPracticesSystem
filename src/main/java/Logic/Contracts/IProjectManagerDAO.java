@@ -13,4 +13,6 @@ import Logic.DTO.ProjectManager;
 public interface IProjectManagerDAO {
     
     public String registerManager(ProjectManager projectManager);
+    
+    public String deactivateProjectManager(int projectManagerId);
 }
