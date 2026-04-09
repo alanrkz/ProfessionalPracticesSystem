@@ -12,10 +12,10 @@ public class StudentFiles {
     public StudentFiles() {
     }
 
-    public StudentFiles(int idStudentRecord, String internSchedule, String workPlan, String assigmentLetter, String enrollment) {
+    public StudentFiles(int idStudentRecord, String internSchedule, String activitiesPlan, String assigmentLetter, String enrollment) {
         this.idStudentRecord = idStudentRecord;
         this.internSchedule = internSchedule;
-        this.activitiesPlan = workPlan;
+        this.activitiesPlan = activitiesPlan;
         this.assigmentLetter = assigmentLetter;
         this.enrollment = enrollment;
     }
@@ -41,8 +41,8 @@ public class StudentFiles {
         return activitiesPlan;
     }
 
-    public void setActivitiesPlan(String workPlan) {
-        this.activitiesPlan = workPlan;
+    public void setActivitiesPlan(String activitiesPlan) {
+        this.activitiesPlan = activitiesPlan;
     }
 
     public String getAssigmentLetter() {
