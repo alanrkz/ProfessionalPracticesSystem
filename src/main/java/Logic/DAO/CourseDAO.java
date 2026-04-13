@@ -17,7 +17,7 @@ public class CourseDAO implements ICourseDAO {
     public String registerCourse(Course course) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO experienciaeducativa (nrc, nombreExperienciaEducativa, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO ExperienciaEducativa (nrc, nombreExperienciaEducativa, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
             
@@ -48,7 +48,7 @@ public class CourseDAO implements ICourseDAO {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "SELECT * FROM Curso;";
+            String query = "SELECT * FROM ExperienciaEducativa;";
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = preparedStatement.executeQuery();
 
