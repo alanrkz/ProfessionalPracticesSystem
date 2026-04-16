@@ -7,8 +7,9 @@ import java.sql.SQLException;
  *
  * @author alan rkz
  */
-public class DataAccessException  extends SQLException{
-    public DataAccessException(String message, Throwable cause) {
+public class DataIntegrityException  extends SQLException{
+    public DataIntegrityException(String message, Throwable cause) {
         super(message, cause);
     }
 }
+

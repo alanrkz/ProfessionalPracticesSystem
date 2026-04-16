@@ -1,7 +1,7 @@
 package DataAccess;
 
 
-import Logic.Exceptions.DataAccessException;
+import Logic.Exceptions.DataIntegrityException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -36,11 +36,11 @@ public class DatabaseConnection {
         }
     }
 
-    public static Connection connect() throws DataAccessException{
+    public static Connection connect() throws DataIntegrityException{
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new DataAccessException("Error al conectar con la base de datos", e);
+            throw new DataIntegrityException("Error al conectar con la base de datos", e);
         }
     }
 

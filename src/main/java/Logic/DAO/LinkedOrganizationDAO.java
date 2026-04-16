@@ -3,7 +3,7 @@ package Logic.DAO;
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.ILinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
-import Logic.Exceptions.DataAccessException;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import java.util.List;
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
     @Override
-    public void registerOrganization(LinkedOrganization linkedOrganization) throws DataAccessException {
+    public void registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -41,7 +41,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DataAccessException("Error al insertar organización", e);
+            throw new DataIntegrityException("Error al insertar organización", e);
         }
     }
 
@@ -71,7 +71,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     }
 
     @Override
-    public boolean deactivateOrganization(int organizationId) throws DataAccessException {
+    public boolean deactivateOrganization(int organizationId) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -85,7 +85,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             return affectedRows > 0;
 
         } catch (SQLException exception) {
-            throw new DataAccessException("Error al desactivar la organización", exception);
+            throw new DataIntegrityException("Error al desactivar la organización", exception);
         }
     }
 }
