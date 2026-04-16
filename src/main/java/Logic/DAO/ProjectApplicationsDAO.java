@@ -19,7 +19,7 @@ public class ProjectApplicationsDAO implements IProjectApplicationsDAO {
     public String registerApplication(ProjectApplications projectApplication) {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO AplicacionProyecto (idProyecto, matricula, estadoAsignacion) VALUES (?, ?, ?);";
+            String query = "INSERT INTO SolicitudesProyecto (idProyecto, matricula, estadoAsignacion) VALUES (?, ?, ?);";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, projectApplication.getIdProject());

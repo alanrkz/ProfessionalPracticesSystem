@@ -3,6 +3,7 @@ package Logic.DAO;
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.ILinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
+import Logic.Exceptions.DataAccessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,8 @@ import java.util.List;
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
     @Override
-    public String registerOrganization(LinkedOrganization linkedOrganization) {
+    public void registerOrganization(LinkedOrganization linkedOrganization) throws DataAccessException {
+
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuarioDirectos, usuariosIndirectos, correoElectronico, telefono, estado, ciudad, direccion, evaluacionOV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -38,17 +40,8 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
             preparedStatement.executeUpdate();
 
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-
-            if (rs.next()) {
-                idGenerado = rs.getInt(1);
-            }
-
-            return "Registro exitoso. ID generado: " + idGenerado;
-
         } catch (SQLException e) {
-            e.printStackTrace();
-            return "Error al registrar organización.";
+            throw new DataAccessException("Error al insertar organización", e);
         }
     }
 
@@ -78,26 +71,21 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
     }
 
     @Override
-    public String deactivateOrganization(int organizationId) {
+    public boolean deactivateOrganization(int organizationId) throws DataAccessException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 0 WHERE idOrganizacion = ?;";
+            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 0 WHERE idOrganizacion = ?";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
             preparedStatement.setInt(1, organizationId);
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0) {
-                return "La organización fue desactivada correctamente.";
-            } else {
-                return "No fue posible desactivar la organización.";
-            }
+            return affectedRows > 0;
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            return "Error en la conexión.";
+            throw new DataAccessException("Error al desactivar la organización", exception);
         }
     }
 }

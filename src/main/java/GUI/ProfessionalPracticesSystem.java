@@ -363,9 +363,7 @@ public class ProfessionalPracticesSystem {
                     org.setAddress(scanner.nextLine());
 
                     System.out.print("Evaluacion: ");
-                    org.setEvaluation(scanner.nextLine());
-
-                    System.out.println(dao.registerOrganization(org));                    
+                    org.setEvaluation(scanner.nextLine());                                     
 
                     break;
                 }
