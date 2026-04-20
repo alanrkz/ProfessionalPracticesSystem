@@ -1,22 +1,25 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IReceivedNotificationsDAO;
 import Logic.DTO.ReceivedNotifications;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
+
 public class ReceivedNotificationsDAO implements IReceivedNotificationsDAO {
 
+    private static final Logger logger = Logger.getLogger(ReceivedNotificationsDAO.class.getName());
+
     @Override
-    public String registerReceived(ReceivedNotifications receivedNotification) {
+    public boolean registerReceived(ReceivedNotifications receivedNotification) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -33,15 +36,21 @@ public class ReceivedNotificationsDAO implements IReceivedNotificationsDAO {
                 receivedNotification.setIdNotification(resultSet.getInt(1));
             }
 
+            preparedStatement.close();
+            resultSet.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Notificación asignada.";
+                return true;
             } else {
-                return "Error al asignar.";
+                logger.warning("No se registro notificacion recibida");
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Error de conexión.";
+            logger.log(Level.SEVERE, "Error al registrar notificacion recibida", e);
+            throw new DataIntegrityException("Error al registrar notificacion recibida", e);
         }
     }
-
+    
 }

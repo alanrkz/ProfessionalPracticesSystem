@@ -5,22 +5,26 @@ import DataAccess.DatabaseConnection;
 import Logic.Contracts.IStudentDAO;
 import Logic.DTO.Student;
 import Logic.DTO.User;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author alan rkz
- */
+
 public class StudentDAO implements IStudentDAO {
 
+    private static final Logger logger = Logger.getLogger(StudentDAO.class.getName());
+
     @Override
-    public String registerStudent(Student student) {
+    public boolean registerStudent(Student student) throws DataIntegrityException {
+
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "INSERT INTO Practicante VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -38,19 +42,23 @@ public class StudentDAO implements IStudentDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return "El alumno fue agregado correctamente.";
+                return true;
             } else {
-                return "Hubo problemas para registrar al alumno. Intente de nuevo mas tarde.";
+                logger.warning("No se registro estudiante: " + student.getEnrollment());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema.";
+            logger.log(Level.SEVERE, "Error al registrar estudiante", e);
+            throw new DataIntegrityException("Error al registrar estudiante", e);
         }
     }
 
     @Override
-    public String deactivateStudent(User user, Student student) {
+    public boolean deactivateStudent(User user, Student student) throws DataIntegrityException {
+
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -58,30 +66,31 @@ public class StudentDAO implements IStudentDAO {
 
             int affectedRows = preparedStatement.executeUpdate();
 
-            connection.close();
             preparedStatement.close();
+            connection.close();
 
             if (affectedRows > 0) {
-                return "El alumno fue desactivado correctamente.";
+                return true;
             } else {
-                return "Hubo problemas para desactivar al alumno. Intente de nuevo mas tarde.";
+                logger.warning("No se desactivo estudiante con id: " + student.getIdUser());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema.";
+            logger.log(Level.SEVERE, "Error al desactivar estudiante", e);
+            throw new DataIntegrityException("Error al desactivar estudiante", e);
         }
     }
 
     @Override
-    public List<Student> getStudents() {
-        List<Student> listStudents = new ArrayList<>();
+    public List<Student> getStudents() throws DataIntegrityException {
 
-        String query = "SELECT * FROM Practicante;";
+        List<Student> listStudents = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.connect()) {
 
+            String query = "SELECT * FROM Practicante;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -96,11 +105,17 @@ public class StudentDAO implements IStudentDAO {
 
                 listStudents.add(student);
             }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al obtener estudiantes", e);
+            throw new DataIntegrityException("Error al obtener estudiantes", e);
         }
 
         return listStudents;
     }
-
+    
 }

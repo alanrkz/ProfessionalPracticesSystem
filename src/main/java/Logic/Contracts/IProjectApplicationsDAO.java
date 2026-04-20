@@ -5,6 +5,7 @@
 package Logic.Contracts;
 
 import Logic.DTO.ProjectApplications;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -12,6 +13,6 @@ import Logic.DTO.ProjectApplications;
  */
 public interface IProjectApplicationsDAO {
     
-    public String registerApplication(ProjectApplications projectApplication);
+    public boolean registerApplication(ProjectApplications projectApplication) throws DataIntegrityException;
     
 }

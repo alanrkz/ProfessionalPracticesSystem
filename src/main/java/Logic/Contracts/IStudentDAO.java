@@ -3,6 +3,7 @@ package Logic.Contracts;
 
 import Logic.DTO.Student;
 import Logic.DTO.User;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 /**
@@ -11,10 +12,10 @@ import java.util.List;
  */
 public interface IStudentDAO {
 
-    public String registerStudent(Student student);
+    public boolean registerStudent(Student student) throws DataIntegrityException;
 
-    public String deactivateStudent(User user, Student student);
+    public boolean deactivateStudent(User user, Student student) throws DataIntegrityException;
     
-    public List<Student> getStudents();
+    public List<Student> getStudents() throws DataIntegrityException;
 
 }

@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.MonthlyReport;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 /**
@@ -10,10 +11,10 @@ import java.util.List;
  */
 public interface IMonthlyReportDAO {
     
-    public String registerMonthlyReport(MonthlyReport monthlyReport);
+    public boolean registerMonthlyReport(MonthlyReport monthlyReport) throws DataIntegrityException;
     
-    public String modifyMonthlyReport(MonthlyReport monthlyReport);
+    public boolean modifyMonthlyReport(MonthlyReport monthlyReport) throws DataIntegrityException;
     
-    public List<MonthlyReport> getMonthlyReports();
+    public List<MonthlyReport> getMonthlyReports() throws DataIntegrityException;
     
 }

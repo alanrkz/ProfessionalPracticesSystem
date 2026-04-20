@@ -1,15 +1,16 @@
 package Logic.Contracts;
 
 import Logic.DTO.FinalReport;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 
 public interface IFinalReportDAO {
     
-    public String registerFinalReport(FinalReport finalReport);
+    public boolean registerFinalReport(FinalReport finalReport) throws DataIntegrityException;
     
-    public String modifyFinalReport(FinalReport finalReport);
+    public boolean modifyFinalReport(FinalReport finalReport) throws DataIntegrityException;
     
-    public List<FinalReport> getFinalReports();
+    public List<FinalReport> getFinalReports() throws DataIntegrityException;
     
 }

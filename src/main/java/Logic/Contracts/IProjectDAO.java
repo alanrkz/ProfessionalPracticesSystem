@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.Project;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -9,8 +10,8 @@ import Logic.DTO.Project;
  */
 public interface IProjectDAO {
     
-    public String registerProject (Project project);
+    public boolean registerProject(Project project) throws DataIntegrityException;
     
-    public String deactivateProject(int idProject);
+    public boolean deactivateProject(int idProject) throws DataIntegrityException;
     
 }

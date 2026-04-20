@@ -1,8 +1,10 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.INotificationDAO;
 import Logic.DTO.Notification;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,16 +12,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
+
 public class NotificationDAO implements INotificationDAO {
 
-    @Override
-    public String registerNotification(Notification notification) {
+    private static final Logger logger = Logger.getLogger(NotificationDAO.class.getName());
 
+    @Override
+    public boolean registerNotification(Notification notification) throws DataIntegrityException {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Notificacion (destinatario, asunto, mensaje, numeroPersonal) VALUES (?, ?, ?, ?);";
@@ -37,19 +39,25 @@ public class NotificationDAO implements INotificationDAO {
                 notification.setIdNotification(resultSet.getInt(1));
             }
 
+            preparedStatement.close();
+            resultSet.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Notificación registrada correctamente.";
+                return true;
             } else {
-                return "No fue posible registrar la notificación.";
+                logger.warning("No se inserto notificacion para: " + notification.getRecipient());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Error de conexión.";
+            logger.log(Level.SEVERE, "Error al registrar notificacion", e);
+            throw new DataIntegrityException("Error al registrar notificacion", e);
         }
     }
 
     @Override
-    public List<Notification> getNotifications() {
+    public List<Notification> getNotifications() throws DataIntegrityException {
         List<Notification> NotificationsList = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.connect()) {
@@ -66,10 +74,16 @@ public class NotificationDAO implements INotificationDAO {
                 NotificationsList.add(notification);
             }
 
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al obtener notificaciones", e);
+            throw new DataIntegrityException("Error al obtener notificaciones", e);
         }
 
         return NotificationsList;
     }
+    
 }

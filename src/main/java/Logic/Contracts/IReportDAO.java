@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.Report;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -9,8 +10,8 @@ import Logic.DTO.Report;
  */
 public interface IReportDAO {
     
-    public String registerReport(Report report);
+    public boolean registerReport(Report report) throws DataIntegrityException;
     
-    public String modifyReport(Report report);
+    public boolean modifyReport(Report report) throws DataIntegrityException;
     
 }

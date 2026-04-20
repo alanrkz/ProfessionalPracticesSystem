@@ -22,7 +22,7 @@ public class ProfessorDAO implements IProfessorDAO {
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Profesorr VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getNumberStaff());

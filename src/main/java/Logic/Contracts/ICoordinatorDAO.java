@@ -3,6 +3,7 @@ package Logic.Contracts;
 
 import Logic.DTO.Coordinator;
 import Logic.DTO.User;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -10,8 +11,8 @@ import Logic.DTO.User;
  */
 public interface ICoordinatorDAO {
     
-    public String registerCoordinator(Coordinator coordinator);
+    public boolean registerCoordinator(Coordinator coordinator) throws DataIntegrityException;
     
-    public String deactivateCoordinator(User user, Coordinator coordinator);
+    public boolean deactivateCoordinator(User user, Coordinator coordinator) throws DataIntegrityException;
     
 }
