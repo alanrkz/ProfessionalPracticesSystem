@@ -1,7 +1,7 @@
 package Logic.Contracts;
 
 import Logic.DTO.LinkedOrganization;
-import java.sql.SQLException;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 /**
@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface ILinkedOrganizationDAO {
     
-     void registerOrganization(LinkedOrganization linkedOrganization) throws SQLException;
+     void registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException;
     
-    List<LinkedOrganization> getOrganizations() throws SQLException;
+    List<LinkedOrganization> getOrganizations() throws DataIntegrityException;
     
-    boolean deactivateOrganization(int organizationId) throws SQLException;
+    boolean deactivateOrganization(int organizationId) throws DataIntegrityException;
     
 }
