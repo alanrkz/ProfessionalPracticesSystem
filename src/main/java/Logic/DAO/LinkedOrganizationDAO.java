@@ -31,10 +31,10 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             preparedStatement.setString(4, linkedOrganization.getIndirectUsers());
             preparedStatement.setString(5, linkedOrganization.getEmail());
             preparedStatement.setString(6, linkedOrganization.getPhone());
-            preparedStatement.setString(7, linkedOrganization.getStatus());
+            preparedStatement.setBoolean(7, true);
             preparedStatement.setString(8, linkedOrganization.getCity());
             preparedStatement.setString(9, linkedOrganization.getAddress());
-            preparedStatement.setString(10, linkedOrganization.getEvaluation());
+            preparedStatement.setString(10, null);
 
             int affectedRows = preparedStatement.executeUpdate();
 

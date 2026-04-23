@@ -29,7 +29,7 @@ public class ProjectDAO implements IProjectDAO {
             preparedStatement.setString(2, project.getDuration());
             preparedStatement.setString(3, project.getDescription());
             preparedStatement.setInt(4, project.getAvailableSpaces());
-            preparedStatement.setBoolean(5, project.isStatus());
+            preparedStatement.setBoolean(5, true);
             preparedStatement.setString(6, project.getProjectMethodology());
             preparedStatement.setInt(7, project.getIdLikedOrganization());
 

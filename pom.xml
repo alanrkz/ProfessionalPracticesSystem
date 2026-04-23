@@ -6,16 +6,40 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.mycompany.professionalpracticesystem.ProfessionalPracticeSystem</exec.mainClass>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <javafx.version>21</javafx.version> <!-- Usa la versión que necesites -->
     </properties>
     <name>ProfessionalPracticesSystem</name>
-     <dependencies>
+    <dependencies>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId> mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <!-- Plugin esencial para correr JavaFX con Maven -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <!-- Cambia esto por tu clase principal -->
+                    <mainClass>GUI.ProfessionalPracticesSystem</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
