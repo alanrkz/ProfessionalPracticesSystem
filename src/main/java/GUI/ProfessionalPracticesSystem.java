@@ -10,7 +10,7 @@ public class ProfessionalPracticesSystem extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudentFormW.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/StudentFormW.fxml"));
 
         Scene scene = new Scene(loader.load());
 
