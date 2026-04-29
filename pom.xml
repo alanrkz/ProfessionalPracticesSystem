@@ -6,9 +6,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
+        
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
-        <javafx.version>21</javafx.version> <!-- Usa la versión que necesites -->
+        
+        <javafx.version>21</javafx.version>
     </properties>
     <name>ProfessionalPracticesSystem</name>
     <dependencies>
@@ -30,13 +32,11 @@
     </dependencies>
     <build>
         <plugins>
-            <!-- Plugin esencial para correr JavaFX con Maven -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <!-- Cambia esto por tu clase principal -->
                     <mainClass>GUI.ProfessionalPracticesSystem</mainClass>
                 </configuration>
             </plugin>
