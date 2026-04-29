@@ -11,24 +11,30 @@ public class Student extends User{
     private int hoursCovered;
     private boolean indigenousLanguage;
     private String socialSector;
-    private int idUser;
     private String nrc;
 
-    
     public Student() {
     }
 
-    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String socialSector, int idUser, String nrc) {
+    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String socialSector, String nrc) {
         this.enrollment = enrollment;
         this.birthdate = birthdate;
         this.hoursCovered = hoursCovered;
         this.indigenousLanguage = indigenousLanguage;
         this.socialSector = socialSector;
-        this.idUser = idUser;
         this.nrc = nrc;
     }
 
-    
+    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String socialSector, String nrc, int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+        super(idUser, firstName, middleName, paternalSurname, maternalSurname, email, password, gender, status);
+        this.enrollment = enrollment;
+        this.birthdate = birthdate;
+        this.hoursCovered = hoursCovered;
+        this.indigenousLanguage = indigenousLanguage;
+        this.socialSector = socialSector;
+        this.nrc = nrc;
+    }
+
     public String getEnrollment() {
         return enrollment;
     }
@@ -69,14 +75,6 @@ public class Student extends User{
         this.socialSector = socialSector;
     }
 
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
-
     public String getNrc() {
         return nrc;
     }
@@ -84,5 +82,5 @@ public class Student extends User{
     public void setNrc(String nrc) {
         this.nrc = nrc;
     }
-   
+
 }

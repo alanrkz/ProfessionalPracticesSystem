@@ -25,7 +25,7 @@ public class StudentDAO implements IStudentDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Practicante VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, sectorSocial, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, student.getEnrollment());

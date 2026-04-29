@@ -36,8 +36,13 @@ public class UserDAO implements IUserDAO {
             int affectedRows = preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
             if (resultSet.next()) {
-                user.setIdUser(resultSet.getInt(1));
+                int idGenerado = resultSet.getInt(1);
+                user.setIdUser(idGenerado);
+                System.out.println("ID GENERADO USER: " + idGenerado);
+            } else {
+                throw new SQLException("No se obtuvo el ID generado");
             }
 
             preparedStatement.close();
@@ -62,7 +67,7 @@ public class UserDAO implements IUserDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "UPDATE Usuario SET primerNombre = ?, segundoNombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, estado = ?, genero = ? WHERE idUser = ?;";
+            String query = "UPDATE Usuario SET primerNombre = ?, segundoNombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, estado = ?, genero = ? WHERE idUsuario = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getFirstName());
@@ -90,5 +95,5 @@ public class UserDAO implements IUserDAO {
             throw new DataIntegrityException("Error al modificar usuario", e);
         }
     }
-    
+
 }
