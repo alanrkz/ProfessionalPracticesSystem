@@ -16,7 +16,8 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+    public User(int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+        this.idUser = idUser;
         this.firstName = firstName;
         this.middleName = middleName;
         this.paternalSurname = paternalSurname;
@@ -26,7 +27,6 @@ public class User {
         this.gender = gender;
         this.status = status;
     }
-
     
     public int getIdUser() {
         return idUser;

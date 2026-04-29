@@ -1,15 +1,16 @@
 package Logic.Contracts;
 
 import Logic.DTO.PartialReport;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 
 public interface IPartialReportDAO {
     
-    public String registerPartialReport(PartialReport partialReport);
+    public boolean registerPartialReport(PartialReport partialReport) throws DataIntegrityException;
     
-    public String modifyPartialReport(PartialReport partialReport);
+    public boolean modifyPartialReport(PartialReport partialReport) throws DataIntegrityException;
     
-    public List<PartialReport> getPartialReports();
+    public List<PartialReport> getPartialReports() throws DataIntegrityException;
     
 }

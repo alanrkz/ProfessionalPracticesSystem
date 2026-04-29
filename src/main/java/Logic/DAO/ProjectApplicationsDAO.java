@@ -1,22 +1,26 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProjectApplicationsDAO;
 import Logic.DTO.ProjectApplications;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
+
 public class ProjectApplicationsDAO implements IProjectApplicationsDAO {
 
+    private static final Logger logger = Logger.getLogger(ProjectApplicationsDAO.class.getName());
+
     @Override
-    public String registerApplication(ProjectApplications projectApplication) {
+    public boolean registerApplication(ProjectApplications projectApplication) throws DataIntegrityException {
+
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO SolicitudesProyecto (idProyecto, matricula, estadoAsignacion) VALUES (?, ?, ?);";
@@ -33,14 +37,21 @@ public class ProjectApplicationsDAO implements IProjectApplicationsDAO {
                 projectApplication.setIdProject(rs.getInt(1));
             }
 
+            preparedStatement.close();
+            rs.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Aplicación registrada correctamente.";
+                return true;
             } else {
-                return "No fue posible registrar la aplicación.";
+                logger.warning("No se registro aplicacion para proyecto con ID: " + projectApplication.getIdProject());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Error de conexión.";
+            logger.log(Level.SEVERE, "Error al registrar aplicacion a proyecto", e);
+            throw new DataIntegrityException("Error al registrar aplicacion a proyecto", e);
         }
     }
+    
 }

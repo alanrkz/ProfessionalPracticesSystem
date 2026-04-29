@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package Logic.Contracts;
 
 import Logic.DTO.StudentFiles;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -12,5 +9,5 @@ import Logic.DTO.StudentFiles;
  */
 public interface IStudentFilesDAO {
     
-    public String registerFiles(StudentFiles studentFiles);
+    public boolean registerFiles(StudentFiles studentFiles) throws DataIntegrityException;
 }

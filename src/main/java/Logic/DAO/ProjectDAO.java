@@ -4,23 +4,26 @@ package Logic.DAO;
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProjectDAO;
 import Logic.DTO.Project;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author alan rkz
- */
-public class ProjectDAO implements IProjectDAO{
-    
+
+public class ProjectDAO implements IProjectDAO {
+
+    private static final Logger logger = Logger.getLogger(ProjectDAO.class.getName());
+
     @Override
-    public String registerProject (Project project){
+    public boolean registerProject(Project project) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "INSERT INTO Proyecto (nombreProyecto, duracion, descripcion, cupo, estado, metodologiaProyecto, idOrganizacionVinculada) VALUES(?, ?, ?, ?, ?, ?, ?);";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, project.getProjectName());
             preparedStatement.setString(2, project.getDuration());
@@ -29,9 +32,9 @@ public class ProjectDAO implements IProjectDAO{
             preparedStatement.setBoolean(5, project.isStatus());
             preparedStatement.setString(6, project.getProjectMethodology());
             preparedStatement.setInt(7, project.getIdLikedOrganization());
-            
+
             int affectedRows = preparedStatement.executeUpdate();
-            
+
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 project.setIdProject(resultSet.getInt(1));
@@ -42,39 +45,43 @@ public class ProjectDAO implements IProjectDAO{
             connection.close();
 
             if (affectedRows > 0) {
-                return "El proyecto fue registrado correctamente ";
+                return true;
             } else {
-                return "Hubo problemas para registrar el proyecto. Intente de nuevo mas tarde ";
+                logger.warning("No se inserto proyecto: " + project.getProjectName());
+                return false;
             }
-            
+
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema ";
+            logger.log(Level.SEVERE, "Error al registrar proyecto", e);
+            throw new DataIntegrityException("Error al registrar proyecto", e);
         }
     }
-    
+
     @Override
-    public String deactivateProject(int idProject){
+    public boolean deactivateProject(int idProject) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "UPDATE Proyecto SET estado = false WHERE idProyecto = ?;";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idProject);
-            
+
             int affectedRows = preparedStatement.executeUpdate();
 
             connection.close();
             preparedStatement.close();
 
             if (affectedRows > 0) {
-                return "El proyecto ha sido desactivado ";
+                return true;
             } else {
-                return "Hubo problemas para desactivar el proyecto. Intente de nuevo mas tarde ";
+                logger.warning("No se desactivo proyecto id: " + idProject);
+                return false;
             }
-            
+
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema ";
-        }  
+            logger.log(Level.SEVERE, "Error al desactivar proyecto id: " + idProject, e);
+            throw new DataIntegrityException("Error al desactivar proyecto", e);
+        }
     }
     
 }
-

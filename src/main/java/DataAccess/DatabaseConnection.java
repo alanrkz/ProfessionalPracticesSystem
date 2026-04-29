@@ -15,7 +15,7 @@ public class DatabaseConnection {
     private static String USER;
     private static String PASSWORD;
 
-    public void loadConfiguration() {
+    public static void loadConfiguration() {
         try {
             Properties properties = new Properties();
 
@@ -37,6 +37,7 @@ public class DatabaseConnection {
     }
 
     public static Connection connect() throws DataIntegrityException{
+        loadConfiguration();
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {

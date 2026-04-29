@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.User;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -9,8 +10,8 @@ import Logic.DTO.User;
  */
 public interface IUserDAO {
     
-     public String registerUser(User user);
+    public boolean registerUser(User user) throws DataIntegrityException;
      
-     public String modifyUser(User user);
+    public boolean modifyUser(User user) throws DataIntegrityException;
     
 }

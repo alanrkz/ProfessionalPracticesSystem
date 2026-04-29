@@ -1,22 +1,26 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IStudentFilesDAO;
 import Logic.DTO.StudentFiles;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
+
 public class StudentFilesDAO implements IStudentFilesDAO {
 
+    private static final Logger logger = Logger.getLogger(StudentFilesDAO.class.getName());
+
     @Override
-    public String registerFiles(StudentFiles studentFiles) {
+    public boolean registerFiles(StudentFiles studentFiles) throws DataIntegrityException {
+
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO ArchivosEstudiante (horario, planTrabajo, cartaAsignacion, matricula) VALUES (?, ?, ?, ?);";
@@ -34,14 +38,21 @@ public class StudentFilesDAO implements IStudentFilesDAO {
                 studentFiles.setIdStudentRecord(resultSet.getInt(1));
             }
 
+            preparedStatement.close();
+            resultSet.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Archivos registrados correctamente.";
+                return true;
             } else {
-                return "No fue posible registrar.";
+                logger.warning("No se registraron archivos del estudiante");
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Error de conexión.";
+            logger.log(Level.SEVERE, "Error al registrar archivos de estudiante", e);
+            throw new DataIntegrityException("Error al registrar archivos", e);
         }
     }
+    
 }

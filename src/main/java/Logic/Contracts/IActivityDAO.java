@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.Activity;
+import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
@@ -9,8 +10,8 @@ import Logic.DTO.Activity;
  */
 public interface IActivityDAO {
     
-    public String addActivity(Activity activity) ;
+    public boolean addActivity(Activity activity) throws DataIntegrityException;   
     
-    public String modifyActivity(Activity activity);
+    public boolean modifyActivity(Activity activity) throws DataIntegrityException;
     
 }

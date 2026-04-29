@@ -1,22 +1,25 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProjectManagerDAO;
 import Logic.DTO.ProjectManager;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
+
 public class ProjectManagerDAO implements IProjectManagerDAO {
 
+    private static final Logger logger = Logger.getLogger(ProjectManagerDAO.class.getName());
+
     @Override
-    public String registerManager(ProjectManager projectManager) {
+    public boolean registerManager(ProjectManager projectManager) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -35,18 +38,25 @@ public class ProjectManagerDAO implements IProjectManagerDAO {
                 projectManager.setIdProjectManager(resultSet.getInt(1));
             }
 
+            preparedStatement.close();
+            resultSet.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Responsable registrado correctamente.";
+                return true;
             } else {
-                return "No fue posible registrar.";
+                logger.warning("No se registro responsable de proyecto");
+                return false;
             }
+
         } catch (SQLException e) {
-            return "Error de conexión.";
+            logger.log(Level.SEVERE, "Error al registrar responsable de proyecto", e);
+            throw new DataIntegrityException("Error al registrar responsable de proyecto", e);
         }
     }
 
     @Override
-    public String deactivateProjectManager(int projectManagerId) {
+    public boolean deactivateProjectManager(int projectManagerId) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -57,15 +67,20 @@ public class ProjectManagerDAO implements IProjectManagerDAO {
 
             int affectedRows = preparedStatement.executeUpdate();
 
+            preparedStatement.close();
+            databaseConnection.close();
+
             if (affectedRows > 0) {
-                return "Responsable desactivado correctamente.";
+                return true;
             } else {
-                return "No fue posible desactivar.";
+                logger.warning("No se desactivo responsable con id: " + projectManagerId);
+                return false;
             }
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
-            return "Error en la conexión.";
+            logger.log(Level.SEVERE, "Error al desactivar responsable", exception);
+            throw new DataIntegrityException("Error al desactivar responsable", exception);
         }
     }
+    
 }

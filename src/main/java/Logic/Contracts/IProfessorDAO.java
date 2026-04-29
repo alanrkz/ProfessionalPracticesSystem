@@ -3,7 +3,8 @@ package Logic.Contracts;
 
 import Logic.DTO.Professor;
 import Logic.DTO.User;
-import java.util.List;
+import Logic.Exceptions.DataIntegrityException;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,12 +12,12 @@ import java.util.List;
  */
 public interface IProfessorDAO {
     
-    public String registerProfessor(Professor professor);
+    public boolean registerProfessor(Professor professor) throws DataIntegrityException;
     
-    public String deactivateProfessor(User user, Professor professor);
+    public boolean deactivateProfessor(User user, Professor professor) throws DataIntegrityException;
     
-    public String updateProfessor(Professor professor);
+    public boolean updateProfessor(Professor professor) throws DataIntegrityException;
     
-    public List<Professor> getProfessors();
+    public ArrayList<Professor> getProfessors() throws DataIntegrityException;
     
 }

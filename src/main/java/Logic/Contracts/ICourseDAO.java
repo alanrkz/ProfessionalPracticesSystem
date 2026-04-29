@@ -2,6 +2,7 @@ package Logic.Contracts;
 
 
 import Logic.DTO.Course;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 /**
@@ -9,7 +10,9 @@ import java.util.List;
  * @author ELLIN JV
  */
 public interface ICourseDAO {
-    public String registerCourse(Course course);
-    public List<Course> getCourses();
+    
+    public boolean registerCourse(Course course) throws DataIntegrityException;
+    
+    public List<Course> getCourses() throws DataIntegrityException;
     
 }

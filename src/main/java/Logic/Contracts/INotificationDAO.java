@@ -5,6 +5,7 @@
 package Logic.Contracts;
 
 import Logic.DTO.Notification;
+import Logic.Exceptions.DataIntegrityException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface INotificationDAO {
     
-    public String registerNotification(Notification notification);
+    public boolean registerNotification(Notification notification) throws DataIntegrityException;
     
-    public List<Notification> getNotifications();
+    public List<Notification> getNotifications() throws DataIntegrityException;
 }

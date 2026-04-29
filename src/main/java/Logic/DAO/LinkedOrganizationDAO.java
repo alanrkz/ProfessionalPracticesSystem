@@ -8,25 +8,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ELLIN JV
- */
 public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
 
+    private static final Logger logger = Logger.getLogger(LinkedOrganizationDAO.class.getName());
+
     @Override
-    public void registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException {
+    public boolean registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO OrganizacionVinculada (nombreEmpresa, sector, usuarioDirectos, usuariosIndirectos, correoElectronico, telefono, estado, ciudad, direccion, evaluacionOV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-            int idGenerado = 0;
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
             preparedStatement.setString(1, linkedOrganization.getCompanyName());
             preparedStatement.setString(2, linkedOrganization.getSector());
             preparedStatement.setString(3, linkedOrganization.getDirectUsers());
@@ -38,15 +36,54 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             preparedStatement.setString(9, linkedOrganization.getAddress());
             preparedStatement.setString(10, linkedOrganization.getEvaluation());
 
-            preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            databaseConnection.close();
+
+            if (affectedRows > 0) {
+                return true;
+            } else {
+                logger.warning("No se inserto organizacion: " + linkedOrganization.getCompanyName());
+                return false;
+            }
 
         } catch (SQLException e) {
-            throw new DataIntegrityException("Error al insertar organización", e);
+            logger.log(Level.SEVERE, "Error al registrar organizacion", e);
+            throw new DataIntegrityException("Error al insertar organizacion", e);
         }
     }
 
     @Override
-    public List<LinkedOrganization> getOrganizations() {
+    public boolean deactivateOrganization(int organizationId) throws DataIntegrityException {
+
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
+
+            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 0 WHERE idOrganizacion = ?";
+
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
+            preparedStatement.setInt(1, organizationId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            databaseConnection.close();
+
+            if (affectedRows > 0) {
+                return true;
+            } else {
+                logger.warning("No se desactivo organizacion con id: " + organizationId);
+                return false;
+            }
+
+        } catch (SQLException exception) {
+            logger.log(Level.SEVERE, "Error al desactivar organizacion", exception);
+            throw new DataIntegrityException("Error al desactivar organizacion", exception);
+        }
+    }
+    
+    @Override
+    public List<LinkedOrganization> getOrganizations() throws DataIntegrityException{
         List<LinkedOrganization> OrganizationsList = new ArrayList<>();
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
@@ -64,28 +101,11 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al obtener las organizaciones", e);
+            throw new DataIntegrityException("Error al obtener las organizaciones", e);
         }
 
         return OrganizationsList;
     }
-
-    @Override
-    public boolean deactivateOrganization(int organizationId) throws DataIntegrityException {
-
-        try (Connection databaseConnection = DatabaseConnection.connect()) {
-
-            String updateQuery = "UPDATE OrganizacionVinculada SET estado = 0 WHERE idOrganizacion = ?";
-
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(updateQuery);
-            preparedStatement.setInt(1, organizationId);
-
-            int affectedRows = preparedStatement.executeUpdate();
-
-            return affectedRows > 0;
-
-        } catch (SQLException exception) {
-            throw new DataIntegrityException("Error al desactivar la organización", exception);
-        }
-    }
+    
 }

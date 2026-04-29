@@ -5,19 +5,22 @@ import DataAccess.DatabaseConnection;
 import Logic.Contracts.ICoordinatorDAO;
 import Logic.DTO.Coordinator;
 import Logic.DTO.User;
+import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author alan rkz
- */
+
 public class CoordinatorDAO implements ICoordinatorDAO {
 
+    private static final Logger logger = Logger.getLogger(CoordinatorDAO.class.getName());
+
     @Override
-    public String registerCoordinator(Coordinator coordinator) {
+    public boolean registerCoordinator(Coordinator coordinator) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -33,19 +36,22 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return "El coordinador fue registrado correctamente.";
+                return true;
             } else {
-                return "Hubo problemas para registrar al coordinador. Intente de nuevo mas tarde.";
+                logger.warning("No se inserto coordinador con numero: " + coordinator.getNumberStaff());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema.";
+            logger.log(Level.SEVERE, "Error al registrar coordinador: " + coordinator.getNumberStaff(), e);
+            throw new DataIntegrityException("Error al registrar coordinador", e);
         }
     }
 
     @Override
-    public String deactivateCoordinator(User user, Coordinator coordinator) {
+    public boolean deactivateCoordinator(User user, Coordinator coordinator) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
+
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -57,14 +63,16 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             preparedStatement.close();
 
             if (affectedRows > 0) {
-                return "El coordinador fue desactivado correctamente.";
+                return true;
             } else {
-                return "Hubo problemas para desactivar al coordinador. Intente de nuevo mas tarde.";
+                logger.warning("No se desactivo coordinador con id: " + coordinator.getIdUser());
+                return false;
             }
 
         } catch (SQLException e) {
-            return "Tenemos problemas con la conexion al sistema.";
+            logger.log(Level.SEVERE, "Error al desactivar coordinador id: " + coordinator.getIdUser(), e);
+            throw new DataIntegrityException("Error al desactivar coordinador", e);
         }
     }
-
+    
 }

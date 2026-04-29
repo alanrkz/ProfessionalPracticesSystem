@@ -1,0 +1,28 @@
+2026-04-20 04:58:04 [FINE] jdk.event.security - X509Certificate: Alg:{0}, Serial:{1}, Subject:{2}, Issuer:{3}, Key type:{4}, Length:{5,number,#}, Cert Id:{6,number,#}, Valid from:{7}, Valid until:{8}
+2026-04-20 04:58:04 [FINE] jdk.event.security - X509Certificate: Alg:{0}, Serial:{1}, Subject:{2}, Issuer:{3}, Key type:{4}, Length:{5,number,#}, Cert Id:{6,number,#}, Valid from:{7}, Valid until:{8}
+2026-04-20 04:58:04 [FINE] jdk.event.security -  TLSHandshake: {0}:{1,number,#}, {2}, {3}, {4,number,#}
+2026-04-20 04:58:04 [SEVERE] Logic.DAO.ProfessorDAO - Error al registrar profesor con numero: 123456789
+java.sql.SQLSyntaxErrorException: Table 'sistemapracticasprofesionales.profesorr' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988)
+	at Logic.DAO.ProfessorDAO.registerProfessor(ProfessorDAO.java:36)
+	at GUI.ProfessionalPracticesSystem.main(ProfessionalPracticesSystem.java:139)
+2026-04-20 05:17:11 [FINE] jdk.event.security - X509Certificate: Alg:{0}, Serial:{1}, Subject:{2}, Issuer:{3}, Key type:{4}, Length:{5,number,#}, Cert Id:{6,number,#}, Valid from:{7}, Valid until:{8}
+2026-04-20 05:17:11 [FINE] jdk.event.security - X509Certificate: Alg:{0}, Serial:{1}, Subject:{2}, Issuer:{3}, Key type:{4}, Length:{5,number,#}, Cert Id:{6,number,#}, Valid from:{7}, Valid until:{8}
+2026-04-20 05:17:11 [FINE] jdk.event.security -  TLSHandshake: {0}:{1,number,#}, {2}, {3}, {4,number,#}
+2026-04-20 05:17:11 [SEVERE] Logic.DAO.ProfessorDAO - Error al registrar profesor con numero: 123456789
+java.sql.SQLSyntaxErrorException: Table 'sistemapracticasprofesionales.profesorr' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988)
+	at Logic.DAO.ProfessorDAO.registerProfessor(ProfessorDAO.java:36)
+	at GUI.ProfessionalPracticesSystem.main(ProfessionalPracticesSystem.java:141)

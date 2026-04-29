@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface ILinkedOrganizationDAO {
     
-     void registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException;
+    public boolean registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException;
     
-    List<LinkedOrganization> getOrganizations() throws DataIntegrityException;
-    
-    boolean deactivateOrganization(int organizationId) throws DataIntegrityException;
+    public boolean deactivateOrganization(int organizationId) throws DataIntegrityException;
+
+    public List<LinkedOrganization> getOrganizations() throws DataIntegrityException;
     
 }
