@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="GUI.Controllers.FXMLManageLinkedOrganizationController">
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLManageLinkedOrganizationController">
    <children>
-      <Label fx:id="labelTitleManageLinkedOrganization" layoutX="140.0" layoutY="40.0" text="Gestionar Organizacion Vinculada">
+      <Label fx:id="labelTitleManageLinkedOrganization" layoutX="128.0" layoutY="39.0" text="Gestionar Organizacion Vinculada">
          <font>
-            <Font name="Times New Roman" size="24.0" />
+            <Font name="Times New Roman Bold" size="24.0" />
          </font>
       </Label>
       <Button fx:id="buttonInsertLinkedOrganization" layoutX="193.0" layoutY="135.0" mnemonicParsing="false" onAction="#buttonInsertLinkedOrganization" prefHeight="26.0" prefWidth="222.0" text="Registrar Organizacion Vinculada" />

@@ -1,6 +1,5 @@
 package Logic.DAO;
 
-
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProfessorDAO;
 import Logic.DTO.Professor;
@@ -14,10 +13,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ProfessorDAO implements IProfessorDAO {
 
     private static final Logger logger = Logger.getLogger(ProfessorDAO.class.getName());
+
     @Override
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
         try (Connection connection = DatabaseConnection.connect()) {
@@ -46,7 +45,7 @@ public class ProfessorDAO implements IProfessorDAO {
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE,"Error al registrar profesor con numero: " + professor.getNumberStaff(), e);
+            logger.log(Level.SEVERE, "Error al registrar profesor con numero: " + professor.getNumberStaff(), e);
             throw new DataIntegrityException("Tuvimos problemas para registrar un nuevo profesor. Intentelo mas tarde", e);
         }
     }
@@ -73,7 +72,7 @@ public class ProfessorDAO implements IProfessorDAO {
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE,"Error al desactivar profesor con idUsuario: " + professor.getIdUser(), e);
+            logger.log(Level.SEVERE, "Error al desactivar profesor con idUsuario: " + professor.getIdUser(), e);
             throw new DataIntegrityException("Tuvimos problemas para desactivar al profesor. Intentelo mas tarde", e);
         }
     }
@@ -141,6 +140,19 @@ public class ProfessorDAO implements IProfessorDAO {
         }
 
         return listProfessors;
+    }
+
+    @Override
+    public boolean getProfessorByUserId(int idUser) throws DataIntegrityException {
+        String query = "SELECT 1 FROM profesor WHERE idUsuario = ?";
+        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "No se encontró el profesor", e);
+            throw new DataIntegrityException("No se encontró el profesor", e);
+        }
     }
 
 }

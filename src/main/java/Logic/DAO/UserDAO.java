@@ -96,4 +96,33 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    public User login(String email, String password) throws DataIntegrityException {
+
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT * FROM Usuario WHERE correoElectronico = ? AND contraseña = ? AND estado = true;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                User user = new User();
+
+                user.setIdUser(resultSet.getInt("idUsuario"));
+                user.setFirstName(resultSet.getString("primerNombre"));
+                user.setEmail(resultSet.getString("correoElectronico"));
+
+                return user;
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            throw new DataIntegrityException("Error en login", e);
+        }
+    }
+
 }

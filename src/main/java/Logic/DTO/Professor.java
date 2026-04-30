@@ -83,5 +83,10 @@ public class Professor extends User{
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-       
+
+    @Override
+    public String toString() {
+        return numberStaff;
+    }
+     
 }

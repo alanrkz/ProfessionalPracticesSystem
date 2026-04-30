@@ -45,7 +45,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
 
     @FXML
-    public void loadLinkedOrganizations() throws DataIntegrityException {
+    public void loadLinkedOrganizations() {
         try {
             ObservableList<LinkedOrganization> observableList = FXCollections.observableList(linkedOrganizationDAO.getOrganizations());
             comboBoxLinkedOrganizations.setItems(observableList);
@@ -69,11 +69,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
 
             stage.setOnHidden(e -> {
                 currentStage.show();
-                try {
-                    loadLinkedOrganizations();
-                } catch (DataIntegrityException ex) {
-                    AlertMessages.showAlert("Error en la base de datos al cargar las organizaciones vinculadas");
-                }
+                loadLinkedOrganizations();
             });
 
             stage.show();
@@ -85,11 +81,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            loadLinkedOrganizations();
-        } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexcion con la base de datos al cargar las organizaciones vinculadas");
-        }
+        loadLinkedOrganizations();
     }
     
     @FXML

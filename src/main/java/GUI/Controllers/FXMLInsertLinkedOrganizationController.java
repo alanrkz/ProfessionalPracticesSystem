@@ -4,6 +4,7 @@ import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
 import Logic.Validations.AlertMessages;
+import Logic.Validations.LogInValidations;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,30 +44,34 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
 
     @FXML
     public void insertLinkedOrganization() {
-    try { 
-        if (valideFields()) {
-            LinkedOrganization linkedOrganization = new LinkedOrganization();
-            linkedOrganization.setCompanyName(textFieldCompanyName.getText());
-            linkedOrganization.setSector(textFieldSector.getText());
-            linkedOrganization.setDirectUsers(textFieldDirectUsers.getText());
-            linkedOrganization.setIndirectUsers(textFieldIndirectUsers.getText());
-            linkedOrganization.setEmail(textFieldEmail.getText());
-            linkedOrganization.setPhone(textFieldPhone.getText());
-            linkedOrganization.setCity(textFieldCity.getText());
-            linkedOrganization.setAddress(textFieldAddress.getText());
+        try {
+            if (valideFields()) {
+                if (LogInValidations.validateEmail(textFieldEmail.getText())) {
+                    LinkedOrganization linkedOrganization = new LinkedOrganization();
+                    linkedOrganization.setCompanyName(textFieldCompanyName.getText());
+                    linkedOrganization.setSector(textFieldSector.getText());
+                    linkedOrganization.setDirectUsers(textFieldDirectUsers.getText());
+                    linkedOrganization.setIndirectUsers(textFieldIndirectUsers.getText());
+                    linkedOrganization.setEmail(textFieldEmail.getText());
+                    linkedOrganization.setPhone(textFieldPhone.getText());
+                    linkedOrganization.setCity(textFieldCity.getText());
+                    linkedOrganization.setAddress(textFieldAddress.getText());
 
-            LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
+                    LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
 
-            if (linkedOrganizationDAO.registerOrganization(linkedOrganization)) {
-                AlertMessages.showAlert("Registro Exitoso de la Organizacion vinculada");
+                    if (linkedOrganizationDAO.registerOrganization(linkedOrganization)) {
+                        AlertMessages.showAlert("Registro Exitoso de la Organizacion vinculada");
+                    }
+                } else {
+                    AlertMessages.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
+                }
+
+            } else {
+                AlertMessages.showAlert("Los campos obligatorios no pueden esatr vacios");
             }
-            
-        } else {
-            AlertMessages.showAlert("Los campos obligatorios no pueden esatr vacios");
+        } catch (DataIntegrityException e) {
+            AlertMessages.showAlert("Error de conexcion con la base de datos");
         }
-    } catch (DataIntegrityException e) {
-        AlertMessages.showAlert("Error de conexcion con la base de datos");
-    }
     }
 
     public boolean valideFields() {
