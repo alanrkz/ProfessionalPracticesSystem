@@ -52,7 +52,7 @@ public class LogInController {
 
                     case "PROFESOR":
                         AlertMessages.showAlert("Bienvenido Profesor: " + result.getUser().getFirstName());
-                        openWindow("/GUI/Views/FXMLMainMenuProfessor.fxml", "Menu Principal Profesores");
+                        openWindow("/GUI/Views/FXMLProfesorMainWindow.fxml", "Menu Principal Profesores");
                         break;
                 }
             } catch (DataIntegrityException e) {
