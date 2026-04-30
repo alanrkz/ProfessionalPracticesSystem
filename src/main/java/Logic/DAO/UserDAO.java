@@ -96,7 +96,7 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-    public User login(String email, String password) throws DataIntegrityException {
+    public User existsUser(String email, String password) throws DataIntegrityException {
 
         try (Connection connection = DatabaseConnection.connect()) {
 

@@ -118,15 +118,22 @@ public class StudentDAO implements IStudentDAO {
         return listStudents;
     }
     
-    public boolean getStudentByUserId(int idUser) throws DataIntegrityException {
+    public boolean existsStudent(int idUser) throws DataIntegrityException {
         String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
-        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.connect()){
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()){
+                return true;
+            } else {
+                return false;
+            }
+            
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "No se encontró el estudiante", e);
-            throw new DataIntegrityException("No se encontró el estudiante", e);
+            logger.log(Level.SEVERE, "Error de conexion con la base de datos", e);
+            throw new DataIntegrityException("Error de conexion con la base de datos", e);
         }
     }
     
