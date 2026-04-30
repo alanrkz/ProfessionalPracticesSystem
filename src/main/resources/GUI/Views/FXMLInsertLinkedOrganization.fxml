@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FXMLInsertLinkedOrganizationController">
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLInsertLinkedOrganizationController">
    <children>
       <Button fx:id="buttonInsert" layoutX="138.0" layoutY="498.0" mnemonicParsing="false" onAction="#insertLinkedOrganization" text="Insertar">
          <font>
