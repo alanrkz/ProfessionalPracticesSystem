@@ -1,25 +1,30 @@
 package GUI;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ProfessionalPracticesSystem extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Views/LogInWindow.fxml"));
+            
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Sistema de Prácticas Profesionales");
+            stage.show();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/StudentFormW.fxml"));
-
-        Scene scene = new Scene(loader.load());
-
-        stage.setScene(scene);
-        stage.setTitle("Registro de alumno");
-        stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

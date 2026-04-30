@@ -9,7 +9,7 @@ public class LinkedOrganization {
     private String indirectUsers;
     private String email;
     private String phone;
-    private String status;
+    private boolean status;
     private String city;
     private String address;
     private String evaluation;
@@ -18,7 +18,7 @@ public class LinkedOrganization {
     public LinkedOrganization() {
     }
 
-    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, String status, String city, String address, String evaluation) {
+    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, boolean status, String city, String address, String evaluation) {
         this.idLikedOrganization = idLikedOrganization;
         this.companyName = companyName;
         this.sector = sector;
@@ -89,11 +89,11 @@ public class LinkedOrganization {
         this.phone = phone;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

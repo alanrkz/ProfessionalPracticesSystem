@@ -45,4 +45,11 @@
                 <exec.appArgs></exec.appArgs>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Run javaFX</actionName>
+            <displayName>Run javaFX</displayName>
+            <goals>
+                <goal>javafx:run</goal>
+            </goals>
+        </action>
     </actions>
