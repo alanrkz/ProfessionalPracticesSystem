@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="GUI.Controllers.FXMLMainMenuProfessorController">
+   <children>
+      <Label layoutX="91.0" layoutY="30.0" text="MENU PRINCIPAL DE PROFESORES">
+         <font>
+            <Font name="Times New Roman Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonSendNotification" layoutX="91.0" layoutY="145.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Enviar Notificacion" />
+      <Button fx:id="buttonEvaluateReport" layoutX="230.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Evaluar Reporte" />
+      <Button fx:id="buttonEvaluateSelfAssessment" layoutX="369.0" layoutY="146.0" mnemonicParsing="false" text="Evaluar Autoevaluacion" />
+      <Button fx:id="buttonExit" layoutX="251.0" layoutY="479.0" mnemonicParsing="false" onAction="#buttonExit" prefHeight="26.0" prefWidth="98.0" text="Salir" />
+   </children>
+</AnchorPane>
