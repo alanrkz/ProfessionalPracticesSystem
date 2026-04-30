@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane fx:id="fxmlCoordinatorMainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="574.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label fx:id="labelCoordinatorOptions" prefHeight="38.0" prefWidth="590.0" style="-fx-background-color: blue;" text="     Opciones de Coordinador" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <GridPane prefHeight="312.0" prefWidth="307.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </center>
+   <bottom>
+      <Pane prefHeight="49.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonExit" layoutX="26.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickOnButtonExit" prefHeight="25.0" prefWidth="105.0" style="-fx-background-color: red;" text="Salir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </bottom>
+   <left>
+      <VBox alignment="CENTER_RIGHT" prefHeight="312.0" prefWidth="239.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonProjectManagment" mnemonicParsing="false" onAction="#clickOnButtonProjectsManagment" prefHeight="35.0" prefWidth="246.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Proyectos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonStudentsManagment" mnemonicParsing="false" prefHeight="35.0" prefWidth="243.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Estudiantes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonProfessorManage" mnemonicParsing="false" prefHeight="35.0" prefWidth="254.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Profesores" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonNotificationManage" mnemonicParsing="false" prefHeight="35.0" prefWidth="245.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Notificación" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonCourseManagement" mnemonicParsing="false" prefHeight="35.0" prefWidth="242.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Experiencia Educativa" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonLinkedOrganizationManage" mnemonicParsing="false" prefHeight="35.0" prefWidth="239.0" style="-fx-background-color: grey; -fx-padding: 10; -fx-border-color: white;" text="Gestionar Organizaciones Vinculadas" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
