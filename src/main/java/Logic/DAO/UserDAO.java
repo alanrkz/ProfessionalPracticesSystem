@@ -100,9 +100,9 @@ public class UserDAO implements IUserDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "SELECT * FROM Usuario WHERE correoElectronico = ? AND contraseña = ? AND estado = true";
-
+            String query = "SELECT * FROM Usuario WHERE correoElectronico = ? AND contraseña = ? AND estado = true;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
 
@@ -110,17 +110,13 @@ public class UserDAO implements IUserDAO {
 
             if (resultSet.next()) {
                 User user = new User();
+
                 user.setIdUser(resultSet.getInt("idUsuario"));
                 user.setFirstName(resultSet.getString("primerNombre"));
                 user.setEmail(resultSet.getString("correoElectronico"));
-                user.setGender(resultSet.getString("genero"));
-                user.setStatus(resultSet.getBoolean("estado"));
 
                 return user;
             }
-
-            resultSet.close();
-            preparedStatement.close();
 
             return null;
 

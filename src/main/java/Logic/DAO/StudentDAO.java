@@ -118,4 +118,16 @@ public class StudentDAO implements IStudentDAO {
         return listStudents;
     }
     
+    public boolean getStudentByUserId(int idUser) throws DataIntegrityException {
+        String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
+        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "No se encontró el estudiante", e);
+            throw new DataIntegrityException("No se encontró el estudiante", e);
+        }
+    }
+    
 }

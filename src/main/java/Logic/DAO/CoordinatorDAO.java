@@ -1,6 +1,5 @@
 package Logic.DAO;
 
-
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.ICoordinatorDAO;
 import Logic.DTO.Coordinator;
@@ -8,10 +7,10 @@ import Logic.DTO.User;
 import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class CoordinatorDAO implements ICoordinatorDAO {
 
@@ -74,5 +73,17 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             throw new DataIntegrityException("Error al desactivar coordinador", e);
         }
     }
-    
+
+    public boolean getCoordinatorByUserId(int idUser) throws DataIntegrityException {
+        String query = "SELECT 1 FROM coordinador WHERE idUsuario = ?";
+        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "No se encontró el coordinador", e);
+            throw new DataIntegrityException("No se encontró el coordinador", e);
+        }
+    }
+
 }
