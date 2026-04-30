@@ -120,5 +120,10 @@ public class LinkedOrganization {
     public void setEvaluation(String evaluation) {
         this.evaluation = evaluation;
     }
+
+    @Override
+    public String toString() {
+        return idLikedOrganization + " - " + companyName;
+    }
     
 }

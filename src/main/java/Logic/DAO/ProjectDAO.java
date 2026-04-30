@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,6 +84,39 @@ public class ProjectDAO implements IProjectDAO {
             logger.log(Level.SEVERE, "Error al desactivar proyecto id: " + idProject, e);
             throw new DataIntegrityException("Error al desactivar proyecto", e);
         }
+    }
+    
+    @Override
+    public List<Project> getProjects () throws DataIntegrityException{
+        List<Project> projectsList = new ArrayList();
+        
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
+
+            String query = "SELECT * FROM Proyecto;";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Project project = new Project();
+
+                project.setIdProject(resultSet.getInt("idProyecto"));
+                project.setProjectName(resultSet.getString("nombreProyecto"));
+                project.setDuration(resultSet.getString("duracion"));
+                project.setDescription(resultSet.getString("descripcion"));
+                project.setAvailableSpaces(resultSet.getInt("cupo"));
+                project.setStatus(resultSet.getBoolean("estado"));
+                project.setProjectMethodology(resultSet.getString("metodologiaProyecto"));
+                project.setIdLikedOrganization(resultSet.getInt("idOrganizacionVinculada"));
+
+                projectsList.add(project);
+            }
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error al obtener los proyectos", e);
+            throw new DataIntegrityException("Error al obtener los proyectos", e);
+        }
+        
+        return projectsList;
     }
     
 }

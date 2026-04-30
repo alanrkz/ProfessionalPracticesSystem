@@ -81,10 +81,9 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new DataIntegrityException("Error al desactivar organizacion", exception);
         }
     }
-    
-    @Override
-    public List<LinkedOrganization> getOrganizations() throws DataIntegrityException{
-        List<LinkedOrganization> OrganizationsList = new ArrayList<>();
+
+    public List<LinkedOrganization> getOrganizations() throws DataIntegrityException {
+        List<LinkedOrganization> organizationsList = new ArrayList<>();
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -93,11 +92,21 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                LinkedOrganization linkedOrganization = new LinkedOrganization();
-                linkedOrganization.setIdLikedOrganization(resultSet.getInt("idOrganizacionVinculada"));
-                linkedOrganization.setCompanyName(resultSet.getString("nombreEmpresa"));
+                LinkedOrganization org = new LinkedOrganization();
 
-                OrganizationsList.add(linkedOrganization);
+                org.setIdLikedOrganization(resultSet.getInt("idOrganizacionVinculada"));
+                org.setCompanyName(resultSet.getString("nombreEmpresa"));
+                org.setSector(resultSet.getString("sector"));
+                org.setDirectUsers(resultSet.getString("usuarioDirectos"));
+                org.setIndirectUsers(resultSet.getString("usuariosIndirectos"));
+                org.setEmail(resultSet.getString("correoElectronico"));
+                org.setPhone(resultSet.getString("telefono"));
+                org.setStatus(resultSet.getBoolean("estado"));
+                org.setCity(resultSet.getString("ciudad"));
+                org.setAddress(resultSet.getString("direccion"));
+                org.setEvaluation(resultSet.getString("evaluacionOV"));
+
+                organizationsList.add(org);
             }
 
         } catch (SQLException e) {
@@ -105,7 +114,7 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
             throw new DataIntegrityException("Error al obtener las organizaciones", e);
         }
 
-        return OrganizationsList;
+        return organizationsList;
     }
-    
+
 }

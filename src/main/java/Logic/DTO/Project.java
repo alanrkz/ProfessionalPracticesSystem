@@ -89,5 +89,12 @@ public class Project {
     public void setIdLikedOrganization(int idLikedOrganization) {
         this.idLikedOrganization = idLikedOrganization;
     }
+
+    @Override
+    public String toString() {
+        return idProject + " - " + projectName;
+    }
       
+    
+    
 }

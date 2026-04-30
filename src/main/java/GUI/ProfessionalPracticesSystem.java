@@ -13,17 +13,17 @@ public class ProfessionalPracticesSystem extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        /*
+        
         Label label = new Label("a");
         Scene scene = new Scene(label, 600, 565);
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/FXMLInsertLinkedOrganization.fxml"));
+    Parent parent = FXMLLoader.load(getClass().getResource("/GUI/Views/FXMLManageProject.fxml"));
         scene.setRoot(parent);
 
         stage.setScene(scene);
-        stage.setTitle("Insertar Organizacion Vincualda");
+        stage.setTitle("a");
         stage.show();
         
-        */
+        /*
         
         Label label = new Label("a");
         Scene scene = new Scene(label, 600, 463);
@@ -33,7 +33,7 @@ public class ProfessionalPracticesSystem extends Application {
         stage.setScene(scene);
         stage.setTitle("Insertar Proyecto");
         stage.show();
-        
+        */
     }
     
     public static void main(String[] args) {
