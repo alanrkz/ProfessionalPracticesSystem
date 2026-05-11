@@ -45,12 +45,12 @@ public class FXMLManageProjectController implements Initializable {
     ProjectDAO projectDAO = new ProjectDAO();
     
     @FXML
-    public void loadProjects() throws DataIntegrityException {
+    public void loadProjects() {
         try {
             ObservableList<Project> observableList = FXCollections.observableList(projectDAO.getProjects());
             comboBoxProjects.setItems(observableList);
         } catch (DataIntegrityException e) {
-            throw new DataIntegrityException("Error con la base de datos");
+            AlertMessages.showAlert("Error de conexion con la base de datos al cargar los proyectos");
         }
     }
     
@@ -69,11 +69,7 @@ public class FXMLManageProjectController implements Initializable {
 
             stage.setOnHidden(e -> {
                 currentStage.show();
-                try {
                     loadProjects();
-                } catch (DataIntegrityException ex) {
-                    AlertMessages.showAlert("Error en la base de datos al cargar los proyectos");
-                }
             });
 
             stage.show();
@@ -82,14 +78,78 @@ public class FXMLManageProjectController implements Initializable {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
         }
     }
+    
+    @FXML
+    public void buttonUpdate() {
+        Project selectedProject = comboBoxProjects.getSelectionModel().getSelectedItem();
+
+        if (selectedProject == null) {
+            AlertMessages.showAlert("Seleccione un proyecto");
+        } else {
+            try {
+                Stage currentStage = (Stage) buttonUpdate.getScene().getWindow();
+                currentStage.hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLUpdateProject.fxml"));
+                Parent root = loader.load();
+
+                FXMLUpdateProjectController controller = loader.getController();
+                controller.setProject(selectedProject);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Actualizar Proyecto");
+
+                stage.setOnHidden(e -> {
+                    currentStage.show();
+                    loadProjects();
+                });
+
+                stage.show();
+
+            } catch (IOException e) {
+                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            }
+        }
+    }
+    
+    @FXML
+    public void buttonDeactive() {
+        Project selectedProject = comboBoxProjects.getSelectionModel().getSelectedItem();
+
+        if (selectedProject == null) {
+            AlertMessages.showAlert("Seleccione un proyecto");
+        } else {
+            try {
+                Stage currentStage = (Stage) buttonDeactive.getScene().getWindow();
+                currentStage.hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLDeactivateProject.fxml"));
+                Parent root = loader.load();
+
+                FXMLDeactivateProjectController controller = loader.getController();
+                controller.setProject(selectedProject);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Inactivar Proyecto");
+
+                stage.setOnHidden(e -> {
+                    currentStage.show();
+                    loadProjects();
+                });
+
+                stage.show();
+
+            } catch (IOException e) {
+                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            }
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            loadProjects();
-        } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error con la base de datos al obtener los proyectos");
-        }
+        loadProjects();
     }    
     
     @FXML

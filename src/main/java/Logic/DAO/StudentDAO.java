@@ -22,7 +22,7 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public boolean registerStudent(Student student) throws DataIntegrityException {
-
+        boolean successfulRegister = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, sectorSocial, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -42,11 +42,10 @@ public class StudentDAO implements IStudentDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registro estudiante: " + student.getEnrollment());
-                return false;
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar estudiante", e);
@@ -56,7 +55,7 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public boolean deactivateStudent(User user, Student student) throws DataIntegrityException {
-
+        boolean successfulDeactivate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -70,11 +69,10 @@ public class StudentDAO implements IStudentDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo estudiante con id: " + student.getIdUser());
-                return false;
+                successfulDeactivate = true;
             }
+            
+            return successfulDeactivate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al desactivar estudiante", e);
@@ -118,22 +116,25 @@ public class StudentDAO implements IStudentDAO {
         return listStudents;
     }
     
+    @Override
     public boolean existsStudent(int idUser) throws DataIntegrityException {
-        String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
+        boolean studentExists = false;
         try (Connection connection = DatabaseConnection.connect()){
+            
+            String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
             
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                return true;
-            } else {
-                return false;
-            }
+                studentExists = true;
+            } 
+            
+            return studentExists;
             
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error de conexion con la base de datos", e);
-            throw new DataIntegrityException("Error de conexion con la base de datos", e);
+            logger.log(Level.SEVERE, "Error al verificar la ecistencia del estudiante", e);
+            throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del estudiante. Intentalo mas tarde", e);
         }
     }
     

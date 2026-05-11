@@ -8,7 +8,7 @@ public class Coordinator extends User{
     private String numberStaff;
     private Date registrationDate;
     private Date terminationDate;
-    private String serviceTime; //Calcular a partir de las fechas de registro
+    private String serviceTime;
     private int idUser;
 
     

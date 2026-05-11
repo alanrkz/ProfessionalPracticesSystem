@@ -20,14 +20,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class FXMLInsertLinkedOrganizationController implements Initializable {
+/**
+ * FXML Controller class
+ *
+ * @author alan rkz
+ */
+public class FXMLUpdateLinkedOrganizationController implements Initializable {
 
     @FXML
-    private Button buttonInsert;
-    @FXML
-    private Button buttonCancel;
-    @FXML
-    private TextField textFieldCompanyName;
+    private TextField textFieldNameOrganization;
     @FXML
     private TextField textFieldDirectUsers;
     @FXML
@@ -37,9 +38,14 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
     @FXML
     private TextField textFieldPhone;
     @FXML
-    private TextArea textAreaAddress;
-    @FXML
     private ComboBox<CatalogSocialSector> comboBoxSector;
+    @FXML
+    private Button buttonUpdate;
+    @FXML
+    private Button buttonCancel;
+    @FXML
+    private TextArea textAreaAddress;
+    private LinkedOrganization linkedOrganization;
 
     CatalogSocialSectorDAO catalogSocialSectorDAO = new CatalogSocialSectorDAO();
 
@@ -52,32 +58,51 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
         }
     }
 
+    public void loadFields() {
+        textFieldNameOrganization.setText(linkedOrganization.getCompanyName());
+        textFieldDirectUsers.setText(linkedOrganization.getDirectUsers());
+        textFieldIndirectUsers.setText(linkedOrganization.getIndirectUsers());
+        textFieldEmail.setText(linkedOrganization.getEmail());
+        textFieldPhone.setText(linkedOrganization.getPhone());
+        textAreaAddress.setText(linkedOrganization.getAddress());
+
+    }
+
     @FXML
-    public void insertLinkedOrganization() {
+    public void buttonCancel(ActionEvent event) {
+        Stage stage = (Stage) buttonCancel.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void buttonUpdate() {
         try {
             if (valideFields()) {
                 if (LogInValidations.validateEmail(textFieldEmail.getText())) {
-                    LinkedOrganization linkedOrganization = new LinkedOrganization();
-                    linkedOrganization.setCompanyName(textFieldCompanyName.getText());
+                    LinkedOrganization updatedOrganization = new LinkedOrganization();
+                    updatedOrganization.setIdLikedOrganization(linkedOrganization.getIdLikedOrganization());
+                    updatedOrganization.setCompanyName(textFieldNameOrganization.getText());
                     CatalogSocialSector catalogSocialSector = (CatalogSocialSector) comboBoxSector.getValue();
-                    linkedOrganization.setSector(catalogSocialSector.getSectorName());
-                    linkedOrganization.setDirectUsers(textFieldDirectUsers.getText());
-                    linkedOrganization.setIndirectUsers(textFieldIndirectUsers.getText());
-                    linkedOrganization.setEmail(textFieldEmail.getText());
-                    linkedOrganization.setPhone(textFieldPhone.getText());
-                    linkedOrganization.setAddress(textAreaAddress.getText());
+                    updatedOrganization.setSector(catalogSocialSector.getSectorName());
+                    updatedOrganization.setDirectUsers(textFieldDirectUsers.getText());
+                    updatedOrganization.setIndirectUsers(textFieldIndirectUsers.getText());
+                    updatedOrganization.setEmail(textFieldEmail.getText());
+                    updatedOrganization.setPhone(textFieldPhone.getText());
+                    updatedOrganization.setAddress(textAreaAddress.getText());
 
                     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
 
-                    if (linkedOrganizationDAO.registerOrganization(linkedOrganization)) {
-                        AlertMessages.showAlert("Registro Exitoso de la Organizacion vinculada");
+                    if (linkedOrganizationDAO.updateOrganization(updatedOrganization)) {
+                        AlertMessages.showAlert("Actualizacion Existosa de la Organizacion vinculada");
+                        Stage stage = (Stage) buttonUpdate.getScene().getWindow();
+                        stage.close();
                     }
                 } else {
                     AlertMessages.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
                 }
 
             } else {
-                AlertMessages.showAlert("Los campos obligatorios no pueden esatr vacios");
+                AlertMessages.showAlert("Los campos obligatorios no pueden estar vacios");
             }
         } catch (DataIntegrityException e) {
             AlertMessages.showAlert("Error de conexcion con la base de datos");
@@ -87,7 +112,7 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
     public boolean valideFields() {
         boolean verified = true;
 
-        if (textFieldCompanyName.getText() == null || textFieldCompanyName.getText().trim().isEmpty()) {
+        if (textFieldNameOrganization.getText() == null || textFieldNameOrganization.getText().trim().isEmpty()) {
             verified = false;
         }
 
@@ -123,10 +148,9 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
         loadSocialSectors();
     }
 
-    @FXML
-    public void buttonCancel(ActionEvent event) {
-        Stage stage = (Stage) buttonCancel.getScene().getWindow();
-        stage.close();
+    public void setLinkedOrganization(LinkedOrganization linkedOrganization) {
+        this.linkedOrganization = linkedOrganization;
+        loadFields();
     }
 
 }

@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
@@ -9,7 +10,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -50,7 +50,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
             ObservableList<LinkedOrganization> observableList = FXCollections.observableList(linkedOrganizationDAO.getOrganizations());
             comboBoxLinkedOrganizations.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexcion con la base de datos al cargar las organizaciones vinculadas");
+            AlertMessages.showAlert("Error de conexion con la base de datos al cargar las organizaciones vinculadas");
         }
     }
 
@@ -79,11 +79,80 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
         }
     }
 
+    @FXML
+    public void buttonUpdate() {
+        LinkedOrganization selectedOrganization = comboBoxLinkedOrganizations.getSelectionModel().getSelectedItem();
+
+        if (selectedOrganization == null) {
+            AlertMessages.showAlert("Seleccione una organización");
+        } else {
+            try {
+                Stage currentStage = (Stage) buttonUpdate.getScene().getWindow();
+                currentStage.hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLUpdateLinkedOrganization.fxml"));
+                Parent root = loader.load();
+
+                FXMLUpdateLinkedOrganizationController controller = loader.getController();
+                controller.setLinkedOrganization(selectedOrganization);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Actualizar Organización Vinculada");
+
+                stage.setOnHidden(e -> {
+                    currentStage.show();
+                    loadLinkedOrganizations();
+                });
+
+                stage.show();
+
+            } catch (IOException e) {
+                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            }
+        }
+
+    }
+    
+    @FXML
+    public void buttonDeactive() {
+        LinkedOrganization selectedOrganization = comboBoxLinkedOrganizations.getSelectionModel().getSelectedItem();
+
+        if (selectedOrganization == null) {
+            AlertMessages.showAlert("Seleccione una organización");
+        } else {
+            try {
+                Stage currentStage = (Stage) buttonDeactive.getScene().getWindow();
+                currentStage.hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLDeactivateLinkedOrganization.fxml"));
+                Parent root = loader.load();
+
+                FXMLDeactivateLinkedOrganizationController controller = loader.getController();
+                controller.setLinkedOrganization(selectedOrganization);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Inactivar Organización Vinculada");
+
+                stage.setOnHidden(e -> {
+                    currentStage.show();
+                    loadLinkedOrganizations();
+                });
+
+                stage.show();
+
+            } catch (IOException e) {
+                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            }
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadLinkedOrganizations();
     }
-    
+
     @FXML
     public void buttonBack() {
         Stage stage = (Stage) buttonBack.getScene().getWindow();

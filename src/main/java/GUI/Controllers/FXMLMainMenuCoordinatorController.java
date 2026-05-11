@@ -12,45 +12,30 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
- * @author ELLIN JV
+ * @author alan rkz
  */
-public class FXMLCoordinatorMainWindowController implements Initializable {
+public class FXMLMainMenuCoordinatorController implements Initializable {
 
     @FXML
-    private BorderPane fxmlCoordinatorMainWindow;
+    private Button buttonProjectManage;
     @FXML
-    private Label labelCoordinatorOptions;
-    @FXML
-    private Button buttonProjectManagment;
-    @FXML
-    private Button buttonStudentsManagment;
+    private Button buttonStudentsManage;
     @FXML
     private Button buttonProfessorManage;
     @FXML
     private Button buttonNotificationManage;
     @FXML
-    private Button buttonCourseManagement;
+    private Button buttonCourseManage;
     @FXML
     private Button buttonLinkedOrganizationManage;
     @FXML
     private Button buttonExit;
 
-   
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
-    @FXML
-    private void clickOnButtonProjectsManagment(ActionEvent event) {
-    }
     
     @FXML
     public void buttonLinkedOrganizationManage() {
@@ -77,9 +62,9 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
     }
     
     @FXML
-    public void buttonProjectManagment() {
+    public void buttonProjectManage() {
         try {
-            Stage currentStage = (Stage) buttonProjectManagment.getScene().getWindow();
+            Stage currentStage = (Stage) buttonProjectManage.getScene().getWindow();
             currentStage.hide();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLManageProject.fxml"));
@@ -123,10 +108,16 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
         }
     }
-
+    
     @FXML
-    private void clickOnButtonExit(ActionEvent event) {
-        ((Stage) buttonExit.getScene().getWindow()).close();
+    private void buttonExit() {
+        Stage stage = (Stage) buttonExit.getScene().getWindow();
+        stage.close();
     }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+    }    
     
 }

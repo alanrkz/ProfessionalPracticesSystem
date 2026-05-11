@@ -1,7 +1,7 @@
 package Logic.DTO;
 
 
-public class ProjectManager {
+public class TechnicalManager {
     private int idProjectManager;
     private String managerName;
     private String managerPosition;
@@ -9,10 +9,10 @@ public class ProjectManager {
     private int idProject;
 
     
-    public ProjectManager() {
+    public TechnicalManager() {
     }
 
-    public ProjectManager(int idProjectManager, String managerName, String managerPosition, String managerEmail, int idProject) {
+    public TechnicalManager(int idProjectManager, String managerName, String managerPosition, String managerEmail, int idProject) {
         this.idProjectManager = idProjectManager;
         this.managerName = managerName;
         this.managerPosition = managerPosition;

@@ -17,5 +17,7 @@ public interface IStudentDAO {
     public boolean deactivateStudent(User user, Student student) throws DataIntegrityException;
     
     public List<Student> getStudents() throws DataIntegrityException;
+    
+    public boolean existsStudent(int idUser) throws DataIntegrityException;
 
 }

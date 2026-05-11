@@ -20,6 +20,6 @@ public interface IProfessorDAO {
     
     public ArrayList<Professor> getProfessors() throws DataIntegrityException;
     
-    public boolean getProfessorByUserId(int idUser) throws DataIntegrityException;
+    public boolean existsProfessor(int idUser) throws DataIntegrityException;
     
 }

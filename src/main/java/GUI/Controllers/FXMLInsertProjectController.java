@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+
 import Logic.DAO.ProjectDAO;
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
@@ -13,15 +14,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 
 public class FXMLInsertProjectController implements Initializable {
 
@@ -34,17 +33,16 @@ public class FXMLInsertProjectController implements Initializable {
     @FXML
     private TextField textFieldDuration;
     @FXML
-    private TextField textFieldDescription;
-    @FXML
     private TextField textFieldAvailableSpaces;
     @FXML
     private TextField textFieldProjectMethodology;
     @FXML
     private ComboBox comboBoxLinkedOrganization;
-
+    @FXML
+    private TextArea textAreaDescription;
+    
     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
 
-    @FXML
     public void loadLinkedOrganizations() {
         try {
             ObservableList<LinkedOrganization> observableList = FXCollections.observableList(linkedOrganizationDAO.getOrganizations());
@@ -61,7 +59,7 @@ public class FXMLInsertProjectController implements Initializable {
                 Project project = new Project();
                 project.setProjectName(textFieldProjectName.getText());
                 project.setDuration(textFieldDuration.getText());
-                project.setDescription(textFieldDescription.getText());
+                project.setDescription(textAreaDescription.getText());
                 project.setAvailableSpaces(Integer.parseInt(textFieldAvailableSpaces.getText()));
                 project.setProjectMethodology(textFieldProjectMethodology.getText());
                 LinkedOrganization linkedOrganization = (LinkedOrganization) comboBoxLinkedOrganization.getValue();
@@ -89,7 +87,7 @@ public class FXMLInsertProjectController implements Initializable {
         if (textFieldDuration.getText() == null || textFieldDuration.getText().trim().isEmpty()) {
             verified = false;
         }
-        if (textFieldDescription.getText() == null || textFieldDescription.getText().trim().isEmpty()) {
+        if (textAreaDescription.getText() == null || textAreaDescription.getText().trim().isEmpty()) {
             verified = false;
         }
         if (textFieldAvailableSpaces.getText() == null || textFieldAvailableSpaces.getText().trim().isEmpty()) {

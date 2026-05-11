@@ -2,8 +2,7 @@ package Logic.DAO;
 
 
 import DataAccess.DatabaseConnection;
-import Logic.Contracts.IProjectManagerDAO;
-import Logic.DTO.ProjectManager;
+import Logic.DTO.TechnicalManager;
 import Logic.Exceptions.DataIntegrityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,14 +11,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Logic.Contracts.ITechnicalManagerDAO;
 
 
-public class ProjectManagerDAO implements IProjectManagerDAO {
+public class TechnicalManagerDAO implements ITechnicalManagerDAO {
 
-    private static final Logger logger = Logger.getLogger(ProjectManagerDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(TechnicalManagerDAO.class.getName());
 
     @Override
-    public boolean registerManager(ProjectManager projectManager) throws DataIntegrityException {
+    public boolean registerManager(TechnicalManager projectManager) throws DataIntegrityException {
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 

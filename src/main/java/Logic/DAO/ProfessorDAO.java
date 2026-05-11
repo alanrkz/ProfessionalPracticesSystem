@@ -1,5 +1,6 @@
 package Logic.DAO;
 
+
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProfessorDAO;
 import Logic.DTO.Professor;
@@ -19,6 +20,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
+        boolean successfulRegister = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -38,11 +40,10 @@ public class ProfessorDAO implements IProfessorDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se inserto ningun registro para el profesor con numero: " + professor.getNumberStaff());
-                return false;
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar profesor con numero: " + professor.getNumberStaff(), e);
@@ -52,6 +53,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean deactivateProfessor(User user, Professor professor) throws DataIntegrityException {
+        boolean successfulDeactivate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -65,11 +67,10 @@ public class ProfessorDAO implements IProfessorDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo ningun usuario con id: " + professor.getIdUser());
-                return false;
+                successfulDeactivate = true;
             }
+            
+            return successfulDeactivate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al desactivar profesor con idUsuario: " + professor.getIdUser(), e);
@@ -79,6 +80,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean updateProfessor(Professor professor) throws DataIntegrityException {
+        boolean successfulUpdate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Profesor SET turno = ?, esCoordinador = ? WHERE numeroPersonal = ?;";
@@ -94,11 +96,10 @@ public class ProfessorDAO implements IProfessorDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se actualizo el profesor con numero: " + professor.getNumberStaff());
-                return false;
+                successfulUpdate = true;
             }
+            
+            return successfulUpdate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al actualizar profesor con numero: " + professor.getNumberStaff(), e);
@@ -108,7 +109,6 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public ArrayList<Professor> getProfessors() throws DataIntegrityException {
-
         ArrayList<Professor> listProfessors = new ArrayList<>();
         String query = "SELECT * FROM Profesor;";
 
@@ -143,15 +143,25 @@ public class ProfessorDAO implements IProfessorDAO {
     }
 
     @Override
-    public boolean getProfessorByUserId(int idUser) throws DataIntegrityException {
-        String query = "SELECT 1 FROM profesor WHERE idUsuario = ?";
-        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    public boolean existsProfessor(int idUser) throws DataIntegrityException {
+        boolean professorExists = false;
+        try (Connection connection = DatabaseConnection.connect()) {
+            
+            String query = "SELECT 1 FROM profesor WHERE idUsuario = ?";
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+
+            if (resultSet.next()) {
+                professorExists = true;
+            }
+            
+            return professorExists;
+            
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "No se encontró el profesor", e);
-            throw new DataIntegrityException("No se encontró el profesor", e);
+            logger.log(Level.SEVERE, "Error al verificar existencia del profesor", e);
+            throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del profesor. Intentalo mas tarde", e);
         }
     }
 

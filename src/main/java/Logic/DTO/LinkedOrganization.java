@@ -10,15 +10,13 @@ public class LinkedOrganization {
     private String email;
     private String phone;
     private boolean status;
-    private String city;
     private String address;
-    private String evaluation;
 
     
     public LinkedOrganization() {
     }
 
-    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, boolean status, String city, String address, String evaluation) {
+    public LinkedOrganization(int idLikedOrganization, String companyName, String sector, String directUsers, String indirectUsers, String email, String phone, boolean status, String address) {
         this.idLikedOrganization = idLikedOrganization;
         this.companyName = companyName;
         this.sector = sector;
@@ -27,9 +25,7 @@ public class LinkedOrganization {
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.city = city;
         this.address = address;
-        this.evaluation = evaluation;
     }
     
     
@@ -97,28 +93,12 @@ public class LinkedOrganization {
         this.status = status;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getEvaluation() {
-        return evaluation;
-    }
-
-    public void setEvaluation(String evaluation) {
-        this.evaluation = evaluation;
     }
 
     @Override

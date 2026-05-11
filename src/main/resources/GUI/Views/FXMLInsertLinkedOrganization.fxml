@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -13,7 +15,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="buttonCancel" layoutX="400.0" layoutY="498.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar">
+      <Button fx:id="buttonCancel" layoutX="400.0" layoutY="498.0" mnemonicParsing="false" onAction="#buttonCancel" text="Cancelar">
          <font>
             <Font size="14.0" />
          </font>
@@ -21,23 +23,21 @@
       <TextField fx:id="textFieldCompanyName" layoutX="263.0" layoutY="84.0" prefHeight="26.0" prefWidth="255.0" />
       <Text layoutX="77.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de la Empresa" />
       <Text layoutX="121.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sector" />
-      <TextField fx:id="textFieldSector" layoutX="263.0" layoutY="126.0" prefHeight="26.0" prefWidth="255.0" />
       <Text layoutX="89.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuarios Directos" />
       <Text layoutX="87.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuarios Indirectos" />
       <Text layoutX="89.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electronico" />
       <Text layoutX="114.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" />
-      <Text layoutX="119.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad" />
-      <Text layoutX="113.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" />
+      <Text layoutX="110.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" />
       <TextField fx:id="textFieldDirectUsers" layoutX="263.0" layoutY="173.0" prefHeight="26.0" prefWidth="255.0" />
       <TextField fx:id="textFieldIndirectUsers" layoutX="263.0" layoutY="217.0" prefHeight="26.0" prefWidth="255.0" />
       <TextField fx:id="textFieldEmail" layoutX="263.0" layoutY="260.0" prefHeight="26.0" prefWidth="255.0" />
       <TextField fx:id="textFieldPhone" layoutX="263.0" layoutY="313.0" prefHeight="26.0" prefWidth="255.0" />
-      <TextField fx:id="textFieldCity" layoutX="263.0" layoutY="365.0" prefHeight="26.0" prefWidth="255.0" />
-      <TextField fx:id="textFieldAddress" layoutX="263.0" layoutY="415.0" prefHeight="26.0" prefWidth="255.0" />
       <Text layoutX="127.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" INSERTAR ORGANIZACION VINCULADA">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Text>
+      <TextArea fx:id="textAreaAddress" layoutX="263.0" layoutY="359.0" prefHeight="70.0" prefWidth="255.0" />
+      <ComboBox fx:id="comboBoxSector" layoutX="263.0" layoutY="126.0" prefHeight="26.0" prefWidth="255.0" />
    </children>
 </AnchorPane>
