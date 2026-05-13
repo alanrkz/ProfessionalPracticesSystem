@@ -22,26 +22,27 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public boolean registerStudent(Student student) throws DataIntegrityException {
+        
         boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, sectorSocial, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Alumno (matricula, fechaNacimiento, horasCubiertas, lenguaIndigena, nrc, idUsuario, idRol) VALUES (?, ?, ?, ?, ?, ?, 3);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, student.getEnrollment());
             preparedStatement.setDate(2, student.getBirthdate());
             preparedStatement.setInt(3, student.getHoursCovered());
-            preparedStatement.setString(4, student.getSocialSector());
-            preparedStatement.setBoolean(5, student.isIndigenousLanguage());
+            preparedStatement.setBoolean(4, student.isIndigenousLanguage());
+            preparedStatement.setString(5, student.getNrc());
             preparedStatement.setInt(6, student.getIdUser());
-            preparedStatement.setString(7, student.getNrc());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
+            if (affectedRows > unaffectedRows) {
                 successfulRegister = true;
             }
             
@@ -55,7 +56,9 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public boolean deactivateStudent(User user, Student student) throws DataIntegrityException {
+        
         boolean successfulDeactivate = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -68,7 +71,7 @@ public class StudentDAO implements IStudentDAO {
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
+            if (affectedRows > unaffectedRows) {
                 successfulDeactivate = true;
             }
             
@@ -96,10 +99,10 @@ public class StudentDAO implements IStudentDAO {
                 student.setEnrollment(resultSet.getString("matricula"));
                 student.setBirthdate(resultSet.getDate("fechaNacimiento"));
                 student.setHoursCovered(resultSet.getInt("horasCubiertas"));
-                student.setSocialSector(resultSet.getString("sectorSocial"));
                 student.setIndigenousLanguage(resultSet.getBoolean("lenguaIndigena"));
-                student.setIdUser(resultSet.getInt("idUsuario"));
                 student.setNrc(resultSet.getString("nrc"));
+                student.setIdUser(resultSet.getInt("idUsuario"));
+                student.setIdRol(resultSet.getInt("idRol"));
 
                 listStudents.add(student);
             }
@@ -118,6 +121,7 @@ public class StudentDAO implements IStudentDAO {
     
     @Override
     public boolean existsStudent(int idUser) throws DataIntegrityException {
+        
         boolean studentExists = false;
         try (Connection connection = DatabaseConnection.connect()){
             

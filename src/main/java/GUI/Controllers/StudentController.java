@@ -94,7 +94,6 @@ public class StudentController {
             student.setEnrollment(textFieldEnrollment.getText());
             student.setNrc(textFieldNrc.getText());
             student.setHoursCovered(Integer.parseInt(textFieldHoursCovered.getText()));
-            student.setSocialSector(comboBoxSector.getValue());
             student.setBirthdate(Date.valueOf(datePickerBirthdate.getValue()));
             student.setIndigenousLanguage(chkIsIndigenousLanguage.isSelected());
 

@@ -19,17 +19,19 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     @Override
     public boolean registerCoordinator(Coordinator coordinator) throws DataIntegrityException {
+        
         boolean successfulRegister = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, coordinator.getNumberStaff());
             preparedStatement.setDate(2, coordinator.getRegistrationDate());
             preparedStatement.setDate(3, coordinator.getTerminationDate());
-            preparedStatement.setString(4, coordinator.getServiceTime());
+            preparedStatement.setBoolean(4, coordinator.getStatusCoordinator());
             preparedStatement.setInt(5, coordinator.getIdUser());
+            preparedStatement.setInt(6, coordinator.getIdRol());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -50,6 +52,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     @Override
     public boolean deactivateCoordinator(User user, Coordinator coordinator) throws DataIntegrityException {
+        
         boolean successfulDeactivate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
@@ -77,6 +80,7 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     @Override
     public boolean existsCoordinator(int idUser) throws DataIntegrityException {
+        
         boolean coordinadorExists = false;
         try (Connection connection = DatabaseConnection.connect()) {
             

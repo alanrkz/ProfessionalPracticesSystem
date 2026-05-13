@@ -41,7 +41,7 @@ public class FXMLManageProfessorController implements Initializable {
 
     public void loadProfessors() {
         try {
-            ObservableList<Professor> observableList = FXCollections.observableList(professorDAO.getProfessors());
+            ObservableList<Professor> observableList = FXCollections.observableList(professorDAO.getProfessorsForComboBox());
             comboBoxProfessors.setItems(observableList);
         } catch (DataIntegrityException e) {
             AlertMessages.showAlert("Error de conexion con la base de datos al cargar los profesores");

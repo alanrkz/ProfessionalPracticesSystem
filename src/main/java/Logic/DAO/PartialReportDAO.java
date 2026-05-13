@@ -23,14 +23,17 @@ public class PartialReportDAO implements IPartialReportDAO {
     @Override
     public boolean registerPartialReport(PartialReport partialReport) throws DataIntegrityException {
 
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO ReporteParcial (archivoReporteParcial, resultadosObtenidos, idReporte) VALUES (?, ?, ?);";
+            String query = "INSERT INTO ReporteParcial (archivoReporteParcial, tiempoPlaneado, tiempoReal, idReporte) VALUES (?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, partialReport.getPartialReportFile());
-            preparedStatement.setString(2, partialReport.getResultsObtained());
-            preparedStatement.setInt(3, partialReport.getIdReport());
+            preparedStatement.setString(2, partialReport.getPlannedTime());
+            preparedStatement.setString(3, partialReport.getRealTime());
+            preparedStatement.setInt(4, partialReport.getIdReport());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -43,12 +46,11 @@ public class PartialReportDAO implements IPartialReportDAO {
             resultSet.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registro reporte parcial");
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar reporte parcial", e);
@@ -59,26 +61,28 @@ public class PartialReportDAO implements IPartialReportDAO {
     @Override
     public boolean modifyPartialReport(PartialReport partialReport) throws DataIntegrityException {
 
+        boolean successfulModify = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "UPDATE ReporteParcial SET archivoReporteParcial = ?, resultadosObtenidos = ? WHERE numeroReporte = ?;";
+            String query = "UPDATE ReporteParcial SET archivoReporteParcial = ?, tiempoPlenado = ?, tiempoReal = ? WHERE numeroReporte = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, partialReport.getPartialReportFile());
-            preparedStatement.setString(2, partialReport.getResultsObtained());
-            preparedStatement.setInt(3, partialReport.getReportNumber());
+            preparedStatement.setString(2, partialReport.getPlannedTime());
+            preparedStatement.setString(3, partialReport.getRealTime());
+            preparedStatement.setInt(4, partialReport.getReportNumber());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se modifico reporte parcial: " + partialReport.getReportNumber());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulModify = true;
             }
+            
+            return successfulModify;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al modificar reporte parcial", e);
@@ -88,6 +92,7 @@ public class PartialReportDAO implements IPartialReportDAO {
     
     @Override
     public List<PartialReport> getPartialReports() throws DataIntegrityException{
+        
         List <PartialReport> listPartialReports = new ArrayList<>();
         
         String query = "SELECT * FROM ReporteParcial;";
@@ -102,7 +107,8 @@ public class PartialReportDAO implements IPartialReportDAO {
                 PartialReport partialReport = new PartialReport();
                 partialReport.setReportNumber(resultSet.getInt("numeroReporte"));
                 partialReport.setPartialReportFile(resultSet.getString("archivoReporteParcial"));
-                partialReport.setResultsObtained(resultSet.getString("resultadosObtenidos"));
+                partialReport.setPlannedTime(resultSet.getString("tiempoPlaneado"));
+                partialReport.setRealTime(resultSet.getString("tiempoReal"));
                 partialReport.setIdReport(resultSet.getInt("idReporte"));
                 
                 listPartialReports.add(partialReport);

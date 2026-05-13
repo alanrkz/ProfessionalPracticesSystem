@@ -1,21 +1,31 @@
 package Logic.DTO;
 
+import java.sql.Date;
+
 
 public class PartialReport extends Report{
     private int reportNumber;
     private String partialReportFile;
-    private String resultsObtained;
-    private int idReport;
+    private String plannedTime;
+    private String realTime;
 
     
     public PartialReport() {
     }
 
-    public PartialReport(int reportNumber, String partialReportFile, String resultsObtained, int idReport) {
+    public PartialReport(int reportNumber, String partialReportFile, String plannedTime, String realTime) {
         this.reportNumber = reportNumber;
         this.partialReportFile = partialReportFile;
-        this.resultsObtained = resultsObtained;
-        this.idReport = idReport;
+        this.plannedTime = plannedTime;
+        this.realTime = realTime;
+    }
+
+    public PartialReport(int reportNumber, String partialReportFile, String plannedTime, String realTime, int idReport, String description, Date dueDate, Double qualification, String observations, String enrollment) {
+        super(idReport, description, dueDate, qualification, observations, enrollment);
+        this.reportNumber = reportNumber;
+        this.partialReportFile = partialReportFile;
+        this.plannedTime = plannedTime;
+        this.realTime = realTime;
     }
 
     
@@ -35,20 +45,20 @@ public class PartialReport extends Report{
         this.partialReportFile = partialReportFile;
     }
 
-    public String getResultsObtained() {
-        return resultsObtained;
+    public String getPlannedTime() {
+        return plannedTime;
     }
 
-    public void setResultsObtained(String resultsObtained) {
-        this.resultsObtained = resultsObtained;
+    public void setPlannedTime(String plannedTime) {
+        this.plannedTime = plannedTime;
     }
 
-    public int getIdReport() {
-        return idReport;
+    public String getRealTime() {
+        return realTime;
     }
 
-    public void setIdReport(int idReport) {
-        this.idReport = idReport;
+    public void setRealTime(String realTime) {
+        this.realTime = realTime;
     }
     
 }

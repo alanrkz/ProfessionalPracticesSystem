@@ -1,20 +1,31 @@
 package Logic.DTO;
 
+import java.sql.Date;
+
 
 public class MonthlyReport extends Report{
     private int reportNumber;
     private String montlyReportFile;
-    private String ActivitiesPerformed;
-    private int idReport;
+    private String month;
+    private int hoursReported;
 
     
     public MonthlyReport() {
     }
 
-    public MonthlyReport(String montlyReportFile, String ActivitiesPerformed, int idReport) {
+    public MonthlyReport(int reportNumber, String montlyReportFile, String month, int hoursReported) {
+        this.reportNumber = reportNumber;
         this.montlyReportFile = montlyReportFile;
-        this.ActivitiesPerformed = ActivitiesPerformed;
-        this.idReport = idReport;
+        this.month = month;
+        this.hoursReported = hoursReported;
+    }
+
+    public MonthlyReport(int reportNumber, String montlyReportFile, String month, int hoursReported, int idReport, String description, Date dueDate, Double qualification, String observations, String enrollment) {
+        super(idReport, description, dueDate, qualification, observations, enrollment);
+        this.reportNumber = reportNumber;
+        this.montlyReportFile = montlyReportFile;
+        this.month = month;
+        this.hoursReported = hoursReported;
     }
 
     
@@ -34,20 +45,20 @@ public class MonthlyReport extends Report{
         this.montlyReportFile = montlyReportFile;
     }
 
-    public String getActivitiesPerformed() {
-        return ActivitiesPerformed;
+    public String getMonth() {
+        return month;
     }
 
-    public void setActivitiesPerformed(String ActivitiesPerformed) {
-        this.ActivitiesPerformed = ActivitiesPerformed;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public int getIdReport() {
-        return idReport;
+    public int getHoursReported() {
+        return hoursReported;
     }
 
-    public void setIdReport(int idReport) {
-        this.idReport = idReport;
+    public void setHoursReported(int hoursReported) {
+        this.hoursReported = hoursReported;
     }
      
 }

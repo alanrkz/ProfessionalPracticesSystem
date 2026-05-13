@@ -20,26 +20,27 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
+        
         boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getNumberStaff());
             preparedStatement.setString(2, professor.getShift());
             preparedStatement.setDate(3, professor.getRegistrationDate());
             preparedStatement.setDate(4, professor.getTerminationDate());
-            preparedStatement.setString(5, professor.getServiceTime());
-            preparedStatement.setBoolean(6, professor.isIsCoordinator());
-            preparedStatement.setInt(7, professor.getIdUser());
+            preparedStatement.setBoolean(5, professor.isIsCoordinator());
+            preparedStatement.setInt(6, professor.getIdUser());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
+            if (affectedRows > unaffectedRows) {
                 successfulRegister = true;
             }
             
@@ -53,7 +54,9 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean deactivateProfessor(User user, Professor professor) throws DataIntegrityException {
+        
         boolean successfulDeactivate = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -66,7 +69,7 @@ public class ProfessorDAO implements IProfessorDAO {
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
+            if (affectedRows > unaffectedRows) {
                 successfulDeactivate = true;
             }
             
@@ -80,22 +83,25 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean updateProfessor(Professor professor) throws DataIntegrityException {
+        
         boolean successfulUpdate = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "UPDATE Profesor SET turno = ?, esCoordinador = ? WHERE numeroPersonal = ?;";
+            String query = "UPDATE Profesor SET turno = ?, esCoordinador = ?, idRol = ? WHERE numeroPersonal = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getShift());
             preparedStatement.setBoolean(2, professor.isIsCoordinator());
-            preparedStatement.setString(3, professor.getNumberStaff());
+            preparedStatement.setInt(3, professor.getIdRol());
+            preparedStatement.setString(4, professor.getNumberStaff());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
+            if (affectedRows > unaffectedRows) {
                 successfulUpdate = true;
             }
             
@@ -109,6 +115,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public ArrayList<Professor> getProfessors() throws DataIntegrityException {
+        
         ArrayList<Professor> listProfessors = new ArrayList<>();
         String query = "SELECT * FROM Profesor;";
 
@@ -123,9 +130,42 @@ public class ProfessorDAO implements IProfessorDAO {
                 professor.setShift(resultSet.getString("turno"));
                 professor.setRegistrationDate(resultSet.getDate("fechaRegistro"));
                 professor.setTerminationDate(resultSet.getDate("fechaBaja"));
-                professor.setServiceTime(resultSet.getString("tiempoServicio"));
                 professor.setIsCoordinator(resultSet.getBoolean("esCoordinador"));
                 professor.setIdUser(resultSet.getInt("idUsuario"));
+                professor.setIdRol(resultSet.getInt("idRol"));
+
+                listProfessors.add(professor);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error al obtener lista de profesores", e);
+            throw new DataIntegrityException("Tuvimos problemas para obtener a los profesores. Intentelo mas tarde", e);
+        }
+
+        return listProfessors;
+    }
+    
+    public ArrayList<Professor> getProfessorsForComboBox() throws DataIntegrityException {
+        
+        ArrayList<Professor> listProfessors = new ArrayList<>();
+        String query = "SELECT * FROM vw_profesor WHERE estado = true;";
+
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Professor professor = new Professor();
+                professor.setNumberStaff(resultSet.getString("numeroPersonal"));
+                professor.setFirstName(resultSet.getString("primerNombre"));
+                professor.setMiddleName(resultSet.getString("segundoNombre"));
+                professor.setPaternalSurname(resultSet.getString("apellidoPaterno"));
+                professor.setMaternalSurname(resultSet.getString("apellidoMaterno"));
 
                 listProfessors.add(professor);
             }
@@ -144,6 +184,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean existsProfessor(int idUser) throws DataIntegrityException {
+        
         boolean professorExists = false;
         try (Connection connection = DatabaseConnection.connect()) {
             

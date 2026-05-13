@@ -21,33 +21,34 @@ public class TechnicalManagerDAO implements ITechnicalManagerDAO {
     @Override
     public boolean registerManager(TechnicalManager projectManager) throws DataIntegrityException {
 
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO ResponsableProyecto (nombre, puesto, email, idProyecto) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO ResponsableTecnico (nombre, puesto, email, idOrganizacionVinculada) VALUES (?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, projectManager.getManagerName());
             preparedStatement.setString(2, projectManager.getManagerPosition());
             preparedStatement.setString(3, projectManager.getManagerEmail());
-            preparedStatement.setInt(4, projectManager.getIdProject());
+            preparedStatement.setInt(4, projectManager.getIdLinkedOrganization());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                projectManager.setIdProjectManager(resultSet.getInt(1));
+                projectManager.setIdTechnicalManager(resultSet.getInt(1));
             }
 
             preparedStatement.close();
             resultSet.close();
             databaseConnection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registro responsable de proyecto");
-                return false;
+            if (affectedRows > unaffectedRows) {
+                 successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar responsable de proyecto", e);
@@ -58,6 +59,8 @@ public class TechnicalManagerDAO implements ITechnicalManagerDAO {
     @Override
     public boolean deactivateProjectManager(int projectManagerId) throws DataIntegrityException {
 
+        boolean successfulDeactivate = false;
+        int unaffectedRows = 0;
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String updateQuery = "UPDATE ResponsableProyecto SET estado = 'Inactivo' WHERE idResponsable = ?;";
@@ -70,12 +73,11 @@ public class TechnicalManagerDAO implements ITechnicalManagerDAO {
             preparedStatement.close();
             databaseConnection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo responsable con id: " + projectManagerId);
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulDeactivate = true;
             }
+            
+            return successfulDeactivate;
 
         } catch (SQLException exception) {
             logger.log(Level.SEVERE, "Error al desactivar responsable", exception);

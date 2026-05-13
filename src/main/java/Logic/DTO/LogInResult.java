@@ -11,11 +11,13 @@ public class LogInResult {
     private User user;
     private UserRole role;
 
+    
     public LogInResult(User user, UserRole role) {
         this.user = user;
         this.role = role;
     }
 
+    
     public User getUser() {
         return user;
     }

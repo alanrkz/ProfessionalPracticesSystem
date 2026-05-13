@@ -68,6 +68,8 @@ public class FXMLInsertProjectController implements Initializable {
                 ProjectDAO projectDAO = new ProjectDAO();
                 if (projectDAO.registerProject(project)) {
                     AlertMessages.showAlert("Proyecto insertado exitosamente");
+                    Stage stage = (Stage) buttonInsert.getScene().getWindow();
+                    stage.close();
                 }
                 
             } else {

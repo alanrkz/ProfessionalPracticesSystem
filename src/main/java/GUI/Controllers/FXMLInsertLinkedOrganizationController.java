@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+
 import Logic.DAO.CatalogSocialSectorDAO;
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.CatalogSocialSector;
@@ -19,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 
 public class FXMLInsertLinkedOrganizationController implements Initializable {
 
@@ -41,6 +43,7 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
     @FXML
     private ComboBox<CatalogSocialSector> comboBoxSector;
 
+    
     CatalogSocialSectorDAO catalogSocialSectorDAO = new CatalogSocialSectorDAO();
 
     public void loadSocialSectors() {
@@ -66,11 +69,13 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
                     linkedOrganization.setEmail(textFieldEmail.getText());
                     linkedOrganization.setPhone(textFieldPhone.getText());
                     linkedOrganization.setAddress(textAreaAddress.getText());
-
+                    
                     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
-
+                    
                     if (linkedOrganizationDAO.registerOrganization(linkedOrganization)) {
                         AlertMessages.showAlert("Registro Exitoso de la Organizacion vinculada");
+                        Stage stage = (Stage) buttonInsert.getScene().getWindow();
+                        stage.close();
                     }
                 } else {
                     AlertMessages.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");

@@ -6,49 +6,32 @@ import java.sql.Date;
 
 public class Report {
     protected int idReport;
-    protected Date reportCompletionDate;
-    protected Date reportSubmissionDate;
     protected String description;
-    protected String personalComments;
+    protected Date dueDate;
     protected Double qualification;
+    protected String observations;
     protected String enrollment;
 
     
     public Report() {
     }
 
-    public Report(Date reportCompletionDate, Date reportSubmissionDate, String description, String personalComments, Double qualification, String enrollment) {
-        this.reportCompletionDate = reportCompletionDate;
-        this.reportSubmissionDate = reportSubmissionDate;
+    public Report(int idReport, String description, Date dueDate, Double qualification, String observations, String enrollment) {
+        this.idReport = idReport;
         this.description = description;
-        this.personalComments = personalComments;
+        this.dueDate = dueDate;
         this.qualification = qualification;
+        this.observations = observations;
         this.enrollment = enrollment;
     }
-    
 
+    
     public int getIdReport() {
         return idReport;
     }
 
     public void setIdReport(int idReport) {
         this.idReport = idReport;
-    }
-
-    public Date getReportCompletionDate() {
-        return reportCompletionDate;
-    }
-
-    public void setReportCompletionDate(Date reportCompletionDate) {
-        this.reportCompletionDate = reportCompletionDate;
-    }
-
-    public Date getReportSubmissionDate() {
-        return reportSubmissionDate;
-    }
-
-    public void setReportSubmissionDate(Date reportSubmissionDate) {
-        this.reportSubmissionDate = reportSubmissionDate;
     }
 
     public String getDescription() {
@@ -59,12 +42,12 @@ public class Report {
         this.description = description;
     }
 
-    public String getPersonalComments() {
-        return personalComments;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setPersonalComments(String personalComments) {
-        this.personalComments = personalComments;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public Double getQualification() {
@@ -75,12 +58,20 @@ public class Report {
         this.qualification = qualification;
     }
 
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
     public String getEnrollment() {
         return enrollment;
     }
 
     public void setEnrollment(String enrollment) {
         this.enrollment = enrollment;
-    }    
+    }
     
 }

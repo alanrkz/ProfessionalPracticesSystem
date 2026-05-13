@@ -21,33 +21,34 @@ public class StudentFilesDAO implements IStudentFilesDAO {
     @Override
     public boolean registerFiles(StudentFiles studentFiles) throws DataIntegrityException {
 
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO ArchivosEstudiante (horario, planTrabajo, cartaAsignacion, matricula) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO ExpedienteAlumno (nombreDocumento, direccionDocumento, tipoDocumento, matricula) VALUES (?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, studentFiles.getInternSchedule());
-            preparedStatement.setString(2, studentFiles.getActivitiesPlan());
-            preparedStatement.setString(3, studentFiles.getAssigmentLetter());
+            preparedStatement.setString(1, studentFiles.getDocumentName());
+            preparedStatement.setString(2, studentFiles.getDocumentURL());
+            preparedStatement.setString(3, studentFiles.getDocumentType());
             preparedStatement.setString(4, studentFiles.getEnrollment());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                studentFiles.setIdStudentRecord(resultSet.getInt(1));
+                studentFiles.setIdDocument(resultSet.getInt(1));
             }
 
             preparedStatement.close();
             resultSet.close();
             databaseConnection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registraron archivos del estudiante");
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar archivos de estudiante", e);

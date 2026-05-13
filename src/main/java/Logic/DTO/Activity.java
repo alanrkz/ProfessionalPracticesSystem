@@ -7,9 +7,9 @@ import java.sql.Date;
 public class Activity {
     private int idActivity;
     private String activityName;
-    private Date dueDateActivity;
     private String description;
     private double value;
+    private Date dueDateActivity;
     private int idActivityProject;
     private int idActivityReport;
 
@@ -17,12 +17,12 @@ public class Activity {
     public Activity() {
     }
 
-    public Activity(int idActivity, String activityName, Date dueDateActivity, String description, double value, int idActivityProject, int idActivityReport) {
+    public Activity(int idActivity, String activityName, String description, double value, Date dueDateActivity, int idActivityProject, int idActivityReport) {
         this.idActivity = idActivity;
         this.activityName = activityName;
-        this.dueDateActivity = dueDateActivity;
         this.description = description;
         this.value = value;
+        this.dueDateActivity = dueDateActivity;
         this.idActivityProject = idActivityProject;
         this.idActivityReport = idActivityReport;
     }
@@ -44,14 +44,6 @@ public class Activity {
         this.activityName = activityName;
     }
 
-    public Date getDueDateActivity() {
-        return dueDateActivity;
-    }
-
-    public void setDueDateActivity(Date dueDateActivity) {
-        this.dueDateActivity = dueDateActivity;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -66,6 +58,14 @@ public class Activity {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public Date getDueDateActivity() {
+        return dueDateActivity;
+    }
+
+    public void setDueDateActivity(Date dueDateActivity) {
+        this.dueDateActivity = dueDateActivity;
     }
 
     public int getIdActivityProject() {

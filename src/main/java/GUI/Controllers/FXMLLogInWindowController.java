@@ -41,6 +41,7 @@ public class FXMLLogInWindowController {
 
     @FXML
     public void ButtonLogin() throws DataIntegrityException {
+        
         String email = textFieldEmailLogIn.getText();
         String password = passwordFieldPasswordLogIn.getText();
 

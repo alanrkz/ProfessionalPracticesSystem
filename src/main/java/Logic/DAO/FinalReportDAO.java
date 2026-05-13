@@ -22,13 +22,16 @@ public class FinalReportDAO implements IFinalReportDAO {
 
     @Override
     public boolean registerFinalReport(FinalReport finalReport) throws DataIntegrityException {
+        
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO ReporteFinal (archivoReporteFinal, resultadoEntregable, idReporte) VALUES (?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, finalReport.getFinalReportFile());
-            preparedStatement.setString(2, finalReport.getFinalDeliverable());
+            preparedStatement.setString(2, finalReport.getResultObtained());
             preparedStatement.setInt(3, finalReport.getIdReport());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -42,12 +45,11 @@ public class FinalReportDAO implements IFinalReportDAO {
             resultSet.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se inserto reporte final idReporte: " + finalReport.getIdReport());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar reporte final", e);
@@ -57,13 +59,16 @@ public class FinalReportDAO implements IFinalReportDAO {
 
     @Override
     public boolean modifyFinalReport(FinalReport finalReport) throws DataIntegrityException {
+        
+        boolean successfulModify = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE ReporteFinal SET archivoReporteFinal = ?, resultadosEntregable = ? WHERE numeroReporte = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, finalReport.getFinalReportFile());
-            preparedStatement.setString(2, finalReport.getFinalDeliverable());
+            preparedStatement.setString(2, finalReport.getResultObtained());
             preparedStatement.setInt(3, finalReport.getReportNumber());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -71,12 +76,11 @@ public class FinalReportDAO implements IFinalReportDAO {
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se actualizo reporte final numero: " + finalReport.getReportNumber());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulModify = true;
             }
+            
+            return successfulModify;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al modificar reporte final", e);
@@ -86,6 +90,7 @@ public class FinalReportDAO implements IFinalReportDAO {
 
     @Override
     public List<FinalReport> getFinalReports() throws DataIntegrityException {
+        
         List<FinalReport> listFinalReports = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.connect()) {
@@ -98,7 +103,7 @@ public class FinalReportDAO implements IFinalReportDAO {
                 FinalReport finalReport = new FinalReport();
                 finalReport.setReportNumber(resultSet.getInt("numeroReporte"));
                 finalReport.setFinalReportFile(resultSet.getString("archivoReporteFinal"));
-                finalReport.setFinalDeliverable(resultSet.getString("resultadoEntregable"));
+                finalReport.setResultObtained(resultSet.getString("resultadoEntregable"));
                 finalReport.setIdReport(resultSet.getInt("idReporte"));
 
                 listFinalReports.add(finalReport);

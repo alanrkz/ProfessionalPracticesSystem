@@ -8,21 +8,29 @@ public class Coordinator extends User{
     private String numberStaff;
     private Date registrationDate;
     private Date terminationDate;
-    private String serviceTime;
-    private int idUser;
+    private boolean statusCoordinator;
+    private int idRol;
 
     
     public Coordinator() {
     }
 
-    public Coordinator(String numberStaff, Date registrationDate, Date terminationDate, String serviceTime, int idUser) {
+    public Coordinator(String numberStaff, Date registrationDate, Date terminationDate, boolean statusCoordinator, int idRol) {
         this.numberStaff = numberStaff;
         this.registrationDate = registrationDate;
         this.terminationDate = terminationDate;
-        this.serviceTime = serviceTime;
-        this.idUser = idUser;
+        this.statusCoordinator = statusCoordinator;
+        this.idRol = idRol;
     }
-    
+
+    public Coordinator(String numberStaff, Date registrationDate, Date terminationDate, boolean statusCoordinator, int idRol, int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+        super(idUser, firstName, middleName, paternalSurname, maternalSurname, email, password, gender, status);
+        this.numberStaff = numberStaff;
+        this.registrationDate = registrationDate;
+        this.terminationDate = terminationDate;
+        this.statusCoordinator = statusCoordinator;
+        this.idRol = idRol;
+    }
 
     public String getNumberStaff() {
         return numberStaff;
@@ -48,20 +56,20 @@ public class Coordinator extends User{
         this.terminationDate = terminationDate;
     }
 
-    public String getServiceTime() {
-        return serviceTime;
+    public boolean getStatusCoordinator() {
+        return statusCoordinator;
     }
 
-    public void setServiceTime(String serviceTime) {
-        this.serviceTime = serviceTime;
+    public void setStatusCoordinator(boolean statusCoordinator) {
+        this.statusCoordinator = statusCoordinator;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
     
 }

@@ -22,14 +22,18 @@ public class MonthlyReportDAO implements IMonthlyReportDAO {
 
     @Override
     public boolean registerMonthlyReport(MonthlyReport monthlyReport) throws DataIntegrityException {
+        
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO ReporteMensual (archivoReporteMensual, actividadesRealizadas, idReporte) VALUES (?, ?, ?);";
+            String query = "INSERT INTO ReporteMensual (archivoReporteMensual, mes, horasReportadas, idReporte) VALUES (?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, monthlyReport.getMontlyReportFile());
-            preparedStatement.setString(2, monthlyReport.getActivitiesPerformed());
-            preparedStatement.setInt(3, monthlyReport.getIdReport());
+            preparedStatement.setString(2, monthlyReport.getMonth());
+            preparedStatement.setInt(3, monthlyReport.getHoursReported());
+            preparedStatement.setInt(4, monthlyReport.getIdReport());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -42,12 +46,11 @@ public class MonthlyReportDAO implements IMonthlyReportDAO {
             resultSet.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se inserto reporte mensual idReporte: " + monthlyReport.getIdReport());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar reporte mensual", e);
@@ -57,26 +60,29 @@ public class MonthlyReportDAO implements IMonthlyReportDAO {
 
     @Override
     public boolean modifyMonthlyReport(MonthlyReport monthlyReport) throws DataIntegrityException {
+        
+        boolean successfulModify = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "UPDATE ReporteMensual SET archivoReporteMensual = ?, actividadesRealizadas = ? WHERE numeroReporte = ?;";
+            String query = "UPDATE ReporteMensual SET archivoReporteMensual = ?, mes = ?, horasReportadas = ? WHERE numeroReporte = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, monthlyReport.getMontlyReportFile());
-            preparedStatement.setString(2, monthlyReport.getActivitiesPerformed());
-            preparedStatement.setInt(3, monthlyReport.getReportNumber());
+            preparedStatement.setString(2, monthlyReport.getMonth());
+            preparedStatement.setInt(3, monthlyReport.getHoursReported());
+            preparedStatement.setInt(4, monthlyReport.getReportNumber());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se actualizo reporte mensual numero: " + monthlyReport.getReportNumber());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulModify = true;
             }
+            
+            return successfulModify;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al modificar reporte mensual", e);
@@ -86,6 +92,7 @@ public class MonthlyReportDAO implements IMonthlyReportDAO {
 
     @Override
     public List<MonthlyReport> getMonthlyReports() throws DataIntegrityException {
+        
         List<MonthlyReport> listMonthlyReports = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.connect()) {
@@ -98,7 +105,8 @@ public class MonthlyReportDAO implements IMonthlyReportDAO {
                 MonthlyReport monthlyReport = new MonthlyReport();
                 monthlyReport.setReportNumber(resultSet.getInt("numeroReporte"));
                 monthlyReport.setMontlyReportFile(resultSet.getString("archivoReporteMensual"));
-                monthlyReport.setActivitiesPerformed(resultSet.getString("actividadesRealizadas"));
+                monthlyReport.setMonth(resultSet.getString("mes"));
+                monthlyReport.setHoursReported(resultSet.getInt("horasReportadas"));
                 monthlyReport.setIdReport(resultSet.getInt("idReporte"));
 
                 listMonthlyReports.add(monthlyReport);

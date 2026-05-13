@@ -53,7 +53,6 @@ public class ProfessorController {
             professor.setShift(cbShift.getValue());
             professor.setRegistrationDate(Date.valueOf(dpRegistrationDate.getValue()));
             professor.setTerminationDate(Date.valueOf(dpTerminationDate.getValue()));
-            professor.setServiceTime(txtServiceTime.getText());
             professor.setIsCoordinator(chkIsCoordinator.isSelected());
             professor.setIdUser(user.getIdUser());
 

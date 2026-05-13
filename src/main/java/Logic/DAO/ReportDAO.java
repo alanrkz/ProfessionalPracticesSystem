@@ -21,17 +21,18 @@ public class ReportDAO implements IReportDAO {
     @Override
     public boolean registerReport(Report report) throws DataIntegrityException {
 
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Reporte (fechaEntrega, fechaRealizacion, descripcion, calificacion, comentariosPersonales, matricula) VALUES(?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Reporte (descripcion, fechaEntrega, calificacion, observaciones, matricula) VALUES(?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setDate(1, report.getReportSubmissionDate());
-            preparedStatement.setDate(2, report.getReportCompletionDate());
-            preparedStatement.setString(3, report.getDescription());
-            preparedStatement.setDouble(4, report.getQualification());
-            preparedStatement.setString(5, report.getPersonalComments());
-            preparedStatement.setString(6, report.getEnrollment());
+            preparedStatement.setString(1, report.getDescription());
+            preparedStatement.setDate(2, report.getDueDate());
+            preparedStatement.setDouble(3, report.getQualification());
+            preparedStatement.setString(4, report.getObservations());
+            preparedStatement.setString(5, report.getEnrollment());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -44,12 +45,11 @@ public class ReportDAO implements IReportDAO {
             resultSet.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registro reporte");
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+            
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar reporte", e);
@@ -60,15 +60,17 @@ public class ReportDAO implements IReportDAO {
     @Override
     public boolean modifyReport(Report report) throws DataIntegrityException {
 
+        boolean successfulModify = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "UPDATE Reporte SET fechaEntrega = ?, descripcion = ?, calificacion = ?, comentariosPersonales = ? WHERE idReporte = ?;";
+            String query = "UPDATE Reporte SET descripcion = ?, fechaEntrega = ?, calificacion = ?, observaciones = ? WHERE idReporte = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setDate(1, report.getReportSubmissionDate());
-            preparedStatement.setString(2, report.getDescription());
+            preparedStatement.setString(1, report.getDescription());
+            preparedStatement.setDate(2, report.getDueDate());
             preparedStatement.setDouble(3, report.getQualification());
-            preparedStatement.setString(4, report.getPersonalComments());
+            preparedStatement.setString(4, report.getObservations());
             preparedStatement.setInt(5, report.getIdReport());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -76,12 +78,11 @@ public class ReportDAO implements IReportDAO {
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se modifico reporte: " + report.getIdReport());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulModify = true;
             }
+            
+            return successfulModify;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al modificar reporte", e);
