@@ -8,20 +8,16 @@ public class Course {
     private String nrc;
     private String courseName;
     private String career;
-    private Date startDate;
-    private Date endDate;
     private String numberStaff;
 
     
     public Course() {
     }
 
-    public Course(String nrc, String courseName, String career, Date startDate, Date endDate, String numberStaff) {
+    public Course(String nrc, String courseName, String career, String numberStaff) {
         this.nrc = nrc;
         this.courseName = courseName;
         this.career = career;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.numberStaff = numberStaff;
     }
 
@@ -48,22 +44,6 @@ public class Course {
 
     public void setCareer(String career) {
         this.career = career;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public String getNumberStaff() {

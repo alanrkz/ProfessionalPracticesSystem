@@ -15,6 +15,8 @@ public interface IProjectDAO {
     
     public boolean deactivateProject(int idProject) throws DataIntegrityException;
     
+    public boolean updateProject(Project project) throws DataIntegrityException;
+    
     public List<Project> getProjects () throws DataIntegrityException;
     
 }

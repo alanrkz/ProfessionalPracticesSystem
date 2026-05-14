@@ -1,16 +1,16 @@
 package Logic.Contracts;
 
 
-import Logic.DTO.ProjectManager;
+import Logic.DTO.TechnicalManager;
 import Logic.Exceptions.DataIntegrityException;
 
 /**
  *
  * @author ELLIN JV
  */
-public interface IProjectManagerDAO {
+public interface ITechnicalManagerDAO {
     
-    public boolean registerManager(ProjectManager projectManager) throws DataIntegrityException;
+    public boolean registerManager(TechnicalManager projectManager) throws DataIntegrityException;
     
     public boolean deactivateProjectManager(int projectManagerId) throws DataIntegrityException;
     

@@ -1,6 +1,5 @@
 package Logic.DAO;
 
-
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IStudentDAO;
 import Logic.DTO.Student;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class StudentDAO implements IStudentDAO {
 
     private static final Logger logger = Logger.getLogger(StudentDAO.class.getName());
@@ -23,29 +21,30 @@ public class StudentDAO implements IStudentDAO {
     @Override
     public boolean registerStudent(Student student) throws DataIntegrityException {
 
+        boolean successfulRegister = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Alumno (matricula, fechaNacimiento, horasCubiertas, lenguaIndigena, nrc, idUsuario, idRol) VALUES (?, ?, ?, ?, ?, ?, 3);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, student.getEnrollment());
             preparedStatement.setDate(2, student.getBirthdate());
             preparedStatement.setInt(3, student.getHoursCovered());
             preparedStatement.setBoolean(4, student.isIndigenousLanguage());
-            preparedStatement.setInt(5, student.getIdUser());
-            preparedStatement.setString(6, student.getNrc());
+            preparedStatement.setString(5, student.getNrc());
+            preparedStatement.setInt(6, student.getIdUser());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se registro estudiante: " + student.getEnrollment());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulRegister = true;
             }
+
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar estudiante", e);
@@ -56,6 +55,8 @@ public class StudentDAO implements IStudentDAO {
     @Override
     public boolean deactivateStudent(User user, Student student) throws DataIntegrityException {
 
+        boolean successfulDeactivate = false;
+        int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -68,12 +69,11 @@ public class StudentDAO implements IStudentDAO {
             preparedStatement.close();
             connection.close();
 
-            if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo estudiante con id: " + student.getIdUser());
-                return false;
+            if (affectedRows > unaffectedRows) {
+                successfulDeactivate = true;
             }
+
+            return successfulDeactivate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al desactivar estudiante", e);
@@ -88,7 +88,7 @@ public class StudentDAO implements IStudentDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "SELECT * FROM Practicante;";
+            String query = "SELECT * FROM Alumno;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -98,8 +98,9 @@ public class StudentDAO implements IStudentDAO {
                 student.setBirthdate(resultSet.getDate("fechaNacimiento"));
                 student.setHoursCovered(resultSet.getInt("horasCubiertas"));
                 student.setIndigenousLanguage(resultSet.getBoolean("lenguaIndigena"));
-                student.setIdUser(resultSet.getInt("idUsuario"));
                 student.setNrc(resultSet.getString("nrc"));
+                student.setIdUser(resultSet.getInt("idUsuario"));
+                student.setIdRol(resultSet.getInt("idRol"));
 
                 listStudents.add(student);
             }
@@ -115,24 +116,52 @@ public class StudentDAO implements IStudentDAO {
 
         return listStudents;
     }
-    
+
+    @Override
     public boolean existsStudent(int idUser) throws DataIntegrityException {
-        String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
-        try (Connection connection = DatabaseConnection.connect()){
-            
+
+        boolean studentExists = false;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT 1 FROM Alumno WHERE idUsuario = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return true;
-            } else {
-                return false;
+            if (resultSet.next()) {
+                studentExists = true;
             }
-            
+
+            return studentExists;
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error de conexion con la base de datos", e);
-            throw new DataIntegrityException("Error de conexion con la base de datos", e);
+            logger.log(Level.SEVERE, "Error al verificar la existencia del estudiante", e);
+            throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del estudiante. Intentalo mas tarde", e);
         }
     }
-    
+
+    public String getEnrollmentByIdUser(int idUser) throws DataIntegrityException {
+
+        String enrollment = null;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT matricula FROM Alumno WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idUser);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                enrollment = resultSet.getString("matricula");
+            }
+
+            return enrollment;
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error al obtener la matericula del alumno", e);
+            throw new DataIntegrityException("Error al obtener la matricula", e);
+        }
+    }
+
 }

@@ -15,6 +15,6 @@ public interface ICoordinatorDAO {
     
     public boolean deactivateCoordinator(User user, Coordinator coordinator) throws DataIntegrityException;
     
-    
+    public boolean existsCoordinator(int idUser) throws DataIntegrityException;
     
 }

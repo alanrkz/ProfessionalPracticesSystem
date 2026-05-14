@@ -7,11 +7,10 @@ public class User {
     protected String middleName;
     protected String paternalSurname;
     protected String maternalSurname;
+    protected Boolean status;
+    protected String gender;
     protected String email;
     protected String password;
-    protected String gender;
-    protected Boolean status;
-
     
     public User() {
     }

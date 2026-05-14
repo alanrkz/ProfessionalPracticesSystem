@@ -1,31 +1,32 @@
 package Logic.DTO;
 
 
-public class ProjectManager {
-    private int idProjectManager;
+public class TechnicalManager {
+    private int idTechnicalManager;
     private String managerName;
     private String managerPosition;
     private String managerEmail;
-    private int idProject;
-
+    private int idLinkedOrganization;
     
-    public ProjectManager() {
+    
+    public TechnicalManager() {
     }
 
-    public ProjectManager(int idProjectManager, String managerName, String managerPosition, String managerEmail, int idProject) {
-        this.idProjectManager = idProjectManager;
+    public TechnicalManager(int idTechnicalManager, String managerName, String managerPosition, String managerEmail, int idLinkedOrganization) {
+        this.idTechnicalManager = idTechnicalManager;
         this.managerName = managerName;
         this.managerPosition = managerPosition;
         this.managerEmail = managerEmail;
-        this.idProject = idProject;
+        this.idLinkedOrganization = idLinkedOrganization;
     }
 
-    public int getIdProjectManager() {
-        return idProjectManager;
+    
+    public int getIdTechnicalManager() {
+        return idTechnicalManager;
     }
 
-    public void setIdProjectManager(int idProjectManager) {
-        this.idProjectManager = idProjectManager;
+    public void setIdTechnicalManager(int idTechnicalManager) {
+        this.idTechnicalManager = idTechnicalManager;
     }
 
     public String getManagerName() {
@@ -52,13 +53,12 @@ public class ProjectManager {
         this.managerEmail = managerEmail;
     }
 
-    public int getIdProject() {
-        return idProject;
+    public int getIdLinkedOrganization() {
+        return idLinkedOrganization;
     }
 
-    public void setIdProject(int idProject) {
-        this.idProject = idProject;
+    public void setIdLinkedOrganization(int idLinkedOrganization) {
+        this.idLinkedOrganization = idLinkedOrganization;
     }
-    
     
 }

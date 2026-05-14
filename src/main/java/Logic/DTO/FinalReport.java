@@ -1,21 +1,29 @@
 package Logic.DTO;
 
 
+import java.sql.Date;
+
+
 public class FinalReport extends Report{
     private int reportNumber;
     private String finalReportFile;
-    private String finalDeliverable;
-    private int idReport;
-
+    private String resultObtained;
+    
     
     public FinalReport() {
     }
 
-    public FinalReport(int reportNumber, String finalReportFile, String finalDeliverable, int idReport) {
+    public FinalReport(int reportNumber, String finalReportFile, String resultObtained) {
         this.reportNumber = reportNumber;
         this.finalReportFile = finalReportFile;
-        this.finalDeliverable = finalDeliverable;
-        this.idReport = idReport;
+        this.resultObtained = resultObtained;
+    }
+
+    public FinalReport(int reportNumber, String finalReportFile, String resultObtained, int idReport, String description, Date dueDate, Double qualification, String observations, String enrollment) {
+        super(idReport, description, dueDate, qualification, observations, enrollment);
+        this.reportNumber = reportNumber;
+        this.finalReportFile = finalReportFile;
+        this.resultObtained = resultObtained;
     }
 
     
@@ -35,20 +43,12 @@ public class FinalReport extends Report{
         this.finalReportFile = finalReportFile;
     }
 
-    public String getFinalDeliverable() {
-        return finalDeliverable;
+    public String getResultObtained() {
+        return resultObtained;
     }
 
-    public void setFinalDeliverable(String finalDeliverable) {
-        this.finalDeliverable = finalDeliverable;
+    public void setResultObtained(String resultObtained) {
+        this.resultObtained = resultObtained;
     }
 
-    public int getIdReport() {
-        return idReport;
-    }
-
-    public void setIdReport(int idReport) {
-        this.idReport = idReport;
-    }
-    
 }

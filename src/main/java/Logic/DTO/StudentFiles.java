@@ -2,55 +2,55 @@ package Logic.DTO;
 
 
 public class StudentFiles {
-    private int idStudentRecord;
-    private String internSchedule;
-    private String activitiesPlan;
-    private String assigmentLetter;
+    private int idDocument;
+    private String documentName;
+    private String documentURL;
+    private String documentType;
     private String enrollment;
 
     
     public StudentFiles() {
     }
 
-    public StudentFiles(int idStudentRecord, String internSchedule, String activitiesPlan, String assigmentLetter, String enrollment) {
-        this.idStudentRecord = idStudentRecord;
-        this.internSchedule = internSchedule;
-        this.activitiesPlan = activitiesPlan;
-        this.assigmentLetter = assigmentLetter;
+    public StudentFiles(int idDocument, String documentName, String documentURL, String documentType, String enrollment) {
+        this.idDocument = idDocument;
+        this.documentName = documentName;
+        this.documentURL = documentURL;
+        this.documentType = documentType;
         this.enrollment = enrollment;
     }
-
     
-    public int getIdStudentRecord() {
-        return idStudentRecord;
+    
+    public int getIdDocument() {
+        return idDocument;
     }
 
-    public void setIdStudentRecord(int idStudentRecord) {
-        this.idStudentRecord = idStudentRecord;
+    public void setIdDocument(int idDocument) {
+        this.idDocument = idDocument;
     }
 
-    public String getInternSchedule() {
-        return internSchedule;
+    public String getDocumentName() {
+        return documentName;
     }
 
-    public void setInternSchedule(String internSchedule) {
-        this.internSchedule = internSchedule;
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
     }
 
-    public String getActivitiesPlan() {
-        return activitiesPlan;
+    public String getDocumentURL() {
+        return documentURL;
     }
 
-    public void setActivitiesPlan(String activitiesPlan) {
-        this.activitiesPlan = activitiesPlan;
+    public void setDocumentURL(String documentURL) {
+        this.documentURL = documentURL;
     }
 
-    public String getAssigmentLetter() {
-        return assigmentLetter;
+    public String getDocumentType() {
+        return documentType;
     }
 
-    public void setAssigmentLetter(String assigmentLetter) {
-        this.assigmentLetter = assigmentLetter;
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 
     public String getEnrollment() {

@@ -22,6 +22,7 @@ public class ProjectDAO implements IProjectDAO {
 
     @Override
     public boolean registerProject(Project project) throws DataIntegrityException {
+        boolean successfulRegister = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO Proyecto (nombreProyecto, duracion, descripcion, cupo, estado, metodologiaProyecto, idOrganizacionVinculada) VALUES(?, ?, ?, ?, ?, ?, ?);";
@@ -47,12 +48,11 @@ public class ProjectDAO implements IProjectDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se inserto proyecto: " + project.getProjectName());
-                return false;
+                successfulRegister = true;
             }
-
+            
+            return successfulRegister;
+            
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar proyecto", e);
             throw new DataIntegrityException("Error al registrar proyecto", e);
@@ -61,6 +61,7 @@ public class ProjectDAO implements IProjectDAO {
 
     @Override
     public boolean deactivateProject(int idProject) throws DataIntegrityException {
+        boolean successfulDeactivate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Proyecto SET estado = false WHERE idProyecto = ?;";
@@ -74,15 +75,48 @@ public class ProjectDAO implements IProjectDAO {
             preparedStatement.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo proyecto id: " + idProject);
-                return false;
+                successfulDeactivate = true;
             }
+            
+            return successfulDeactivate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al desactivar proyecto id: " + idProject, e);
             throw new DataIntegrityException("Error al desactivar proyecto", e);
+        }
+    }
+    
+    @Override
+    public boolean updateProject(Project project) throws DataIntegrityException {
+        boolean successfulUpdate = false;
+        
+        try (Connection databaseConnection = DatabaseConnection.connect()) {
+            String query = "UPDATE Proyecto SET nombreProyecto = ?, duracion = ?, descripcion = ?, cupo = ?, metodologiaProyecto = ?, "
+                    + "idOrganizacionVinculada = ? WHERE idProyecto = ?;";
+            
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
+            preparedStatement.setString(1, project.getProjectName());
+            preparedStatement.setString(2, project.getDuration());
+            preparedStatement.setString(3, project.getDescription());
+            preparedStatement.setInt(4, project.getAvailableSpaces());
+            preparedStatement.setString(5, project.getProjectMethodology());
+            preparedStatement.setInt(6, project.getIdLikedOrganization());
+            preparedStatement.setInt(7, project.getIdProject());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            databaseConnection.close();
+
+            if (affectedRows > 0) {
+                successfulUpdate = true;
+            }
+            
+            return successfulUpdate;
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error al actualizar proyecto", e);
+            throw new DataIntegrityException("Error al actualizar proyecto", e);
         }
     }
     
@@ -92,7 +126,7 @@ public class ProjectDAO implements IProjectDAO {
         
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "SELECT * FROM Proyecto;";
+            String query = "SELECT * FROM Proyecto WHERE estado = true;";
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 

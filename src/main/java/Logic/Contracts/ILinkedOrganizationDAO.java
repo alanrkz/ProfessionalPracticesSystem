@@ -13,6 +13,8 @@ public interface ILinkedOrganizationDAO {
     public boolean registerOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException;
     
     public boolean deactivateOrganization(int organizationId) throws DataIntegrityException;
+    
+    public boolean updateOrganization(LinkedOrganization linkedOrganization) throws DataIntegrityException;
 
     public List<LinkedOrganization> getOrganizations() throws DataIntegrityException;
     

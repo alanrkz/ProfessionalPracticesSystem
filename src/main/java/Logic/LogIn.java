@@ -6,8 +6,13 @@ import Logic.DAO.StudentDAO;
 import Logic.DAO.UserDAO;
 import Logic.DTO.LogInResult;
 import Logic.DTO.User;
+import Logic.Enums.UserRole;
 import Logic.Exceptions.BusinessException;
 import Logic.Exceptions.DataIntegrityException;
+import Logic.Validations.AlertMessages;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,45 +20,49 @@ import Logic.Exceptions.DataIntegrityException;
  */
 public class LogIn {
 
-    private UserDAO userDAO = new UserDAO();
-    private StudentDAO studentDAO = new StudentDAO();
-    private CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
-    private ProfessorDAO professorDAO = new ProfessorDAO();
+    private final UserDAO userDAO;
+    private final StudentDAO studentDAO;
+    private final CoordinatorDAO coordinatorDAO;
+    private final ProfessorDAO professorDAO;
 
-    public LogInResult login(String email, String password) throws BusinessException, DataIntegrityException {
+    public LogIn(UserDAO userDAO, StudentDAO studentDAO, CoordinatorDAO coordinatorDAO, ProfessorDAO professorDAO) {
+        this.userDAO = userDAO;
+        this.studentDAO = studentDAO;
+        this.coordinatorDAO = coordinatorDAO;
+        this.professorDAO = professorDAO;
+    }
 
-        if (email == null || email.isEmpty()) {
-            throw new BusinessException("Correo vacio");
-        }
-
-        if (password == null || password.isEmpty()) {
-            throw new BusinessException("Contraseña vacia");
-        }
-
+    public Optional<LogInResult> login(String email, String password) throws DataIntegrityException {
         try {
-            User user = userDAO.existsUser(email, password);
 
-            if (user == null) {
-                throw new BusinessException("Correo o contraseña incorrectos");
+            Optional<User> result = userDAO.getUserByCredentials(email, password);
+
+            if (result.isEmpty()) {
+                AlertMessages.showAlert("Usuario no encontrado");
             }
 
+            User user = result.get();
             int idUser = user.getIdUser();
 
-            if (coordinatorDAO.getCoordinatorByUserId(idUser)) {
-                return new LogInResult(user, "COORDINADOR");
+            if (coordinatorDAO.existsCoordinator(idUser)) {
+                String personalNumber = coordinatorDAO.getPersonalNumberByIdUser(idUser);
+                return Optional.of(new LogInResult(user, UserRole.COORDINATOR, personalNumber));
             }
 
-            if (professorDAO.getProfessorByUserId(idUser)) {
-                return new LogInResult(user, "PROFESOR");
+            if (professorDAO.existsProfessor(idUser)) {
+                String personalNumber = professorDAO.getPersonalNumberByIdUser(idUser);
+                return Optional.of(new LogInResult(user, UserRole.PROFESSOR, personalNumber));
             }
 
             if (studentDAO.existsStudent(idUser)) {
-                return new LogInResult(user, "ESTUDIANTE");
+                String enrollment= studentDAO.getEnrollmentByIdUser(idUser);
+                return Optional.of(new LogInResult(user, UserRole.STUDENT, enrollment));
             }
+
+            return Optional.empty();
+
         } catch (DataIntegrityException e) {
-            throw new DataIntegrityException("Error de conexion con la base de datos");
+            throw new DataIntegrityException("Error de conexión con la base de datos", e);
         }
-        
-        return null;
     }
 }

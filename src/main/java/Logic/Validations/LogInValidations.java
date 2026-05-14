@@ -6,43 +6,46 @@ package Logic.Validations;
  */
 public class LogInValidations {
 
-    public static boolean validateEmail(String email) throws IllegalArgumentException {
-        boolean flag = true;
+    public static boolean validateEmail(String email) {
+        boolean validEmail = true;
 
         if (email == null || email.trim().isEmpty()) {
-            flag = false;
+            validEmail = false;
             AlertMessages.showAlert("El correo no puede estar vacío");
+        } else {
+            if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+                validEmail = false;
+                AlertMessages.showAlert("Formato de correo inválido");
+            }
         }
 
-        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            flag = false;
-            AlertMessages.showAlert("Formato de correo inválido");
-        }
-
-        return flag;
+        return validEmail;
     }
 
-    public static boolean validatePassword(String password) throws IllegalArgumentException {
-        boolean flag = true;
+    public static boolean validatePassword(String password) {
+        boolean validPassword = true;
+        int minimumPasswordLength = 4;
 
         if (password == null || password.trim().isEmpty()) {
-            flag = false;
+            validPassword = false;
             AlertMessages.showAlert("La contraseña no puede estar vacía");
         } else {
-            if (password.length() < 4) {
-                flag = false;
+            if (password.length() < minimumPasswordLength) {
+                validPassword = false;
                 AlertMessages.showAlert("La contraseña es demasiado corta");
             }
         }
 
-        return flag;
+        return validPassword;
     }
 
     public static boolean validateLoginFields(String email, String password) {
+        boolean validatedLoginFields = false;
+        
         if (validateEmail(email) && validatePassword(password)) {
-            return true;
-        } else {
-            return false;
+            validatedLoginFields = true;
         }
+        
+        return validatedLoginFields;
     }
 }

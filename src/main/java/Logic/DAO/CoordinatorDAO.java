@@ -18,16 +18,19 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     @Override
     public boolean registerCoordinator(Coordinator coordinator) throws DataIntegrityException {
+
+        boolean successfulRegister = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Coordinador VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, coordinator.getNumberStaff());
             preparedStatement.setDate(2, coordinator.getRegistrationDate());
             preparedStatement.setDate(3, coordinator.getTerminationDate());
-            preparedStatement.setString(4, coordinator.getServiceTime());
+            preparedStatement.setBoolean(4, coordinator.getStatusCoordinator());
             preparedStatement.setInt(5, coordinator.getIdUser());
+            preparedStatement.setInt(6, coordinator.getIdRol());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -35,11 +38,10 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             connection.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se inserto coordinador con numero: " + coordinator.getNumberStaff());
-                return false;
+                successfulRegister = true;
             }
+
+            return successfulRegister;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al registrar coordinador: " + coordinator.getNumberStaff(), e);
@@ -49,6 +51,8 @@ public class CoordinatorDAO implements ICoordinatorDAO {
 
     @Override
     public boolean deactivateCoordinator(User user, Coordinator coordinator) throws DataIntegrityException {
+
+        boolean successfulDeactivate = false;
         try (Connection connection = DatabaseConnection.connect()) {
 
             String query = "UPDATE Usuario SET estado = false WHERE idUsuario = ?;";
@@ -62,11 +66,10 @@ public class CoordinatorDAO implements ICoordinatorDAO {
             preparedStatement.close();
 
             if (affectedRows > 0) {
-                return true;
-            } else {
-                logger.warning("No se desactivo coordinador con id: " + coordinator.getIdUser());
-                return false;
+                successfulDeactivate = true;
             }
+
+            return successfulDeactivate;
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al desactivar coordinador id: " + coordinator.getIdUser(), e);
@@ -74,15 +77,50 @@ public class CoordinatorDAO implements ICoordinatorDAO {
         }
     }
 
-    public boolean getCoordinatorByUserId(int idUser) throws DataIntegrityException {
-        String query = "SELECT 1 FROM coordinador WHERE idUsuario = ?";
-        try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    @Override
+    public boolean existsCoordinator(int idUser) throws DataIntegrityException {
+
+        boolean coordinadorExists = false;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT 1 FROM coordinador WHERE idUsuario = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+
+            if (resultSet.next()) {
+                coordinadorExists = true;
+            }
+
+            return coordinadorExists;
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "No se encontró el coordinador", e);
-            throw new DataIntegrityException("No se encontró el coordinador", e);
+            logger.log(Level.SEVERE, "Error al verificar existencia del coordinador", e);
+            throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del coordinador. Intentalo mas tarde", e);
+        }
+    }
+
+    public String getPersonalNumberByIdUser(int idUser) throws DataIntegrityException {
+
+        String personalNumber = null;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT numeroPersonal FROM Coordinador WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idUser);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                personalNumber = resultSet.getString("numeroPersonal");
+            }
+
+            return personalNumber;
+
+        } catch (SQLException e) {
+            throw new DataIntegrityException("Error al obtener el numero de personal", e);
         }
     }
 

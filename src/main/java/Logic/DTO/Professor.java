@@ -9,25 +9,32 @@ public class Professor extends User{
     private String shift;
     private Date registrationDate;
     private Date terminationDate;
-    private String serviceTime;
     private boolean isCoordinator;
-    private int idUser;
+    private int idRol;
 
     
     public Professor() {
     }
 
-    public Professor(String numberStaff, String shift, Date registrationDate, Date terminationDate, String serviceTime, boolean isCoordinator, int idUser) {
+    public Professor(String numberStaff, String shift, Date registrationDate, Date terminationDate, boolean isCoordinator, int idRol) {
         this.numberStaff = numberStaff;
         this.shift = shift;
         this.registrationDate = registrationDate;
         this.terminationDate = terminationDate;
-        this.serviceTime = serviceTime;
         this.isCoordinator = isCoordinator;
-        this.idUser = idUser;
+        this.idRol = idRol;
     }
 
-    
+    public Professor(String numberStaff, String shift, Date registrationDate, Date terminationDate, boolean isCoordinator, int idRol, int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+        super(idUser, firstName, middleName, paternalSurname, maternalSurname, email, password, gender, status);
+        this.numberStaff = numberStaff;
+        this.shift = shift;
+        this.registrationDate = registrationDate;
+        this.terminationDate = terminationDate;
+        this.isCoordinator = isCoordinator;
+        this.idRol = idRol;
+    }
+
     public String getNumberStaff() {
         return numberStaff;
     }
@@ -60,15 +67,7 @@ public class Professor extends User{
         this.terminationDate = terminationDate;
     }
 
-    public String getServiceTime() {
-        return serviceTime;
-    }
-
-    public void setServiceTime(String serviceTime) {
-        this.serviceTime = serviceTime;
-    }
-
-    public boolean getIsCoordinator() {
+    public boolean isIsCoordinator() {
         return isCoordinator;
     }
 
@@ -76,17 +75,17 @@ public class Professor extends User{
         this.isCoordinator = isCoordinator;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     @Override
     public String toString() {
-        return numberStaff;
+        return numberStaff + " - " + firstName + " " + paternalSurname + " " + maternalSurname;
     }
      
 }

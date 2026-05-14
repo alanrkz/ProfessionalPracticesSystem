@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLMainMenuCoordinatorController">
+   <children>
+      <Label layoutX="70.0" layoutY="33.0" text="MENU PRINCIPAL DEL COORDINADOR">
+         <font>
+            <Font name="Times New Roman Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonProjectManage" layoutX="332.0" layoutY="101.0" mnemonicParsing="false" onAction="#buttonProjectManage" prefHeight="26.0" prefWidth="195.0" text="Gestionar Proyectos" />
+      <Button fx:id="buttonStudentsManage" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" text="Gestionar Estudiantes" />
+      <Button fx:id="buttonProfessorManage" layoutX="70.0" layoutY="101.0" mnemonicParsing="false" onAction="#buttonProfessorManage" prefHeight="26.0" prefWidth="184.0" text="Gestionar Profesores" />
+      <Button fx:id="buttonNotificationManage" layoutX="331.0" layoutY="270.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="195.0" text="Gestionar Notificacion" />
+      <Button fx:id="buttonCourseManage" layoutX="70.0" layoutY="270.0" mnemonicParsing="false" text="Gestionar Experiencia Educativa" />
+      <Button fx:id="buttonLinkedOrganizationManage" layoutX="331.0" layoutY="185.0" mnemonicParsing="false" onAction="#buttonLinkedOrganizationManage" text="Gestionar Organizacion Vinculada" />
+      <Button fx:id="buttonExit" layoutX="260.0" layoutY="482.0" mnemonicParsing="false" onAction="#buttonExit" prefHeight="26.0" prefWidth="80.0" text="Salir" />
+      <Button layoutX="208.0" layoutY="354.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" text="Gestionar Responsable Tecnico" />
+   </children>
+</AnchorPane>
