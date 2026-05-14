@@ -48,9 +48,9 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
                 return false;
             }
 
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al registrar organizacion", e);
-            throw new DataIntegrityException("Error al insertar organizacion", e);
+        } catch (SQLException exception) {
+            logger.log(Level.SEVERE, "Error al registrar organizacion", exception);
+            throw new DataIntegrityException("Error al insertar organizacion", exception);
         }
     }
 
@@ -109,9 +109,9 @@ public class LinkedOrganizationDAO implements ILinkedOrganizationDAO {
                 organizationsList.add(org);
             }
 
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al obtener las organizaciones", e);
-            throw new DataIntegrityException("Error al obtener las organizaciones", e);
+        } catch (SQLException exception) {
+            logger.log(Level.SEVERE, "Error al obtener las organizaciones", exception);
+            throw new DataIntegrityException("Error al obtener las organizaciones", exception);
         }
 
         return organizationsList;

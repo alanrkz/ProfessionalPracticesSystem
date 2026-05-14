@@ -10,28 +10,25 @@ public class Student extends User{
     private Date birthdate;
     private int hoursCovered;
     private boolean indigenousLanguage;
-    private String socialSector;
     private String nrc;
 
     public Student() {
     }
 
-    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String socialSector, String nrc) {
+    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String nrc) {
         this.enrollment = enrollment;
         this.birthdate = birthdate;
         this.hoursCovered = hoursCovered;
         this.indigenousLanguage = indigenousLanguage;
-        this.socialSector = socialSector;
         this.nrc = nrc;
     }
 
-    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String socialSector, String nrc, int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
+    public Student(String enrollment, Date birthdate, int hoursCovered, boolean indigenousLanguage, String nrc, int idUser, String firstName, String middleName, String paternalSurname, String maternalSurname, String email, String password, String gender, Boolean status) {
         super(idUser, firstName, middleName, paternalSurname, maternalSurname, email, password, gender, status);
         this.enrollment = enrollment;
         this.birthdate = birthdate;
         this.hoursCovered = hoursCovered;
         this.indigenousLanguage = indigenousLanguage;
-        this.socialSector = socialSector;
         this.nrc = nrc;
     }
 
@@ -65,14 +62,6 @@ public class Student extends User{
 
     public void setIndigenousLanguage(boolean indigenousLanguage) {
         this.indigenousLanguage = indigenousLanguage;
-    }
-
-    public String getSocialSector() {
-        return socialSector;
-    }
-
-    public void setSocialSector(String socialSector) {
-        this.socialSector = socialSector;
     }
 
     public String getNrc() {

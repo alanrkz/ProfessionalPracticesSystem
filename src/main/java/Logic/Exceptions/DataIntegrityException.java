@@ -1,15 +1,12 @@
 package Logic.Exceptions;
 
-
-import java.sql.SQLException;
-
 /**
  *
  * @author alan rkz
  */
-public class DataIntegrityException extends SQLException{
-    public DataIntegrityException(String massage) {
-        super(massage);
+public class DataIntegrityException extends Exception{
+    public DataIntegrityException(String message) {
+        super(message);
     }
     
     public DataIntegrityException(String message, Throwable cause) {

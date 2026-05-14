@@ -5,10 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="GUI.Controllers.FXMLMainMenuProfessorController">
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLMainMenuProfessorController">
    <children>
-      <Label layoutX="91.0" layoutY="30.0" text="MENU PRINCIPAL DE PROFESORES">
+      <Label alignment="CENTER" prefHeight="28.0" prefWidth="600.0" style="-fx-background-color: #146CD0; -fx-padding: 10;" text="Opciones de profesor" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="24.0" />
          </font>

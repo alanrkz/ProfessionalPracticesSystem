@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLManageStudentController">
+   <children>
+      <ImageView fitHeight="171.0" fitWidth="154.0" layoutX="28.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/imageStudentProfile.jpg" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: #146CD0; -fx-padding: 10;" text="Ficha de practicante" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="204.0" layoutY="62.0" text="Matrícula">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="203.0" layoutY="107.0" text="Nombre completo">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="202.0" layoutY="152.0" text="Correo electrónico">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="417.0" layoutY="225.0" text="Sector de práctica">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="233.0" text="Carrera">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="199.0" layoutY="289.0" text="Horas cubiertas">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="289.0" text="NRC de Práctica">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="417.0" layoutY="61.0" text="Fecha de nacimiento">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="417.0" layoutY="106.0" text="Género">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="417.0" layoutY="151.0" text="Lengua indígena">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="28.0" layoutY="516.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: red;" text="Regresar" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="28.0" layoutY="400.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: orange;" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="199.0" layoutY="227.0" text="Proyecto de práctica">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="414.0" layoutY="289.0" text="Tutor de práctica">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="204.0" layoutY="76.0" prefHeight="18.0" prefWidth="138.0" text="S24013317" />
+      <Button layoutX="28.0" layoutY="443.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #EC407A;" text="Inactivar" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="417.0" layoutY="75.0" prefHeight="18.0" prefWidth="138.0" text="17/11/2006" />
+      <Label layoutX="204.0" layoutY="121.0" prefHeight="18.0" prefWidth="191.0" text="Ellin Alejandra Jiménez Villanueva" />
+      <Label layoutX="417.0" layoutY="120.0" prefHeight="18.0" prefWidth="138.0" text="Femenino" />
+      <Label layoutX="417.0" layoutY="167.0" prefHeight="18.0" prefWidth="138.0" text="No" />
+      <Label layoutX="204.0" layoutY="168.0" prefHeight="18.0" prefWidth="174.0" text="zs24013317@estudiantes.uv.mx" />
+      <Label layoutX="28.0" layoutY="249.0" prefHeight="18.0" prefWidth="138.0" text="Ingeniería de Software" />
+      <Label layoutX="195.0" layoutY="249.0" prefHeight="18.0" prefWidth="191.0" text="Sistema de Prácticas Profesionales" />
+      <Label layoutX="417.0" layoutY="249.0" prefHeight="18.0" prefWidth="138.0" text="Software" />
+      <Label layoutX="28.0" layoutY="305.0" prefHeight="18.0" prefWidth="138.0" text="50562" />
+      <Label layoutX="200.0" layoutY="305.0" prefHeight="18.0" prefWidth="138.0" text="40" />
+      <Label layoutX="417.0" layoutY="305.0" prefHeight="18.0" prefWidth="138.0" text="Juan Carlos Pérez Arriaga" />
+   </children>
+</AnchorPane>

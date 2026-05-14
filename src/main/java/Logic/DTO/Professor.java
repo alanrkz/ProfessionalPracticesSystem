@@ -68,7 +68,7 @@ public class Professor extends User{
         this.serviceTime = serviceTime;
     }
 
-    public boolean isIsCoordinator() {
+    public boolean getIsCoordinator() {
         return isCoordinator;
     }
 

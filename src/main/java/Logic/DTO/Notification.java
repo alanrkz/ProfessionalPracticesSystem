@@ -3,7 +3,7 @@ package Logic.DTO;
 
 public class Notification {
     private int idNotification;
-    private String recipient;
+    private String receiver;
     private String subject;
     private String messageBody;
     private String numberStaff;
@@ -14,7 +14,7 @@ public class Notification {
 
     public Notification(int idNotification, String recipient, String subject, String messageBody, String numberStaff) {
         this.idNotification = idNotification;
-        this.recipient = recipient;
+        this.receiver = recipient;
         this.subject = subject;
         this.messageBody = messageBody;
         this.numberStaff = numberStaff;
@@ -29,12 +29,12 @@ public class Notification {
         this.idNotification = idNotification;
     }
 
-    public String getRecipient() {
-        return recipient;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setReceiver(String recipient) {
+        this.receiver = recipient;
     }
 
     public String getSubject() {

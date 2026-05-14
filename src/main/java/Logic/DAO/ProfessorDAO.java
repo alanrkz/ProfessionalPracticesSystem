@@ -19,34 +19,38 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
+
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Profesor VALUES (?, ?, ?, ?, ?, ?, ?);";
-
+            String query = "INSERT INTO Profesor (numeroPersonal, turno, esCoordinador, idUsuario) VALUES (?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getNumberStaff());
             preparedStatement.setString(2, professor.getShift());
-            preparedStatement.setDate(3, professor.getRegistrationDate());
-            preparedStatement.setDate(4, professor.getTerminationDate());
-            preparedStatement.setString(5, professor.getServiceTime());
-            preparedStatement.setBoolean(6, professor.isIsCoordinator());
-            preparedStatement.setInt(7, professor.getIdUser());
+            preparedStatement.setBoolean(3, professor.getIsCoordinator());
+            preparedStatement.setInt(4, professor.getIdUser());
 
             int affectedRows = preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            connection.close();
 
             if (affectedRows > 0) {
                 return true;
             } else {
-                logger.warning("No se inserto ningun registro para el profesor con numero: " + professor.getNumberStaff());
+                logger.warning("No se insertó ningún registro para el profesor con número: "
+                        + professor.getNumberStaff());
                 return false;
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al registrar profesor con numero: " + professor.getNumberStaff(), e);
-            throw new DataIntegrityException("Tuvimos problemas para registrar un nuevo profesor. Intentelo mas tarde", e);
+
+            logger.log(Level.SEVERE,
+                    "Error al registrar profesor con número: "
+                    + professor.getNumberStaff(), e);
+
+            throw new DataIntegrityException(
+                    "Tuvimos problemas para registrar un nuevo profesor. Inténtelo más tarde",
+                    e
+            );
         }
     }
 
@@ -85,7 +89,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, professor.getShift());
-            preparedStatement.setBoolean(2, professor.isIsCoordinator());
+            preparedStatement.setBoolean(2, professor.getIsCoordinator());
             preparedStatement.setString(3, professor.getNumberStaff());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -96,7 +100,7 @@ public class ProfessorDAO implements IProfessorDAO {
             if (affectedRows > 0) {
                 return true;
             } else {
-                logger.warning("No se actualizo el profesor con numero: " + professor.getNumberStaff());
+                logger.warning("No se actualizó el profesor con número: " + professor.getNumberStaff());
                 return false;
             }
 
@@ -146,9 +150,11 @@ public class ProfessorDAO implements IProfessorDAO {
     public boolean getProfessorByUserId(int idUser) throws DataIntegrityException {
         String query = "SELECT 1 FROM profesor WHERE idUsuario = ?";
         try (Connection connection = DatabaseConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
+
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "No se encontró el profesor", e);
             throw new DataIntegrityException("No se encontró el profesor", e);

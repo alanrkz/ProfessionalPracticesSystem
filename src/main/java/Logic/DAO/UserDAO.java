@@ -23,40 +23,47 @@ public class UserDAO implements IUserDAO {
 
             String query = "INSERT INTO Usuario (primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, estado, genero, correoElectronico, contraseña) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getFirstName());
-            preparedStatement.setString(2, user.getMiddleName());
-            preparedStatement.setString(3, user.getPaternalSurname());
-            preparedStatement.setString(4, user.getMaternalSurname());
-            preparedStatement.setBoolean(5, user.getStatus());
-            preparedStatement.setString(6, user.getGender());
-            preparedStatement.setString(7, user.getEmail());
-            preparedStatement.setString(8, user.getPassword());
-
-            int affectedRows = preparedStatement.executeUpdate();
-
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-
-            if (resultSet.next()) {
-                int idGenerado = resultSet.getInt(1);
-                user.setIdUser(idGenerado);
-                System.out.println("ID GENERADO USER: " + idGenerado);
-            } else {
-                throw new SQLException("No se obtuvo el ID generado");
+            int affectedRows;
+            ResultSet resultSet;
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                
+                preparedStatement.setString(1, user.getFirstName());
+                preparedStatement.setString(2, user.getMiddleName());
+                preparedStatement.setString(3, user.getPaternalSurname());
+                preparedStatement.setString(4, user.getMaternalSurname());
+                preparedStatement.setBoolean(5, user.getStatus());
+                preparedStatement.setString(6, user.getGender());
+                preparedStatement.setString(7, user.getEmail());
+                preparedStatement.setString(8, user.getPassword());
+                
+                affectedRows = preparedStatement.executeUpdate();
+                resultSet = preparedStatement.getGeneratedKeys();
+                
+                if (resultSet.next()) {
+                    
+                    int idGenerado = resultSet.getInt(1);
+                    user.setIdUser(idGenerado);
+                    System.out.println("ID GENERADO USER: " + idGenerado);
+                } else {
+                    
+                    throw new SQLException("No se obtuvo el ID generado");
+                }
             }
-
-            preparedStatement.close();
             resultSet.close();
             connection.close();
 
             if (affectedRows > 0) {
+                
                 return true;
             } else {
+                
                 logger.warning("No se registro usuario: " + user.getEmail());
                 return false;
             }
 
         } catch (SQLException e) {
+            
             logger.log(Level.SEVERE, "Error al registrar usuario", e);
             throw new DataIntegrityException("Error al registrar usuario", e);
         }

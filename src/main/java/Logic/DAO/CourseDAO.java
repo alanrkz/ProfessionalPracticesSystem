@@ -20,6 +20,7 @@ public class CourseDAO implements ICourseDAO {
 
     @Override
     public boolean registerCourse(Course course) throws DataIntegrityException {
+        
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
             String query = "INSERT INTO ExperienciaEducativa (nrc, nombreExperienciaEducativa, carrera, fechaInicio, fechaFin, numeroPersonal) VALUES (?, ?, ?, ?, ?, ?);";
@@ -45,15 +46,16 @@ public class CourseDAO implements ICourseDAO {
                 return false;
             }
 
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al registrar curso NRC: " + course.getNrc(), e);
-            throw new DataIntegrityException("Error al registrar curso", e);
+        } catch (SQLException exception) {
+            logger.log(Level.SEVERE, "Error al registrar curso NRC: " + course.getNrc(), exception);
+            throw new DataIntegrityException("Error al registrar curso", exception);
         }
     }
 
     @Override
-    public List<Course> getCourses() throws DataIntegrityException {
-        List<Course> CoursesList = new ArrayList<>();
+    public ArrayList<Course> getCourses() throws DataIntegrityException {
+        
+        ArrayList<Course> CoursesList = new ArrayList<>();
 
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
@@ -62,6 +64,7 @@ public class CourseDAO implements ICourseDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                
                 Course course = new Course();
                 course.setNrc(resultSet.getString("nrc"));
                 course.setCourseName(resultSet.getString("nombreExperienciaEducativa"));
@@ -69,7 +72,6 @@ public class CourseDAO implements ICourseDAO {
                 course.setStartDate(resultSet.getDate("fechaInicio"));
                 course.setEndDate(resultSet.getDate("fechaFin"));
                 course.setNumberStaff(resultSet.getString("numeroPersonal"));
-
                 CoursesList.add(course);
             }
 
@@ -77,9 +79,10 @@ public class CourseDAO implements ICourseDAO {
             preparedStatement.close();
             databaseConnection.close();
 
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al obtener cursos", e);
-            throw new DataIntegrityException("Error al obtener cursos", e);
+        } catch (SQLException exception) {
+            
+            logger.log(Level.SEVERE, "Error al obtener cursos", exception);
+            throw new DataIntegrityException("Error al obtener cursos", exception);
         }
 
         return CoursesList;

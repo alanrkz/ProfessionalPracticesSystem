@@ -24,10 +24,10 @@ public class NotificationDAO implements INotificationDAO {
     public boolean registerNotification(Notification notification) throws DataIntegrityException {
         try (Connection databaseConnection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Notificacion (destinatario, asunto, mensaje, numeroPersonal) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO Notificacion (destinatario, asunto, cuerpoNotificacion, numeroPersonal) VALUES (?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, notification.getRecipient());
+            preparedStatement.setString(1, notification.getReceiver());
             preparedStatement.setString(2, notification.getSubject());
             preparedStatement.setString(3, notification.getMessageBody());
             preparedStatement.setString(4, notification.getNumberStaff());
@@ -46,7 +46,7 @@ public class NotificationDAO implements INotificationDAO {
             if (affectedRows > 0) {
                 return true;
             } else {
-                logger.warning("No se inserto notificacion para: " + notification.getRecipient());
+                logger.warning("No se insertó notificacion para: " + notification.getReceiver());
                 return false;
             }
 
@@ -64,17 +64,17 @@ public class NotificationDAO implements INotificationDAO {
 
             String query = "SELECT * FROM Notificacion;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Notification notification = new Notification();
-                notification.setIdNotification(rs.getInt("idNotificacion"));
-                notification.setSubject(rs.getString("asunto"));
+                notification.setIdNotification(resultSet.getInt("idNotificacion"));
+                notification.setSubject(resultSet.getString("asunto"));
 
                 NotificationsList.add(notification);
             }
 
-            rs.close();
+            resultSet.close();
             preparedStatement.close();
             connection.close();
 

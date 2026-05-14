@@ -73,5 +73,12 @@ public class Course {
     public void setNumberStaff(String numberStaff) {
         this.numberStaff = numberStaff;
     }
+
+    @Override
+    public String toString() {
+        return nrc + "-" + courseName ;
+    }
+    
+    
      
 }

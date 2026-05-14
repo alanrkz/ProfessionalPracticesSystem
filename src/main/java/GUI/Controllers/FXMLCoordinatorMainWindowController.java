@@ -1,6 +1,5 @@
 package GUI.Controllers;
 
-
 import Logic.Validations.AlertMessages;
 import java.io.IOException;
 import java.net.URL;
@@ -42,16 +41,15 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
     @FXML
     private Button buttonExit;
 
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void clickOnButtonProjectsManagment(ActionEvent event) {
     }
-    
+
     @FXML
     public void buttonLinkedOrganizationManage() {
         try {
@@ -75,7 +73,7 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
         }
     }
-    
+
     @FXML
     public void buttonProjectManagment() {
         try {
@@ -99,7 +97,7 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
         }
     }
-    
+
     @FXML
     public void buttonProfessorManage() {
         try {
@@ -121,6 +119,47 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
 
         } catch (IOException e) {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void studentManagment() {
+        try {
+            // 1. Obtener y ocultar la ventana actual
+            Stage currentStage = (Stage) buttonStudentsManagment.getScene().getWindow();
+            currentStage.hide();
+
+            // 2. Cargar el FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StudentManagment.fxml"));
+            Parent root = loader.load();
+
+            // 3. Crear la Escena y CARGAR EL CSS (Esto arregla los iconos y el diseño)
+            Scene scene = new Scene(root);
+
+            // Esta línea es la que hace que el botón verde y los iconos se vean como en Scene Builder
+            String cssPath = "/com/gluonhq/charm/glisten/themes/glisten.css";
+            if (getClass().getResource(cssPath) != null) {
+                scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+            }
+
+            // 4. Configurar el nuevo Stage
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Gestión de Estudiantes");
+
+            // 5. EVENTO DE CIERRE: Usamos una clase formal en lugar de lambda
+            // Le pasamos 'currentStage' para que sepa qué ventana volver a mostrar
+            stage.setOnHidden(e -> {
+                currentStage.show();
+            });
+
+            stage.show();
+
+        } catch (IOException e) {
+            // Uso de tu clase de alertas
+            AlertMessages.showAlert("Error: No se pudo cargar la vista de gestión de estudiantes.");
+            e.printStackTrace();
         }
     }
 
@@ -128,5 +167,5 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
     private void clickOnButtonExit(ActionEvent event) {
         ((Stage) buttonExit.getScene().getWindow()).close();
     }
-    
+
 }

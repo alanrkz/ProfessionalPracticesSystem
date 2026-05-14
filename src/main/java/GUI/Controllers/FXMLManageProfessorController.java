@@ -36,6 +36,8 @@ public class FXMLManageProfessorController implements Initializable {
     private Button buttonDeactive;
     @FXML
     private Button buttonBack;
+    @FXML
+    private Button buttonConsultProfessorsList;
 
     ProfessorDAO professorDAO = new ProfessorDAO();
 
@@ -54,12 +56,12 @@ public class FXMLManageProfessorController implements Initializable {
             Stage currentStage = (Stage) buttonInsertProfessor.getScene().getWindow();
             currentStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLInsertProfessor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLRegisterProfessor.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Insertar Profesor");
+            stage.setTitle("Registrar Profesor");
 
             stage.setOnHidden(e -> {
                 currentStage.show();
@@ -72,6 +74,8 @@ public class FXMLManageProfessorController implements Initializable {
             AlertMessages.showAlert("Funcionalidad no disponible por el momento");
         }
     }
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,5 +87,14 @@ public class FXMLManageProfessorController implements Initializable {
         Stage stage = (Stage) buttonBack.getScene().getWindow();
         stage.close();
     }
+    
+    public void clickOnButtonUpdate(ActionEvent event) {
+        //TO DO
+    }
+    
+    public void clickOnButtonDeactivate(ActionEvent event) {
+        //TO DO
+    }
+    
 
 }

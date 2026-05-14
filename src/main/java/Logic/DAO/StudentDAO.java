@@ -25,16 +25,15 @@ public class StudentDAO implements IStudentDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, sectorSocial, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO Practicante (matricula, fechaNacimiento, horasCubiertas, lenguaIndigena, idUsuario, nrc) VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, student.getEnrollment());
             preparedStatement.setDate(2, student.getBirthdate());
             preparedStatement.setInt(3, student.getHoursCovered());
-            preparedStatement.setString(4, student.getSocialSector());
-            preparedStatement.setBoolean(5, student.isIndigenousLanguage());
-            preparedStatement.setInt(6, student.getIdUser());
-            preparedStatement.setString(7, student.getNrc());
+            preparedStatement.setBoolean(4, student.isIndigenousLanguage());
+            preparedStatement.setInt(5, student.getIdUser());
+            preparedStatement.setString(6, student.getNrc());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -98,7 +97,6 @@ public class StudentDAO implements IStudentDAO {
                 student.setEnrollment(resultSet.getString("matricula"));
                 student.setBirthdate(resultSet.getDate("fechaNacimiento"));
                 student.setHoursCovered(resultSet.getInt("horasCubiertas"));
-                student.setSocialSector(resultSet.getString("sectorSocial"));
                 student.setIndigenousLanguage(resultSet.getBoolean("lenguaIndigena"));
                 student.setIdUser(resultSet.getInt("idUsuario"));
                 student.setNrc(resultSet.getString("nrc"));

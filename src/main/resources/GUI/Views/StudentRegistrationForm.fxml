@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.StudentController">
+  <children>
+    <AnchorPane fx:id="StudentForm" maxHeight="-1.0" maxWidth="-1.0" prefHeight="565.0" prefWidth="600.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+      <children>
+            <Button fx:id="buttonRegister" layoutX="479.0" layoutY="513.0" mnemonicParsing="false" onAction="#onRegisterStudentButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #22891F; -fx-padding: 5;" text="Registrar" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="buttonCancel" layoutX="35.0" layoutY="513.0" mnemonicParsing="false" onAction="#onCancelButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: RED; -fx-padding: 5;" text="Cancelar" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font></Button>
+            <TextField fx:id="textFieldFirstName" layoutX="114.0" layoutY="108.0" prefHeight="30.0" prefWidth="160.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <TextField fx:id="textFieldMiddleName" layoutX="409.0" layoutY="102.0" prefHeight="30.0" prefWidth="187.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <TextField fx:id="textFieldPaternalSurname" layoutX="114.0" layoutY="145.0" prefHeight="30.0" prefWidth="160.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <Label fx:id="labelFirstName" layoutX="23.0" layoutY="114.0" text="Primer Nombre">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <TextField fx:id="textFieldMaternalSurname" layoutX="409.0" layoutY="141.0" prefHeight="30.0" prefWidth="187.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <Label fx:id="labelPaternalSurname" layoutX="17.0" layoutY="149.0" text="Apellido Paterno">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelMaternalSurname" layoutX="306.0" layoutY="147.0" text="Apellido Materno">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelGender" layoutX="69.0" layoutY="190.0" text="Género">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelMiddleName" layoutX="306.0" layoutY="110.0" text="Segundo Nombre">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelBirthDate" layoutX="293.0" layoutY="189.0" text="Fecha de nacimiento">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelEnrollment" layoutX="50.0" layoutY="326.0" text="Matrícula">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label fx:id="labelEmail" layoutX="37.0" layoutY="354.0" prefHeight="34.0" prefWidth="74.0" text="Correo Institucional" wrapText="true">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <ComboBox fx:id="comboBoxGender" layoutX="113.0" layoutY="183.0" prefHeight="34.0" prefWidth="160.0" promptText="Seleccionar" style="-fx-padding: 4; -fx-background-color: #E8F0FE;" />
+            <Label fx:id="labelStudentPersonalData" layoutX="17.0" layoutY="81.0" text="Datos personales del estudiante">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePickerBirthdate" layoutX="411.0" layoutY="181.0" style="-fx-padding: 5; -fx-background-color: #E8F0FE;" />
+            <Label layoutX="17.0" layoutY="294.0" text="Datos de usuario del estudiante">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="textFieldEnrollment" layoutX="109.0" layoutY="321.0" prefHeight="30.0" prefWidth="160.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <TextField fx:id="textFieldEmail" layoutX="110.0" layoutY="358.0" prefHeight="30.0" prefWidth="160.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <Label layoutX="287.0" layoutY="294.0" text="Datos de prácticas profesionales">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="textFieldPassword" layoutX="110.0" layoutY="394.0" prefHeight="30.0" prefWidth="160.0" style="-fx-padding: 6; -fx-background-color: #E8F0FE;" />
+            <Label layoutX="42.0" layoutY="403.0" text="Contraseña">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label layoutX="78.0" layoutY="229.0" />
+            <Label layoutX="300.0" layoutY="310.0" prefHeight="48.0" prefWidth="110.0" text="Experiencia Educativa (NRC)" wrapText="true">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <Label layoutX="16.0" layoutY="228.0" text="Lengua Indígena">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <CheckBox fx:id="checkBoxIndigenousLanguage" layoutX="114.0" layoutY="224.0" mnemonicParsing="false" style="-fx-padding: 3; -fx-background-color: #E8F0FE;" text="Marcar si es verdadero">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></CheckBox>
+            <Label alignment="CENTER" layoutX="-1.0" prefHeight="18.0" prefWidth="614.0" style="-fx-background-color: #146CD0; -fx-padding: 7;" text="REGISTRO DE ESTUDIANTE" textFill="#e8f0fe">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBoxCourse" layoutX="402.0" layoutY="319.0" prefHeight="34.0" prefWidth="175.0" promptText="Seleccionar" style="-fx-padding: 4; -fx-background-color: #E8F0FE;" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
