@@ -22,6 +22,7 @@ public class CatalogSocialSectorDAO implements ICatalogSocialSectorDAO {
     
     @Override
     public ArrayList<CatalogSocialSector> getSocialSectors() throws DataIntegrityException {
+        
         ArrayList<CatalogSocialSector> listSocialSectors = new ArrayList<>();
         String query = "SELECT * FROM CatalogoSectorSocial;";
 
@@ -31,11 +32,11 @@ public class CatalogSocialSectorDAO implements ICatalogSocialSectorDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                CatalogSocialSector CatalogSocialSector = new CatalogSocialSector();
-                CatalogSocialSector.setIdSector(resultSet.getInt("idSector"));
-                CatalogSocialSector.setSectorName(resultSet.getString("nombreSector"));
+                CatalogSocialSector catalogSocialSector = new CatalogSocialSector();
+                catalogSocialSector.setIdSector(resultSet.getInt("idSector"));
+                catalogSocialSector.setSectorName(resultSet.getString("nombreSector"));
 
-                listSocialSectors.add(CatalogSocialSector);
+                listSocialSectors.add(catalogSocialSector);
             }
 
             resultSet.close();

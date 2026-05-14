@@ -1,6 +1,5 @@
 package Logic.DAO;
 
-
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IStudentDAO;
 import Logic.DTO.Student;
@@ -15,14 +14,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class StudentDAO implements IStudentDAO {
 
     private static final Logger logger = Logger.getLogger(StudentDAO.class.getName());
 
     @Override
     public boolean registerStudent(Student student) throws DataIntegrityException {
-        
+
         boolean successfulRegister = false;
         int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
@@ -45,7 +43,7 @@ public class StudentDAO implements IStudentDAO {
             if (affectedRows > unaffectedRows) {
                 successfulRegister = true;
             }
-            
+
             return successfulRegister;
 
         } catch (SQLException e) {
@@ -56,7 +54,7 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public boolean deactivateStudent(User user, Student student) throws DataIntegrityException {
-        
+
         boolean successfulDeactivate = false;
         int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
@@ -74,7 +72,7 @@ public class StudentDAO implements IStudentDAO {
             if (affectedRows > unaffectedRows) {
                 successfulDeactivate = true;
             }
-            
+
             return successfulDeactivate;
 
         } catch (SQLException e) {
@@ -90,7 +88,7 @@ public class StudentDAO implements IStudentDAO {
 
         try (Connection connection = DatabaseConnection.connect()) {
 
-            String query = "SELECT * FROM Practicante;";
+            String query = "SELECT * FROM Alumno;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -118,28 +116,52 @@ public class StudentDAO implements IStudentDAO {
 
         return listStudents;
     }
-    
+
     @Override
     public boolean existsStudent(int idUser) throws DataIntegrityException {
-        
+
         boolean studentExists = false;
-        try (Connection connection = DatabaseConnection.connect()){
-            
-            String query = "SELECT 1 FROM practicante WHERE idUsuario = ?";
-            
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT 1 FROM Alumno WHERE idUsuario = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 studentExists = true;
-            } 
-            
+            }
+
             return studentExists;
-            
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error al verificar la ecistencia del estudiante", e);
+            logger.log(Level.SEVERE, "Error al verificar la existencia del estudiante", e);
             throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del estudiante. Intentalo mas tarde", e);
         }
     }
-    
+
+    public String getEnrollmentByIdUser(int idUser) throws DataIntegrityException {
+
+        String enrollment = null;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT matricula FROM Alumno WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idUser);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                enrollment = resultSet.getString("matricula");
+            }
+
+            return enrollment;
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error al obtener la matericula del alumno", e);
+            throw new DataIntegrityException("Error al obtener la matricula", e);
+        }
+    }
+
 }

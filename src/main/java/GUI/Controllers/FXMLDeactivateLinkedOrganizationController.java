@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
@@ -19,7 +20,6 @@ import javafx.stage.Stage;
  * @author alan rkz
  */
 public class FXMLDeactivateLinkedOrganizationController implements Initializable {
-
     @FXML
     private Button buttonYes;
     @FXML
@@ -29,6 +29,7 @@ public class FXMLDeactivateLinkedOrganizationController implements Initializable
     @FXML
     private TextField textFieldLinkedOrganizationName;
     private LinkedOrganization linkedOrganization;
+    
     
     public void loadFields() {
         textFieldLinkedOrganizationName.setText(linkedOrganization.getCompanyName());

@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+
 import Logic.DAO.ProjectDAO;
 import Logic.DTO.Project;
 import Logic.Exceptions.DataIntegrityException;
@@ -19,7 +20,6 @@ import javafx.stage.Stage;
  * @author alan rkz
  */
 public class FXMLDeactivateProjectController implements Initializable {
-
     @FXML
     private Button buttonYes;
     @FXML
@@ -30,6 +30,7 @@ public class FXMLDeactivateProjectController implements Initializable {
     private TextField textFieldIdProject;
     private Project project;
 
+    
     public void loadFields() {
         textFieldProjectName.setText(project.getProjectName());
         textFieldIdProject.setText(String.valueOf(project.getIdProject()));

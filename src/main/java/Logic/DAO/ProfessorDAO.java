@@ -1,6 +1,5 @@
 package Logic.DAO;
 
-
 import DataAccess.DatabaseConnection;
 import Logic.Contracts.IProfessorDAO;
 import Logic.DTO.Professor;
@@ -20,7 +19,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean registerProfessor(Professor professor) throws DataIntegrityException {
-        
+
         boolean successfulRegister = false;
         int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
@@ -43,7 +42,7 @@ public class ProfessorDAO implements IProfessorDAO {
             if (affectedRows > unaffectedRows) {
                 successfulRegister = true;
             }
-            
+
             return successfulRegister;
 
         } catch (SQLException e) {
@@ -54,7 +53,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean deactivateProfessor(User user, Professor professor) throws DataIntegrityException {
-        
+
         boolean successfulDeactivate = false;
         int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
@@ -72,7 +71,7 @@ public class ProfessorDAO implements IProfessorDAO {
             if (affectedRows > unaffectedRows) {
                 successfulDeactivate = true;
             }
-            
+
             return successfulDeactivate;
 
         } catch (SQLException e) {
@@ -83,7 +82,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean updateProfessor(Professor professor) throws DataIntegrityException {
-        
+
         boolean successfulUpdate = false;
         int unaffectedRows = 0;
         try (Connection connection = DatabaseConnection.connect()) {
@@ -104,7 +103,7 @@ public class ProfessorDAO implements IProfessorDAO {
             if (affectedRows > unaffectedRows) {
                 successfulUpdate = true;
             }
-            
+
             return successfulUpdate;
 
         } catch (SQLException e) {
@@ -115,7 +114,7 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public ArrayList<Professor> getProfessors() throws DataIntegrityException {
-        
+
         ArrayList<Professor> listProfessors = new ArrayList<>();
         String query = "SELECT * FROM Profesor;";
 
@@ -148,9 +147,9 @@ public class ProfessorDAO implements IProfessorDAO {
 
         return listProfessors;
     }
-    
+
     public ArrayList<Professor> getProfessorsForComboBox() throws DataIntegrityException {
-        
+
         ArrayList<Professor> listProfessors = new ArrayList<>();
         String query = "SELECT * FROM vw_profesor WHERE estado = true;";
 
@@ -184,12 +183,12 @@ public class ProfessorDAO implements IProfessorDAO {
 
     @Override
     public boolean existsProfessor(int idUser) throws DataIntegrityException {
-        
+
         boolean professorExists = false;
         try (Connection connection = DatabaseConnection.connect()) {
-            
+
             String query = "SELECT 1 FROM profesor WHERE idUsuario = ?";
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, idUser);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -197,12 +196,35 @@ public class ProfessorDAO implements IProfessorDAO {
             if (resultSet.next()) {
                 professorExists = true;
             }
-            
+
             return professorExists;
-            
+
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error al verificar existencia del profesor", e);
             throw new DataIntegrityException("Tuvimos problemas para verificar la ecistencia del profesor. Intentalo mas tarde", e);
+        }
+    }
+
+    public String getPersonalNumberByIdUser(int idUser) throws DataIntegrityException {
+
+        String personalNumber = null;
+        try (Connection connection = DatabaseConnection.connect()) {
+
+            String query = "SELECT numeroPersonal FROM Profesor WHERE idUsuario = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idUser);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                personalNumber = resultSet.getString("numeroPersonal");
+            }
+
+            return personalNumber;
+
+        } catch (SQLException e) {
+            throw new DataIntegrityException("Error al obtener el numero de personal", e);
         }
     }
 

@@ -48,8 +48,10 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
 
     public void loadSocialSectors() {
         try {
+            
             ObservableList<CatalogSocialSector> observableList = FXCollections.observableList(catalogSocialSectorDAO.getSocialSectors());
             comboBoxSector.setItems(observableList);
+            
         } catch (DataIntegrityException e) {
             AlertMessages.showAlert("Error de conexion con la base de datos al cargar el catalogo de sectores sociales");
         }
@@ -58,6 +60,7 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
     @FXML
     public void insertLinkedOrganization() {
         try {
+            
             if (valideFields()) {
                 if (LogInValidations.validateEmail(textFieldEmail.getText())) {
                     LinkedOrganization linkedOrganization = new LinkedOrganization();
@@ -84,6 +87,7 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
             } else {
                 AlertMessages.showAlert("Los campos obligatorios no pueden esatr vacios");
             }
+            
         } catch (DataIntegrityException e) {
             AlertMessages.showAlert("Error de conexcion con la base de datos");
         }
@@ -122,16 +126,16 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
 
         return verified;
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        loadSocialSectors();
-    }
-
+    
     @FXML
     public void buttonCancel(ActionEvent event) {
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
         stage.close();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        loadSocialSectors();
     }
 
 }

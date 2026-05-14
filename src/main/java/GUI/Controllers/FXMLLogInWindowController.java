@@ -1,6 +1,5 @@
 package GUI.Controllers;
 
-
 import Logic.DAO.CoordinatorDAO;
 import Logic.DAO.ProfessorDAO;
 import Logic.DAO.StudentDAO;
@@ -41,7 +40,7 @@ public class FXMLLogInWindowController {
 
     @FXML
     public void ButtonLogin() throws DataIntegrityException {
-        
+
         String email = textFieldEmailLogIn.getText();
         String password = passwordFieldPasswordLogIn.getText();
 
@@ -54,18 +53,18 @@ public class FXMLLogInWindowController {
                 } else {
                     LogInResult loginResult = result.get();
 
-                    switch (loginResult.getUserRole()) {
+                    switch (loginResult.getRole()) {
                         case COORDINATOR:
                             AlertMessages.showAlert("Bienvenido Coordinador: " + loginResult.getUser().getFirstName());
-                            openWindow("/GUI/Views/FXMLMainMenuCoordinator.fxml", "Menu Principal Coordinador");
+                            openWindow("/GUI/Views/FXMLMainMenuCoordinator.fxml", "Menu Principal Coordinador", loginResult);
                             break;
                         case STUDENT:
                             AlertMessages.showAlert("Bienvenido Estudiante: " + loginResult.getUser().getFirstName());
-                            openWindow("/GUI/Views/FXMLMainMenuStudent.fxml", "Menu Principal Estudiantes");
+                            openWindow("/GUI/Views/FXMLMainMenuStudent.fxml", "Menu Principal Estudiantes", loginResult);
                             break;
                         case PROFESSOR:
                             AlertMessages.showAlert("Bienvenido Profesor: " + loginResult.getUser().getFirstName());
-                            openWindow("/GUI/Views/FXMLProfesorMainWindow.fxml", "Menu Principal Profesores");
+                            openWindow("/GUI/Views/FXMLProfesorMainWindow.fxml", "Menu Principal Profesores", loginResult);
                             break;
                     }
                 }
@@ -75,10 +74,14 @@ public class FXMLLogInWindowController {
         }
     }
 
-    public void openWindow(String fxmlPath, String title) {
+    public void openWindow(String fxmlPath, String title, LogInResult logInResult) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
+            Object controller = loader.getController();
+            if (controller instanceof FXMLMainMenuStudentController) {
+                ((FXMLMainMenuStudentController) controller).setLogInResult(logInResult);
+            }
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(title);

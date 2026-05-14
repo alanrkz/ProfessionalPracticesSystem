@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="GUI.Controllers.FXMLMainMenuStudentController">
+<AnchorPane id="AnchorPane" prefHeight="565.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLMainMenuStudentController">
    <children>
       <Label layoutX="106.0" layoutY="34.0" text="MENU PRINCIPAL ESTUDIANTES">
          <font>
@@ -17,7 +16,7 @@
       <Button fx:id="buttonGenerateReport" layoutX="106.0" layoutY="220.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Generar Reporte" />
       <Button fx:id="buttonGenerateSelfAssessment" layoutX="106.0" layoutY="308.0" mnemonicParsing="false" text="Generar Autoevaluacion" />
       <Button fx:id="buttonShowNotifications" layoutX="351.0" layoutY="140.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Mostrar Notificaciones" />
-      <Button fx:id="buttonUploadDocuments" layoutX="351.0" layoutY="220.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Subir Documentos" />
+      <Button fx:id="buttonUploadDocuments" layoutX="351.0" layoutY="220.0" mnemonicParsing="false" onAction="#buttonUploadDocuments" prefHeight="26.0" prefWidth="143.0" text="Subir Documentos" />
       <Button fx:id="buttonDownloadDocuments" layoutX="351.0" layoutY="307.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Descargar Archivos" />
       <Button fx:id="buttonExit" layoutX="260.0" layoutY="443.0" mnemonicParsing="false" onAction="#buttonExit" prefHeight="26.0" prefWidth="80.0" text="Salir" />
    </children>
