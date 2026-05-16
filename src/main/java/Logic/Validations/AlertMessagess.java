@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
  *
  * @author alan rkz
  */
-public class AlertMessages {
+public class AlertMessagess {
     
     public static void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

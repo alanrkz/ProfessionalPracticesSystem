@@ -5,7 +5,7 @@ import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.CatalogSocialSector;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import Logic.Validations.LogInValidations;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,7 +54,7 @@ public class FXMLUpdateLinkedOrganizationController implements Initializable {
             ObservableList<CatalogSocialSector> observableList = FXCollections.observableList(catalogSocialSectorDAO.getSocialSectors());
             comboBoxSector.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar el catalogo de sectores sociales");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar el catalogo de sectores sociales");
         }
     }
 
@@ -93,19 +93,19 @@ public class FXMLUpdateLinkedOrganizationController implements Initializable {
                     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
 
                     if (linkedOrganizationDAO.updateOrganization(updatedOrganization)) {
-                        AlertMessages.showAlert("Actualizacion Existosa de la Organizacion vinculada");
+                        AlertMessagess.showAlert("Actualizacion Existosa de la Organizacion vinculada");
                         Stage stage = (Stage) buttonUpdate.getScene().getWindow();
                         stage.close();
                     }
                 } else {
-                    AlertMessages.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
+                    AlertMessagess.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
                 }
 
             } else {
-                AlertMessages.showAlert("Los campos obligatorios no pueden estar vacios");
+                AlertMessagess.showAlert("Los campos obligatorios no pueden estar vacios");
             }
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexcion con la base de datos");
+            AlertMessagess.showAlert("Error de conexcion con la base de datos");
         }
     }
 

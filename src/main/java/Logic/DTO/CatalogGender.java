@@ -1,30 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logic.DTO;
 
 /**
  *
  * @author ELLIN JV
  */
-public class Gender {
-    private String genderId;
+public class CatalogGender {
+    private int genderId;
     private String genderName;
 
-    public Gender() {
+    public CatalogGender() {
     }
 
-    public Gender(String genderId, String genderName) {
+    public CatalogGender(int genderId, String genderName) {
         this.genderId = genderId;
         this.genderName = genderName;
     }
 
-    public String getGenderId() {
+    public int getGenderId() {
         return genderId;
     }
 
-    public void setGenderId(String genderId) {
+    public void setGenderId(int genderId) {
         this.genderId = genderId;
     }
 

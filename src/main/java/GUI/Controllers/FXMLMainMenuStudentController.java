@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
 import Logic.DTO.LogInResult;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,7 +65,7 @@ public class FXMLMainMenuStudentController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
 

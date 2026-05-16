@@ -19,7 +19,7 @@ public class StudentRegistrationValidations {
 
     //private static final String NRC_PATTERN = "\"^[0-9]+$\"";
     //private static final int NRC_LENGTH = 5;
-    private static final String NRC_LABEL = "El NRC";
+    private static final String NRC_LABEL = "Experiencia educativa";
 
     private static final String ENROLLMENT_PATTERN = "^[a-zA-Z0-9]+$";
     private static final int ENROLLMENT_LENGTH = 9;
@@ -49,22 +49,11 @@ public class StudentRegistrationValidations {
         FormValidations.validateAllowedCharacters(cleanedEnrollment, ENROLLMENT_PATTERN, ENROLLMENT_LABEL);
     }
 
-    public static void validateCourseSelection(Course selectedCourse) throws InvalidFormDataException {
-
-        FormValidations.validateObjectSelection(selectedCourse, "Experiencia Educativa");
-
-
-        if (selectedCourse.getNrc() == null || selectedCourse.getNrc().isBlank()) {
-            throw new InvalidFormDataException("El curso seleccionado no tiene un NRC válido.");
-        }
-    }
-
+    
     public static void validateNrc(String courseNrc) throws InvalidFormDataException {
 
         FormValidations.validateComboBoxSelection(courseNrc, NRC_LABEL);
 
-        //FormValidations.validateUniqueLength(courseNrc,NRC_LENGTH, NRC_LABEL);
-        //FormValidations.validateAllowedCharacters(courseNrc,NRC_PATTERN, NRC_LABEL);
     }
 
     public static void validateBirthdate(LocalDate birthdate) throws InvalidFormDataException {
@@ -85,4 +74,14 @@ public class StudentRegistrationValidations {
             throw new InvalidFormDataException("La fecha de nacimiento es inválida.");
         }
     }
+    
+    public static void validateCourseSelection(Course selectedCourse) throws InvalidFormDataException {
+
+        FormValidations.validateObjectSelection(selectedCourse, NRC_LABEL);
+
+        if (selectedCourse.getNrc() == null || selectedCourse.getNrc().isBlank()) {
+            throw new InvalidFormDataException("El curso seleccionado no tiene un NRC válido.");
+        }
+    }
+
 }

@@ -4,7 +4,7 @@ package GUI.Controllers;
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,7 +50,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
             ObservableList<LinkedOrganization> observableList = FXCollections.observableList(linkedOrganizationDAO.getOrganizations());
             comboBoxLinkedOrganizations.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar las organizaciones vinculadas");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar las organizaciones vinculadas");
         }
     }
 
@@ -75,7 +75,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
 
@@ -84,7 +84,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
         LinkedOrganization selectedOrganization = comboBoxLinkedOrganizations.getSelectionModel().getSelectedItem();
 
         if (selectedOrganization == null) {
-            AlertMessages.showAlert("Seleccione una organización");
+            AlertMessagess.showAlert("Seleccione una organización");
         } else {
             try {
                 Stage currentStage = (Stage) buttonUpdate.getScene().getWindow();
@@ -108,7 +108,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
                 stage.show();
 
             } catch (IOException e) {
-                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+                AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
             }
         }
 
@@ -119,7 +119,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
         LinkedOrganization selectedOrganization = comboBoxLinkedOrganizations.getSelectionModel().getSelectedItem();
 
         if (selectedOrganization == null) {
-            AlertMessages.showAlert("Seleccione una organización");
+            AlertMessagess.showAlert("Seleccione una organización");
         } else {
             try {
                 Stage currentStage = (Stage) buttonDeactive.getScene().getWindow();
@@ -143,7 +143,7 @@ public class FXMLManageLinkedOrganizationController implements Initializable {
                 stage.show();
 
             } catch (IOException e) {
-                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+                AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
             }
         }
     }

@@ -9,7 +9,7 @@ import Logic.DTO.User;
 import Logic.Enums.UserRole;
 import Logic.Exceptions.BusinessException;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +38,7 @@ public class LogIn {
             Optional<User> result = userDAO.getUserByCredentials(email, password);
 
             if (result.isEmpty()) {
-                AlertMessages.showAlert("Usuario no encontrado");
+                AlertMessagess.showAlert("Usuario no encontrado");
             }
 
             User user = result.get();

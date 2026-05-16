@@ -1,6 +1,6 @@
 package GUI.Controllers;
 
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,6 +48,27 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
 
     @FXML
     private void clickOnButtonProjectsManagment(ActionEvent event) {
+        
+        try {
+            Stage currentStage = (Stage) buttonLinkedOrganizationManage.getScene().getWindow();
+            currentStage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/FXMLManageLinkedOrganization.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestionar Organizacion Vinculada");
+
+            stage.setOnHidden(e -> {
+                currentStage.show();
+            });
+
+            stage.show();
+
+        } catch (IOException e) {
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
+        }
     }
 
     @FXML
@@ -70,7 +91,7 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
 
@@ -94,7 +115,7 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
 
@@ -118,47 +139,7 @@ public class FXMLCoordinatorMainWindowController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void studentManagment() {
-        try {
-            // 1. Obtener y ocultar la ventana actual
-            Stage currentStage = (Stage) buttonStudentsManagment.getScene().getWindow();
-            currentStage.hide();
-
-            // 2. Cargar el FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StudentManagment.fxml"));
-            Parent root = loader.load();
-
-            // 3. Crear la Escena y CARGAR EL CSS (Esto arregla los iconos y el diseño)
-            Scene scene = new Scene(root);
-
-            // Esta línea es la que hace que el botón verde y los iconos se vean como en Scene Builder
-            String cssPath = "/com/gluonhq/charm/glisten/themes/glisten.css";
-            if (getClass().getResource(cssPath) != null) {
-                scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
-            }
-
-            // 4. Configurar el nuevo Stage
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Gestión de Estudiantes");
-
-            // 5. EVENTO DE CIERRE: Usamos una clase formal en lugar de lambda
-            // Le pasamos 'currentStage' para que sepa qué ventana volver a mostrar
-            stage.setOnHidden(e -> {
-                currentStage.show();
-            });
-
-            stage.show();
-
-        } catch (IOException e) {
-            // Uso de tu clase de alertas
-            AlertMessages.showAlert("Error: No se pudo cargar la vista de gestión de estudiantes.");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
             e.printStackTrace();
         }
     }

@@ -4,7 +4,7 @@ package GUI.Controllers;
 import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -43,12 +43,12 @@ public class FXMLDeactivateLinkedOrganizationController implements Initializable
             linkedOrganizationDAO.deactivateOrganization(linkedOrganization.getIdLikedOrganization());
             
             if (linkedOrganizationDAO.deactivateOrganization(linkedOrganization.getIdLikedOrganization())) {
-                AlertMessages.showAlert("Organizacion vinculada inactivada exitosamente");
+                AlertMessagess.showAlert("Organizacion vinculada inactivada exitosamente");
                 Stage stage = (Stage) buttonYes.getScene().getWindow();
                 stage.close();
             }
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error al inactivar la organizacion vinculada");
+            AlertMessagess.showAlert("Error al inactivar la organizacion vinculada");
         }
     }
     

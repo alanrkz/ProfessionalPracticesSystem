@@ -6,7 +6,7 @@ import Logic.DAO.LinkedOrganizationDAO;
 import Logic.DTO.CatalogSocialSector;
 import Logic.DTO.LinkedOrganization;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import Logic.Validations.LogInValidations;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,7 +53,7 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
             comboBoxSector.setItems(observableList);
             
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar el catalogo de sectores sociales");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar el catalogo de sectores sociales");
         }
     }
 
@@ -76,20 +76,20 @@ public class FXMLInsertLinkedOrganizationController implements Initializable {
                     LinkedOrganizationDAO linkedOrganizationDAO = new LinkedOrganizationDAO();
                     
                     if (linkedOrganizationDAO.registerOrganization(linkedOrganization)) {
-                        AlertMessages.showAlert("Registro Exitoso de la Organizacion vinculada");
+                        AlertMessagess.showAlert("Registro Exitoso de la Organizacion vinculada");
                         Stage stage = (Stage) buttonInsert.getScene().getWindow();
                         stage.close();
                     }
                 } else {
-                    AlertMessages.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
+                    AlertMessagess.showAlert("Formato de Correo Electronico incorrecto. Por favor ingresalo nuevamente");
                 }
 
             } else {
-                AlertMessages.showAlert("Los campos obligatorios no pueden esatr vacios");
+                AlertMessagess.showAlert("Los campos obligatorios no pueden esatr vacios");
             }
             
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexcion con la base de datos");
+            AlertMessagess.showAlert("Error de conexcion con la base de datos");
         }
     }
 

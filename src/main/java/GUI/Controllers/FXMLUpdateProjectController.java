@@ -5,7 +5,7 @@ import Logic.DAO.ProjectDAO;
 import Logic.DTO.LinkedOrganization;
 import Logic.DTO.Project;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -53,7 +53,7 @@ public class FXMLUpdateProjectController implements Initializable {
             ObservableList<LinkedOrganization> observableList = FXCollections.observableList(linkedOrganizationDAO.getOrganizations());
             comboBoxLinkedOrganization.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error al cargar las organizaciones vinculadas");
+            AlertMessagess.showAlert("Error al cargar las organizaciones vinculadas");
         }
     }
 
@@ -81,15 +81,15 @@ public class FXMLUpdateProjectController implements Initializable {
                 updatedProject.setIdLikedOrganization(linkedOrganization.getIdLikedOrganization());
 
                 if (projectDAO.updateProject(updatedProject)) {
-                    AlertMessages.showAlert("Actualizacion exitosa del proyecto");
+                    AlertMessagess.showAlert("Actualizacion exitosa del proyecto");
                     Stage stage = (Stage) buttonUpdate.getScene().getWindow();
                     stage.close();
                 }
             } else {
-                AlertMessages.showAlert("Los campos obligatorios no pueden estar vacios");
+                AlertMessagess.showAlert("Los campos obligatorios no pueden estar vacios");
             }
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos");
+            AlertMessagess.showAlert("Error de conexion con la base de datos");
         }
         
     }

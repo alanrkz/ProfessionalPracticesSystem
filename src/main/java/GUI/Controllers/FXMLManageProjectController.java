@@ -4,7 +4,7 @@ package GUI.Controllers;
 import Logic.DAO.ProjectDAO;
 import Logic.DTO.Project;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,7 +50,7 @@ public class FXMLManageProjectController implements Initializable {
             ObservableList<Project> observableList = FXCollections.observableList(projectDAO.getProjects());
             comboBoxProjects.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar los proyectos");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar los proyectos");
         }
     }
     
@@ -75,7 +75,7 @@ public class FXMLManageProjectController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
     
@@ -84,7 +84,7 @@ public class FXMLManageProjectController implements Initializable {
         Project selectedProject = comboBoxProjects.getSelectionModel().getSelectedItem();
 
         if (selectedProject == null) {
-            AlertMessages.showAlert("Seleccione un proyecto");
+            AlertMessagess.showAlert("Seleccione un proyecto");
         } else {
             try {
                 Stage currentStage = (Stage) buttonUpdate.getScene().getWindow();
@@ -108,7 +108,7 @@ public class FXMLManageProjectController implements Initializable {
                 stage.show();
 
             } catch (IOException e) {
-                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+                AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
             }
         }
     }
@@ -118,7 +118,7 @@ public class FXMLManageProjectController implements Initializable {
         Project selectedProject = comboBoxProjects.getSelectionModel().getSelectedItem();
 
         if (selectedProject == null) {
-            AlertMessages.showAlert("Seleccione un proyecto");
+            AlertMessagess.showAlert("Seleccione un proyecto");
         } else {
             try {
                 Stage currentStage = (Stage) buttonDeactive.getScene().getWindow();
@@ -142,7 +142,7 @@ public class FXMLManageProjectController implements Initializable {
                 stage.show();
 
             } catch (IOException e) {
-                AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+                AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
             }
         }
     }

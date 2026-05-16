@@ -11,11 +11,11 @@ public class LogInValidations {
 
         if (email == null || email.trim().isEmpty()) {
             validEmail = false;
-            AlertMessages.showAlert("El correo no puede estar vacío");
+            AlertMessagess.showAlert("El correo no puede estar vacío");
         } else {
             if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
                 validEmail = false;
-                AlertMessages.showAlert("Formato de correo inválido");
+                AlertMessagess.showAlert("Formato de correo inválido");
             }
         }
 
@@ -28,11 +28,11 @@ public class LogInValidations {
 
         if (password == null || password.trim().isEmpty()) {
             validPassword = false;
-            AlertMessages.showAlert("La contraseña no puede estar vacía");
+            AlertMessagess.showAlert("La contraseña no puede estar vacía");
         } else {
             if (password.length() < minimumPasswordLength) {
                 validPassword = false;
-                AlertMessages.showAlert("La contraseña es demasiado corta");
+                AlertMessagess.showAlert("La contraseña es demasiado corta");
             }
         }
 

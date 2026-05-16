@@ -1,7 +1,7 @@
 package GUI;
 
 
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ public class ProfessionalPracticesSystem extends Application {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Error: No se encontro la ventana principal Login");
+            AlertMessagess.showAlert("Error: No se encontro la ventana principal Login");
         }
     }
 

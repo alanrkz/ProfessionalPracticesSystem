@@ -7,7 +7,7 @@ import Logic.DAO.UserDAO;
 import Logic.DTO.LogInResult;
 import Logic.Exceptions.DataIntegrityException;
 import Logic.LogIn;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import Logic.Validations.LogInValidations;
 import java.io.IOException;
 import java.util.Optional;
@@ -49,27 +49,27 @@ public class FXMLLogInWindowController {
                 Optional<LogInResult> result = loginService.login(email, password);
 
                 if (result.isEmpty()) {
-                    AlertMessages.showAlert("Usuario no encontrado");
+                    AlertMessagess.showAlert("Usuario no encontrado");
                 } else {
                     LogInResult loginResult = result.get();
 
                     switch (loginResult.getRole()) {
                         case COORDINATOR:
-                            AlertMessages.showAlert("Bienvenido Coordinador: " + loginResult.getUser().getFirstName());
-                            openWindow("/GUI/Views/FXMLMainMenuCoordinator.fxml", "Menu Principal Coordinador", loginResult);
+                            AlertMessagess.showAlert("Bienvenido Coordinador: " + loginResult.getUser().getFirstName());
+                            openWindow("/fxml/CoordinatorDashboard.fxml", "Menu Principal Coordinador", loginResult);
                             break;
                         case STUDENT:
-                            AlertMessages.showAlert("Bienvenido Estudiante: " + loginResult.getUser().getFirstName());
+                            AlertMessagess.showAlert("Bienvenido Estudiante: " + loginResult.getUser().getFirstName());
                             openWindow("/GUI/Views/FXMLMainMenuStudent.fxml", "Menu Principal Estudiantes", loginResult);
                             break;
                         case PROFESSOR:
-                            AlertMessages.showAlert("Bienvenido Profesor: " + loginResult.getUser().getFirstName());
+                            AlertMessagess.showAlert("Bienvenido Profesor: " + loginResult.getUser().getFirstName());
                             openWindow("/GUI/Views/FXMLProfesorMainWindow.fxml", "Menu Principal Profesores", loginResult);
                             break;
                     }
                 }
             } catch (DataIntegrityException e) {
-                AlertMessages.showAlert("Error de conexión con la base de datos");
+                AlertMessagess.showAlert("Error de conexión con la base de datos");
             }
         }
     }
@@ -90,7 +90,8 @@ public class FXMLLogInWindowController {
             Stage currentStage = (Stage) textFieldEmailLogIn.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
-            AlertMessages.showAlert("Error al abrir la ventana");
+            AlertMessagess.showAlert("Error al abrir la ventana");
+            e.printStackTrace();
         }
     }
 

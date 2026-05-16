@@ -96,7 +96,7 @@ public class UserValidations {
 
     public static void validateGender(String selectedGender) throws InvalidFormDataException {
 
-        FormValidations.validateComboBoxSelection(selectedGender,GENDER_LABEL);
+        FormValidations.validateComboBoxSelection(selectedGender, GENDER_LABEL);
     }
 
 }

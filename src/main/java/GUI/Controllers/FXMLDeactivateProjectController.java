@@ -4,7 +4,7 @@ package GUI.Controllers;
 import Logic.DAO.ProjectDAO;
 import Logic.DTO.Project;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -43,12 +43,12 @@ public class FXMLDeactivateProjectController implements Initializable {
             projectDAO.deactivateProject(project.getIdProject());
             
             if (projectDAO.deactivateProject(project.getIdProject())) {
-                AlertMessages.showAlert("Proyecto inactivado exitosamente");
+                AlertMessagess.showAlert("Proyecto inactivado exitosamente");
                 Stage stage = (Stage) buttonYes.getScene().getWindow();
                 stage.close();
             }
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error al inactivar el proyecto");
+            AlertMessagess.showAlert("Error al inactivar el proyecto");
         }
     }
     

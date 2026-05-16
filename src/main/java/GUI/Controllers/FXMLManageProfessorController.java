@@ -3,7 +3,7 @@ package GUI.Controllers;
 import Logic.DAO.ProfessorDAO;
 import Logic.DTO.Professor;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,7 +46,7 @@ public class FXMLManageProfessorController implements Initializable {
             ObservableList<Professor> observableList = FXCollections.observableList(professorDAO.getProfessorsForComboBox());
             comboBoxProfessors.setItems(observableList);
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar los profesores");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar los profesores");
         }
     }
 
@@ -71,7 +71,7 @@ public class FXMLManageProfessorController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            AlertMessages.showAlert("Funcionalidad no disponible por el momento");
+            AlertMessagess.showAlert("Funcionalidad no disponible por el momento");
         }
     }
     

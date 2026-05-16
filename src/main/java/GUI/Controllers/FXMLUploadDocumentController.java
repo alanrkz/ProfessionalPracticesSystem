@@ -5,7 +5,7 @@ import Logic.DTO.CatalogDocumentType;
 import Logic.DTO.LogInResult;
 import Logic.DTO.StudentFiles;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,7 +53,7 @@ public class FXMLUploadDocumentController implements Initializable {
             comboBoxDocumentType.setItems(observableList);
 
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos al cargar el catalogo de tipos de documento");
+            AlertMessagess.showAlert("Error de conexion con la base de datos al cargar el catalogo de tipos de documento");
         }
     }
 
@@ -79,7 +79,7 @@ public class FXMLUploadDocumentController implements Initializable {
             labelURLDocument.setText(documentURL);
 
         } else {
-            AlertMessages.showAlert("No se selecciono ningun archivo PDF");
+            AlertMessagess.showAlert("No se selecciono ningun archivo PDF");
         }
     }
 
@@ -96,20 +96,20 @@ public class FXMLUploadDocumentController implements Initializable {
                     studentFiles.setEnrollment(logInResult.getUserIdentifier());
 
                     if (studentFilesDAO.registerFiles(studentFiles)) {
-                        AlertMessages.showAlert("Registro Exitoso del documento ingresado");
+                        AlertMessagess.showAlert("Registro Exitoso del documento ingresado");
                         Stage stage = (Stage) buttonUpload.getScene().getWindow();
                         stage.close();
                     }
 
                 } else {
-                    AlertMessages.showAlert("Por favor seleccione un documento");
+                    AlertMessagess.showAlert("Por favor seleccione un documento");
                 }
             } else {
-                AlertMessages.showAlert("Por favor seleccione el tipo de documento que quiere subir");
+                AlertMessagess.showAlert("Por favor seleccione el tipo de documento que quiere subir");
             }
 
         } catch (DataIntegrityException e) {
-            AlertMessages.showAlert("Error de conexion con la base de datos");
+            AlertMessagess.showAlert("Error de conexion con la base de datos");
         }
     }
 

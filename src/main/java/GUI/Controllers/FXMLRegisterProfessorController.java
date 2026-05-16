@@ -7,7 +7,7 @@ import Logic.DTO.Professor;
 import Logic.DTO.User;
 import Logic.Exceptions.BusinessException;
 import Logic.Exceptions.DataIntegrityException;
-import Logic.Validations.AlertMessages;
+import Logic.Validations.AlertMessagess;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -113,7 +113,7 @@ public class FXMLRegisterProfessorController implements Initializable {
             boolean userResult = userDAO.registerUser(user);
 
             if (!userResult) {
-                AlertMessages.showAlert("Error al registrar usuario");
+                AlertMessagess.showAlert("Error al registrar usuario");
                 return;
             }
 
@@ -145,24 +145,24 @@ public class FXMLRegisterProfessorController implements Initializable {
 
             if (professorResult) {
 
-                AlertMessages.showAlert(
+                AlertMessagess.showAlert(
                         "Profesor registrado correctamente"
                 );
 
             } else {
 
-                AlertMessages.showAlert(
+                AlertMessagess.showAlert(
                         "No se pudo registrar el profesor"
                 );
             }
 
         } catch (DataIntegrityException e) {
 
-            AlertMessages.showAlert("Error en base de datos");
+            AlertMessagess.showAlert("Error en base de datos");
 
         } catch (BusinessException e) {
 
-            AlertMessages.showAlert(
+            AlertMessagess.showAlert(
                     "Error: " + e.getMessage()
             );
         }
